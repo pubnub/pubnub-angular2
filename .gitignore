@@ -35,3 +35,13 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# distribution folder
+dist
+
+# bower_components
+bower_components
+
+# webstorm
+.idea
+

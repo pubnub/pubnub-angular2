@@ -1,0 +1,26 @@
+{
+  "name": "pubnub-angular2",
+  "description": "Official PubNub Angular2 Package",
+  "main": "dist/pubnub-angular2.min.js",
+  "authors": [
+    "PubNub <support@pubnub.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "PubNub",
+    "Angular",
+    "Angular2",
+    "Real",
+    "Time",
+    "WebSocket"
+  ],
+  "homepage": "https://github.com/pubnub/pubnub-angular2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
