@@ -1,0 +1,14 @@
+extends: "airbnb/base"
+rules:
+  max-len: 0
+  func-names: 0
+  comma-dangle: 0
+  no-loop-func: 0
+  no-else-return: 0
+  no-param-reassign: 0
+  prefer-const: 0
+  prefer-rest-params: 0
+  wrap-iife: 0
+  no-underscore-dangle: 0
+  no-restricted-syntax: 0
+  indent: [2, 4]

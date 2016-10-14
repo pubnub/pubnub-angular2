@@ -14,7 +14,7 @@ import runSequence from 'run-sequence';
 import karma from 'karma';
 
 gulp.task('clean', () => {
-    return gulp.src(src, {read: false}).pipe(gulpClean());
+    return gulp.src(dist, {read: false}).pipe(gulpClean());
 });
 
 gulp.task('clean-original-sourcemap', () => {
