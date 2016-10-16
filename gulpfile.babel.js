@@ -76,7 +76,7 @@ gulp.task('test', (done) => {
 
 gulp.task('compile', (done) => {
 
-    runSequence('clean', 'webpack', 'lint', 'uglify', 'include-sourcemaps', 'clean-original-sourcemap', done);
+    runSequence('clean', 'lint', 'webpack', 'uglify', 'include-sourcemaps', 'clean-original-sourcemap', done);
 });
 
 

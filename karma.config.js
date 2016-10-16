@@ -28,7 +28,9 @@ module.exports = function(config) {
             'node_modules/@angular/router/bundles/router.umd.js',
             'node_modules/@angular/upgrade/bundles/upgrade.umd.js',
             'bower_components/pubnub/dist/web/pubnub.js',
-            'test/testHelper.js'
+            'dist/pubnub-angular2.js',
+            'test/testHelper.js',
+            'test/e2e/*.test.js',
         ],
 
         // list of files to exclude

@@ -3,39 +3,39 @@ var config = {};
 var expect = chai.expect;
 
 config.demo = {
-    publish_key: 'ds',
-    subscribe_key: 'ds'
+    publishKey: 'ds',
+    subscribeKey: 'ds'
 };
 
 config.admin = {
-  publish_key: 'ds',
-  subscribe_key: 'ds',
-  secret_key: 'demo'
+    publishKey: 'ds',
+    subscribeKey: 'ds',
+    cipherKey: 'demo'
 };
 
 config.user = {
-  publish_key: 'ds',
-  subscribe_key: 'ds',
-  secret_key: 'demo'
+    publishKey: 'ds',
+    subscribeKey: 'ds',
+    cipherKey: 'demo'
 };
 
 // This key includes a channel group kittyChannelGroup
 // that includes these channels: kitty1,kitty2,kitty3,kitty4,kitty5,kitty6,kitty7,kitty8,kitty9, kitty10
 config.with_channel_groups = {
-  publish_key: 'pub-c-8a727694-74b6-47ea-84a1-3e0cbb0f1b9b',
-  subscribe_key: 'sub-c-75ef9b4c-1628-11e6-875d-0619f8945a4f',
-  secret_key: 'sec-c-ZmM0NWVmNzUtOGE4ZS00Y2MzLWExZDMtM2QxYmViYjdiYmM1',
-  auth_key: 'master'
+    publishKey: 'pub-c-8a727694-74b6-47ea-84a1-3e0cbb0f1b9b',
+    subscribeKey: 'sub-c-75ef9b4c-1628-11e6-875d-0619f8945a4f',
+    cipherKey: 'sec-c-ZmM0NWVmNzUtOGE4ZS00Y2MzLWExZDMtM2QxYmViYjdiYmM1',
+    authKey: 'master'
 };
 
 config.fake = {
-    publish_key: 'fake',
-    subscribe_key: 'fake'
+    publishKey: 'fake',
+    subscribeKey: 'fake'
 };
 
 config.demoWithHistoryRetention = {
-    publish_key: 'demo-36',
-    subscribe_key: 'demo-36'
+    publishKey: 'demo-36',
+    subscribeKey: 'demo-36'
 };
 
 config.channelWithHistory = 'channel-with-history-messages';

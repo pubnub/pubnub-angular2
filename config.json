@@ -1,0 +1,50 @@
+{
+  "pubnub_prefix": "pubnub",
+  "default_instance_name": "default",
+  "methods_to_delegate": [
+    "addListener",
+    "removeListener",
+    "removeAllListeners",
+    "channelGroups",
+    "push",
+    "hereNow",
+    "whereNow",
+    "getState",
+    "setState",
+    "grant",
+    "audit",
+    "publish",
+    "fire",
+    "history",
+    "time",
+    "subscribe",
+    "unsubscribe",
+    "reconnect",
+    "stop",
+    "unsubscribeAll",
+    "getSubscribedChannels",
+    "getSubscribedChannelGroups",
+    "encrypt",
+    "decrypt",
+    "getAuthKey",
+    "setAuthKey",
+    "setCipherKey",
+    "getUUID",
+    "setUUID",
+    "getFilterExpression",
+    "setFilterExpression"
+  ],
+  "common_callbacks_to_wrap": [
+    "callback",
+    "error"
+  ],
+  "subscribe_callbacks_to_wrap": [
+    "callback",
+    "connect",
+    "reconnect",
+    "disconnect",
+    "error",
+    "idle",
+    "presence"
+  ]
+}
