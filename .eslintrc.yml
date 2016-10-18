@@ -1,5 +1,6 @@
 extends: "airbnb/base"
 rules:
+  padded-blocks: 0
   max-len: 0
   func-names: 0
   comma-dangle: 0
@@ -11,4 +12,9 @@ rules:
   wrap-iife: 0
   no-underscore-dangle: 0
   no-restricted-syntax: 0
+  object-shorthand: 0
   indent: [2, 4]
+globals:
+  ng: true
+  PubNub: true
+

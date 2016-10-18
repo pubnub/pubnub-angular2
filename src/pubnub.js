@@ -1,11 +1,12 @@
-const config = require('../config.json');
-const Wrapper = require('./wrapper.js');
+import config from '../config.json';
+import Wrapper from './wrapper.js';
+import PubNub from '../bower_components/pubnub/dist/web/pubnub';
 
 (function (pubnub) {
 
     let wrappers = {};
 
-    pubnub.angular2Service = ng.core.Class({
+    pubnub.angular2Service = new ng.core.Class({
 
         constructor: function () {
 
@@ -33,15 +34,15 @@ const Wrapper = require('./wrapper.js');
          * @param instanceName
          * @returns {Wrapper}
          */
-        getInstance: function(instanceName){
+        getInstance: function (instanceName) {
 
             let instance = wrappers[instanceName];
 
-            if (instance && instance instanceof Wrapper){
+            if (instance && instance instanceof Wrapper) {
 
                 return instance;
-            }
-            else if (typeof instanceName === 'string' && instanceName.length > 0){
+
+            } else if (typeof instanceName === 'string' && instanceName.length > 0) {
 
                 wrappers[instanceName] = new Wrapper(instanceName);
 
@@ -49,13 +50,13 @@ const Wrapper = require('./wrapper.js');
 
                     wrappers[instanceName].wrapMethod(method);
 
-                    this[method] = function (args){
+                    this[method] = function (args) {
 
                         return this.getInstance(config.default_instance_name)[method](args);
                     };
                 });
 
-                return  wrappers[instanceName];
+                return wrappers[instanceName];
             }
 
             return instance;
@@ -68,7 +69,9 @@ const Wrapper = require('./wrapper.js');
          * @param {string} instanceName
          * @returns {string} event name
          */
-        getEventNameFor: function(methodName, callbackName, instanceName){
+        getEventNameFor: function (methodName, callbackName, instanceName) {
+
+            return instanceName;
         },
         /**
          * Generate unique message event name for specified channel
@@ -78,6 +81,8 @@ const Wrapper = require('./wrapper.js');
          * @returns {string} event name
          */
         getMessageEventNameFor: function (channelName, instanceName) {
+
+            return instanceName;
         },
         /**
          * Generate unique presence event name for specified channel
@@ -86,15 +91,18 @@ const Wrapper = require('./wrapper.js');
          * @param {string} instanceName
          * @returns {string} event name
          */
-        getPresenceEventNameFor: function(channelName, instanceName){
+        getPresenceEventNameFor: function (channelName, instanceName) {
+
+            return instanceName;
         },
         /**
          * Subscribe method wrapper for default instance
          *
          * @param {object} args
          */
-        subscribe: function (args){
+        subscribe: function (args) {
 
+            return args;
         }
     });
 

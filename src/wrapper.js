@@ -32,11 +32,7 @@ module.exports = class {
 
     wrapMethod(methodName) {
 
-        this[methodName] = (args) => {
-
-            if (typeof args === 'object') {
-
-            }
+        this[methodName] = function (args) {
 
             return this.getOriginalInstance()[methodName](args);
         };
