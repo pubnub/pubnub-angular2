@@ -71,7 +71,9 @@ import PubNub from '../bower_components/pubnub/dist/web/pubnub';
          */
         getEventNameFor: function (methodName, callbackName, instanceName) {
 
-            return instanceName;
+            if (!instanceName) instanceName = config.default_instance_name;
+
+            return [config.pubnub_prefix, instanceName, methodName, callbackName].join(':');
         },
         /**
          * Generate unique message event name for specified channel
@@ -82,7 +84,9 @@ import PubNub from '../bower_components/pubnub/dist/web/pubnub';
          */
         getMessageEventNameFor: function (channelName, instanceName) {
 
-            return instanceName;
+            if (!instanceName) instanceName = config.default_instance_name;
+
+            return [config.pubnub_prefix, instanceName, 'subscribe', 'callback', channelName].join(':');
         },
         /**
          * Generate unique presence event name for specified channel
@@ -93,7 +97,9 @@ import PubNub from '../bower_components/pubnub/dist/web/pubnub';
          */
         getPresenceEventNameFor: function (channelName, instanceName) {
 
-            return instanceName;
+            if (!instanceName) instanceName = config.default_instance_name;
+
+            return [config.pubnub_prefix, instanceName, 'subscribe', 'presence', channelName].join(':');
         },
         /**
          * Subscribe method wrapper for default instance
@@ -102,7 +108,7 @@ import PubNub from '../bower_components/pubnub/dist/web/pubnub';
          */
         subscribe: function (args) {
 
-            return args;
+            this.getInstance(config.default_instance_name).subscribe(args);
         }
     });
 
