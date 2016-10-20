@@ -1,8 +1,8 @@
-describe('"#subscribe()', function () {
+describe('#subscribe()', function () {
 
     var pubnubService = undefined;
     var channelName = undefined;
-    var stringMessage = "hey";
+    var stringMessage = 'hey';
 
     pubnubService = new window.pubnub.angular2Service();
 
@@ -13,10 +13,10 @@ describe('"#subscribe()', function () {
         channelName = getRandomChannel();
     });
 
-    // afterEach(function () {
-    //
-    //     pubnubService.unsubscribe({channels: [channelName]});
-    // });
+    afterEach(function () {
+
+        pubnubService.unsubscribe({channels: [channelName]});
+    });
 
     this.timeout(20000);
 
@@ -63,12 +63,12 @@ describe('"#subscribe()', function () {
 
     });
 
-    describe('Message callback', function(){
+    describe('Message callback', function () {
 
-        it('The message callback should be invoked as usual', function(done){
+        it('The message callback should be invoked as usual', function (done) {
 
             pubnubService.addListener({
-                message: function(m){
+                message: function (m) {
 
                     expect(m.message).to.be.equal(stringMessage);
                     done();
