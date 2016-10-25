@@ -1,19 +1,20 @@
 import config from '../config.json';
-import Wrapper from './wrapper.js';
-import PubNub from '../bower_components/pubnub/dist/web/pubnub';
+let Wrapper = require('./wrapper.js');
 
-(function (pubnub) {
+(function () {
 
     let wrappers = {};
 
-    pubnub.angular2Service = new ng.core.Class({
+    window.Pubnub = ng.core.Class({
 
-        constructor: function () {
+        constructor: function (initConfig) {
 
             if (typeof PubNub === undefined || PubNub === null) {
 
                 throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4.0.13 file is included before pubnub-angular2.js');
             }
+
+            if (initConfig) this.init(initConfig);
         },
         /**
          * Initializer for default instance
@@ -112,4 +113,4 @@ import PubNub from '../bower_components/pubnub/dist/web/pubnub';
         }
     });
 
-})(window.pubnub || (window.pubnub = {}));
+})();

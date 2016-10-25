@@ -1,12 +1,10 @@
 describe('#subscribe()', function () {
 
-    var pubnubService = undefined;
+    var pubnub = new window.Pubnub();
     var channelName = undefined;
     var stringMessage = 'hey';
 
-    pubnubService = new window.pubnub.angular2Service();
-
-    pubnubService.init(config.demo);
+    pubnub.init(config.demo);
 
     beforeEach(function () {
 
@@ -15,7 +13,7 @@ describe('#subscribe()', function () {
 
     afterEach(function () {
 
-        pubnubService.unsubscribe({channels: [channelName]});
+        pubnub.unsubscribe({channels: [channelName]});
     });
 
     this.timeout(20000);
@@ -24,7 +22,7 @@ describe('#subscribe()', function () {
 
         it('should be invoked', function (done) {
 
-            pubnubService.addListener({
+            pubnub.addListener({
                 message: function (m) {
 
                     expect(m.message).to.be.equal(stringMessage);
@@ -34,9 +32,9 @@ describe('#subscribe()', function () {
                 }
             });
 
-            pubnubService.subscribe({channels: [channelName]});
+            pubnub.subscribe({channels: [channelName]});
 
-            pubnubService.publish({channel: channelName, message: stringMessage});
+            pubnub.publish({channel: channelName, message: stringMessage});
         });
     });
 
@@ -46,11 +44,11 @@ describe('#subscribe()', function () {
 
             var uuid = 'blah';
 
-            pubnubService.getInstance('another').init(config.demo);
+            pubnub.getInstance('another').init(config.demo);
 
-            pubnubService.getInstance('another').setUUID(uuid);
+            pubnub.getInstance('another').setUUID(uuid);
 
-            pubnubService.getInstance('another').addListener({
+            pubnub.getInstance('another').addListener({
                 presence: function (p) {
 
                     expect(p.uuid).to.be.equal(uuid);
@@ -58,7 +56,7 @@ describe('#subscribe()', function () {
                 }
             });
 
-            pubnubService.getInstance('another').subscribe({channels: [channelName], withPresence: true});
+            pubnub.getInstance('another').subscribe({channels: [channelName], withPresence: true});
         });
 
     });
@@ -67,7 +65,7 @@ describe('#subscribe()', function () {
 
         it('The message callback should be invoked as usual', function (done) {
 
-            pubnubService.addListener({
+            pubnub.addListener({
                 message: function (m) {
 
                     expect(m.message).to.be.equal(stringMessage);
@@ -75,9 +73,9 @@ describe('#subscribe()', function () {
                 }
             });
 
-            pubnubService.subscribe({'channels': [channelName]});
+            pubnub.subscribe({'channels': [channelName]});
 
-            pubnubService.publish({channel: channelName, message: stringMessage});
+            pubnub.publish({channel: channelName, message: stringMessage});
         });
     });
 });
