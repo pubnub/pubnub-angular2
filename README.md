@@ -53,7 +53,7 @@ To utilize this wrapper, include the scripts in the following order:
   <script src="(pubnub-angular2.js)"></script>
 ```
 
-You have to register `pubnub.angular2Service` inside `providers` property either in yours ngModule or
+You have to register `Pubnub` inside `providers` property either in yours ngModule or
 ngComponent, this is going to depend on how far do you want to get your Pubnub instance.
 
 This will make sure that the Pubnub object is available to get injected into your ngComponents,
@@ -98,97 +98,45 @@ your_module.js
 In **Pubnub Angular2 SDK** instances are hidden inside service and are accessible via instance getter.
 
 
-### Creating a default instance
+### Creating a default instance PubNub JS V4
 
-<table>
-<tr><td></td>
-    <td>PubNub Angular2 SDK with JS <b>V4</b></td>
-	 <td>PubNub Angular2 SDK with JS <b>V3</b></td>
-</tr>
-<tr>
-	<td>Javascript SDK</td>
-	<td>
-	<pre><code>
-	var defaultInstance = new PubNub({
-        publishKey: 'your pub key',
-        subscribeKey: 'your sub key'
-        });
-    </code></pre>
-	</td>
-	<td>
-	<pre><code>
-	var defaultInstance = PUBNUB.init({
-	    publish_key: 'your pub key',
-	    subscribe_key: 'your sub key'
-	    });
-    </code></pre>
-	</td>
-</tr>
-<tr>
-	<td>PubNub Angular2 SDK</td>
-	<td>
-    <pre><code>
-    var pubnub = new window.Pubnub();
-    </code></pre>
-    <pre><code>
-    pubnub.init({
+```javascript
+
+var defaultInstance = new PubNub({
     publishKey: 'your pub key',
     subscribeKey: 'your sub key'
-    });
-    </code></pre>
-	</td>
-	<td>
-    <pre><code>
-    var pubnub = new window.Pubnub();
-    </code></pre>
-    <pre><code>
-    pubnub.init({
+});
+```
+
+### Creating a default instance PubNub Angular 2 SDK
+
+```javascript
+
+var pubnub = new window.Pubnub({
     publishKey: 'your pub key',
     subscribeKey: 'your sub key'
-    });
-    </code></pre>
-	</td>
-</tr>
-</table>
+});
+```
 
 ### Creating an other instance
 
 In most use cases, usage of the default PubNub instance will be sufficient, but if multiple instances with
 different credentials are needed, the ```Pubnub.getInstance(instanceName)``` getter needs to be utilized.
 
-<table>
-<tr><td></td>
-    <td>PubNub Angular2 SDK with JS <b>V4</b></td>
-	 <td>PubNub Angular2 SDK with JS <b>V3</b></td>
-</tr>
-<tr>
-	<td>PubNub Angular2 SDK</td>
-	<td>
-	<pre><code>
-	var pubnub = new window.Pubnub();
-    </code></pre>
-	<pre><code>
-	pubnub.getInstance("another").init({
+```javascript
+
+var pubnub = new window.Pubnub();
+
+pubnub.getInstance("another").init({
 	publishKey: 'your pub key',
-	subscribeKey: 'your sub key'});
-	</code></pre>
-	</td>
-	<td>
-	<pre><code>
-    var pubnub = new window.Pubnub();
-    </code></pre>
-	<pre><code>
-	pubnub.getInstance("another").init({
-	publish_key: 'your pub key',
-	subscribe_key: 'your sub key'});
-	</code></pre>
-	</td>
-</tr>
-</table>
+	subscribeKey: 'your sub key'
+});
+
+```
 
 ## Accessing methods
 
-All methods of the Native Javascript SDKs are wrapped within the **Pubnub Angular2 Service**.
+All methods of the Native Javascript SDKs are wrapped within the **Pubnub Angular2 SDK**.
 
 - Methods of default instance are mapped directly to PubNub service like ```Pubnub.publish({...})```.
 - Methods of the other instances are available via the instance getter like ```Pubnub.getInstance(instanceName).publish()```.
@@ -196,54 +144,24 @@ All methods of the Native Javascript SDKs are wrapped within the **Pubnub Angula
 To learn about PubNub JavaScript features and methods available refer to the API Reference of the Javascript SDK that you are using:
 
 * [JavaScript V4 API Reference](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4)
-* [JavaScript V3 API Reference](https://https://www.pubnub.com/docs/web-javascript/api-reference)
 
 **Examples:**
 
-<table>
-<tr><td></td>
-    <td>PubNub Angular2 SDK with JS <b>V4</b></td>
-	 <td>PubNub Angular2 SDK with JS <b>V3</b></td>
-</tr>
-<tr>
-	<td>With the default instance</td>
-	</td>
-	<td><pre><code>pubnub.publish({
-    channel: 'myChannel',
-    message: 'Hello!'
-  }, function(status, response){
-       console.log(response);
-});</code></pre>
-	</td>
-	</td>
-	<td><pre><code>pubnub.publish({
-    channel: 'myChannel',
-    message: 'Hello!',
-    callback: function (m) {console.log(m);},
-    error: function (err) {console.log(err);}
-});</code></pre>
-	</td>
-</tr>
-<tr>
-	<td>With an other instance</td>
-</td>
-	<td><pre><code>pubnub.getInstance("another").publish({
-    channel: 'myChannel',
-    message: 'Hello!'
-  }, function(status, response){
-       console.log(response);
-});</code></pre>
-	</td>
-	</td>
-	<td><pre><code>
-	pubnub.getInstance("another").publish({
-    channel: 'myChannel',
-    message: 'Hello!',
-    callback: function (m) {console.log(m);}
-});</code></pre>
-	</td>
-</tr>
-</table>
+```javascript
+
+pubnub.publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
+    console.log(response);
+});
+```
+
+With an other instance
+
+```javascript
+
+pubnub.getInstance("another").publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
+    console.log(response);
+});
+```
 
 That's it - you're ready to start using the Angular2 PubNub SDK!
 
