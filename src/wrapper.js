@@ -1,21 +1,30 @@
 /* global angular PUBNUB */
+import Mock from './mocks.js';
 
 module.exports = class {
 
-    constructor(label) {
+    constructor(label, service) {
 
         this.label = label;
         this.pubnubInstance = null;
+        this.mockingInstance = new Mock(label, this, service);
+        this.service = service;
     }
 
     init(initConfig) {
 
         this.pubnubInstance = new PubNub(initConfig);
+        this.mockingInstance.initializeListener();
     }
 
     getLabel() {
 
         return this.label;
+    }
+
+    subscribe(args) {
+
+        this.getOriginalInstance().subscribe(args);
     }
 
     getOriginalInstance() {

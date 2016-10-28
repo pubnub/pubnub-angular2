@@ -1,5 +1,6 @@
 import config from '../config.json';
-let Wrapper = require('./wrapper.js');
+import Wrapper from './wrapper.js';
+import Broadcast from './broadcast.js';
 
 (function () {
 
@@ -15,6 +16,8 @@ let Wrapper = require('./wrapper.js');
             }
 
             if (initConfig) this.init(initConfig);
+
+            this.on = new Broadcast();
         },
         /**
          * Initializer for default instance
@@ -45,7 +48,7 @@ let Wrapper = require('./wrapper.js');
 
             } else if (typeof instanceName === 'string' && instanceName.length > 0) {
 
-                wrappers[instanceName] = new Wrapper(instanceName);
+                wrappers[instanceName] = new Wrapper(instanceName, this);
 
                 config.methods_to_delegate.forEach(method => {
 

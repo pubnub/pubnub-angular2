@@ -17,7 +17,6 @@
     "fire",
     "history",
     "time",
-    "subscribe",
     "unsubscribe",
     "reconnect",
     "stop",
@@ -38,13 +37,9 @@
     "callback",
     "error"
   ],
-  "subscribe_callbacks_to_wrap": [
-    "callback",
-    "connect",
-    "reconnect",
-    "disconnect",
-    "error",
-    "idle",
-    "presence"
+  "subscribe_listener_events_to_broadcast": [
+    "message",
+    "presence",
+    "status"
   ]
 }
