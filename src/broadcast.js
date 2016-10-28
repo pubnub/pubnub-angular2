@@ -1,26 +1,16 @@
-function resolveChannel(channel) {
-
-    let ch = '';
+function registerChannel(register, channel, callback) {
 
     if (Array.isArray(channel)) {
 
-        channel.sort();
+        channel.forEach((ch) => {
 
-        ch = channel.join('@');
+            register[ch] = callback;
+        });
 
     } else {
 
-        ch = channel;
+        register[channel.toString()] = callback;
     }
-
-    return ch;
-}
-
-function registerChannel(register, channel, callback) {
-
-    let ch = resolveChannel(channel);
-
-    register[ch] = callback;
 }
 
 module.exports = class {
@@ -55,20 +45,16 @@ module.exports = class {
 
         } else {
 
-            let ch = resolveChannel(channel);
+            let reg = ('_').concat(register);
 
-            let reg = '_' + register;
-
-            if (this[reg][ch]) this[reg][ch].call(null, obj);
+            if (this[reg][channel]) this[reg][channel].call(null, obj);
         }
     }
 
     unsubscribe(channel) {
 
-        let ch = resolveChannel(channel);
+        if (this._message[channel]) delete this._message[channel];
 
-        if (this._message[ch]) delete this._message[ch];
-
-        if (this._presence[ch]) delete this._presence[ch];
+        if (this._presence[channel]) delete this._presence[channel];
     }
 };
