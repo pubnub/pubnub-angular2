@@ -25,6 +25,7 @@ module.exports = class {
     subscribe(args) {
 
         this.getOriginalInstance().subscribe(args);
+        this.mockingInstance.enableEventsBroadcast(args);
     }
 
     getOriginalInstance() {
