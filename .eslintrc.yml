@@ -20,4 +20,5 @@ rules:
 globals:
   ng: true
   PubNub: true
+  config: true
 

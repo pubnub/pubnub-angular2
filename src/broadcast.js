@@ -1,15 +1,30 @@
-function registerChannel(register, channel, callback) {
+function subscribeChannel(subscriber, channel, callback) {
 
     if (Array.isArray(channel)) {
 
         channel.forEach((ch) => {
 
-            register[ch] = callback;
+            subscriber[ch] = callback;
         });
 
     } else {
 
-        register[channel.toString()] = callback;
+        subscriber[channel] = callback;
+    }
+}
+
+function unsubscriberChannel(subscriber, channel) {
+
+    if (Array.isArray(channel)) {
+
+        channel.forEach((ch) => {
+
+            if (subscriber[ch]) delete subscriber[ch];
+        });
+
+    } else {
+
+        if (subscriber[channel]) delete subscriber[channel];
     }
 }
 
@@ -24,12 +39,12 @@ module.exports = class {
 
     message(channel, callback) {
 
-        registerChannel(this._message, channel, callback);
+        subscribeChannel(this._message, channel, callback);
     }
 
     presence(channel, callback) {
 
-        registerChannel(this._presence, channel, callback);
+        subscribeChannel(this._presence, channel, callback);
     }
 
     status(callback) {
@@ -53,8 +68,7 @@ module.exports = class {
 
     unsubscribe(channel) {
 
-        if (this._message[channel]) delete this._message[channel];
-
-        if (this._presence[channel]) delete this._presence[channel];
+        unsubscriberChannel(this._message, channel);
+        unsubscriberChannel(this._presence, channel);
     }
 };

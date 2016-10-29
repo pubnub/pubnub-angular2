@@ -6,7 +6,6 @@ module.exports = class {
 
         this.listener = null;
         this.service = service;
-        this.broadcastStatus = false;
         this.broadcastChannels = {};
     }
 
@@ -22,9 +21,16 @@ module.exports = class {
 
                 self.listener[event] = function (received) {
 
-                    if(self.broadcastChannels[received.channel])
+                    if (received.channel && self.broadcastChannels[received.channel] &&
+                        self.broadcastChannels[received.channel].includes(event)) {
 
-                    self.service.on.emit(event, received);
+                        self.service.on.emit(event, received);
+
+                    } else if (event === 'status' && self.broadcastChannels[received.channel] &&
+                        self.broadcastChannels[received.channel].includes(event)) {
+
+                        self.service.on.emit(event, received);
+                    }
                 };
 
             });
@@ -37,20 +43,17 @@ module.exports = class {
 
         args.channels.forEach((channel) => {
 
-            if (typeof args.triggerEvents === 'bool') {
+            if (typeof args.triggerEvents === 'boolean') {
 
                 this.broadcastChannels[channel] = config.subscribe_listener_events_to_broadcast;
-                this.broadcastStatus = true;
 
-            } else if(Array.isArray(args.triggerEvents)) {
+            } else if (Array.isArray(args.triggerEvents)) {
 
                 this.broadcastChannels[channel] = [];
 
                 args.triggerEvents.forEach((trigger) => {
 
                     if (config.subscribe_listener_events_to_broadcast.includes(trigger)) {
-
-                        if (trigger === 'status') this.broadcastStatus = true;
 
                         this.broadcastChannels[channel].push(trigger);
                     }
