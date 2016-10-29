@@ -37,9 +37,9 @@ module.exports = class {
         this._status = callback;
     }
 
-    emit(register, channel, obj) {
+    emit(register, obj) {
 
-        if (register === 'status') {
+        if (!obj.channel) {
 
             if (this._status) this._status.call(null, obj);
 
@@ -47,7 +47,7 @@ module.exports = class {
 
             let reg = ('_').concat(register);
 
-            if (this[reg][channel]) this[reg][channel].call(null, obj);
+            if (this[reg][obj.channel]) this[reg][obj.channel].call(null, obj);
         }
     }
 

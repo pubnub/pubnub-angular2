@@ -5,16 +5,16 @@ module.exports = class {
 
     constructor(label, service) {
 
+        this.config = config;
         this.label = label;
         this.pubnubInstance = null;
-        this.mockingInstance = new Mock(label, this, service);
-        this.service = service;
+        this.mockingInstance = new Mock(service);
     }
 
     init(initConfig) {
 
         this.pubnubInstance = new PubNub(initConfig);
-        this.mockingInstance.initializeListener();
+        this.mockingInstance.initializeListener(this);
     }
 
     getLabel() {
