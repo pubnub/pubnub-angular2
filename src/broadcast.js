@@ -34,7 +34,7 @@ module.exports = class {
 
         this._message = {};
         this._presence = {};
-        this._status = null;
+        this._status = {};
     }
 
     message(channel, callback) {
@@ -47,28 +47,22 @@ module.exports = class {
         subscribeChannel(this._presence, channel, callback);
     }
 
-    status(callback) {
+    status(channel, callback) {
 
-        this._status = callback;
+        subscribeChannel(this._status, channel, callback);
     }
 
-    emit(register, obj) {
+    emit(subscriber, channel, obj) {
 
-        if (!obj.channel) {
+        let subs = ('_').concat(subscriber);
 
-            if (this._status) this._status.call(null, obj);
-
-        } else {
-
-            let reg = ('_').concat(register);
-
-            if (this[reg][obj.channel]) this[reg][obj.channel].call(null, obj);
-        }
+        if (this[subs][channel]) this[subs][channel].call(null, obj);
     }
 
     unsubscribe(channel) {
 
         unsubscriberChannel(this._message, channel);
         unsubscriberChannel(this._presence, channel);
+        unsubscriberChannel(this._status, channel);
     }
 };

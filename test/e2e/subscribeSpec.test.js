@@ -18,7 +18,7 @@ describe('#subscribe()', function () {
 
     this.timeout(20000);
 
-    describe('success and connect callback', function () {
+    describe('Success and Connect Callback', function () {
 
         it('should be invoked', function (done) {
 
@@ -28,7 +28,6 @@ describe('#subscribe()', function () {
                     expect(m.message).to.be.equal(stringMessage);
                     expect(m.channel).to.be.equal(channelName);
                     done();
-
                 }
             });
 
@@ -38,7 +37,7 @@ describe('#subscribe()', function () {
         });
     });
 
-    describe('presence callback', function () {
+    describe('Presence callback', function () {
 
         it('should be invoked', function (done) {
 
@@ -73,9 +72,57 @@ describe('#subscribe()', function () {
                 }
             });
 
-            pubnub.subscribe({'channels': [channelName]});
+            pubnub.subscribe({channels: [channelName]});
 
             pubnub.publish({channel: channelName, message: stringMessage});
         });
+    });
+
+    describe('Triggered all events', function() {
+
+        it('Should be triggered (message)', function (done) {
+
+            pubnub.on.message(channelName, function (m) {
+
+                expect(m).to.not.equal(null);
+                expect(m.channel).to.be.equal(channelName);
+                expect(m.message).to.be.equal(stringMessage);
+                done();
+            });
+
+            pubnub.publish({channel: channelName, message: stringMessage});
+            pubnub.subscribe({channels: [channelName], triggerEvents: true});
+        });
+
+        it('Should be triggered (presence)', function(done) {
+
+            var uuid = 'blah';
+            var subscribedChannel = channelName + '-pnpres';
+
+            pubnub.on.presence(channelName, function (ps) {
+
+                expect(ps).to.not.equal(null);
+                expect(ps.subscribedChannel).to.be.equal(subscribedChannel);
+                done();
+            });
+
+            pubnub.setUUID(uuid);
+            pubnub.publish({channel: channelName, message: stringMessage});
+            pubnub.subscribe({channels: [channelName], triggerEvents: true, withPresence: true});
+        });
+
+        it('Should be triggered (status)', function(done) {
+
+            pubnub.on.status(channelName, function (st) {
+
+                expect(st).to.not.equal(null);
+                expect(st.category).to.be.equal('PNConnectedCategory');
+                done();
+            });
+
+            pubnub.publish({channel: channelName, message: stringMessage});
+            pubnub.subscribe({channels: [channelName], triggerEvents: true});
+        });
+
     });
 });

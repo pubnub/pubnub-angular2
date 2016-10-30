@@ -24,15 +24,19 @@ module.exports = class {
                     if (received.channel && self.broadcastChannels[received.channel] &&
                         self.broadcastChannels[received.channel].includes(event)) {
 
-                        self.service.on.emit(event, received);
+                        self.service.on.emit(event, received.channel, received);
 
-                    } else if (event === 'status' && self.broadcastChannels[received.channel] &&
-                        self.broadcastChannels[received.channel].includes(event)) {
+                    } else if (event === 'status') {
 
-                        self.service.on.emit(event, received);
+                        received.affectedChannels.forEach((channel) => {
+
+                            if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
+
+                                self.service.on.emit(event, channel, received);
+                            }
+                        });
                     }
                 };
-
             });
 
             instance.getOriginalInstance().addListener(this.listener);
