@@ -1,3 +1,5 @@
+import config from '../config.json';
+
 function subscribeChannel(subscriber, channel, callback) {
 
     if (Array.isArray(channel)) {
@@ -32,37 +34,36 @@ module.exports = class {
 
     constructor() {
 
-        this._message = {};
-        this._presence = {};
-        this._status = {};
+        config.subscribe_listener_events_to_broadcast.forEach((event) => {
+
+            let subscriber = ('_').concat(event);
+
+            this[subscriber] = {};
+
+            this[event] = function (channel, callback) {
+
+                subscribeChannel(this[subscriber], channel, callback);
+            };
+        });
     }
 
-    message(channel, callback) {
+    emit(event, channel, obj) {
 
-        subscribeChannel(this._message, channel, callback);
-    }
+        let subscriber = ('_').concat(event);
 
-    presence(channel, callback) {
+        if (this[subscriber][channel]) {
 
-        subscribeChannel(this._presence, channel, callback);
-    }
-
-    status(channel, callback) {
-
-        subscribeChannel(this._status, channel, callback);
-    }
-
-    emit(subscriber, channel, obj) {
-
-        let subs = ('_').concat(subscriber);
-
-        if (this[subs][channel]) this[subs][channel].call(null, obj);
+            this[subscriber][channel].call(null, obj);
+        }
     }
 
     unsubscribe(channel) {
 
-        unsubscriberChannel(this._message, channel);
-        unsubscriberChannel(this._presence, channel);
-        unsubscriberChannel(this._status, channel);
+        config.subscribe_listener_events_to_broadcast.forEach((event) => {
+
+            let subscriber = ('_').concat(event);
+
+            unsubscriberChannel(this[subscriber], channel);
+        });
     }
 };
