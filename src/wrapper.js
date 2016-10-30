@@ -28,6 +28,12 @@ module.exports = class {
         this.mockingInstance.enableEventsBroadcast(args);
     }
 
+    unsubscribe(args) {
+
+        this.getOriginalInstance().unsubscribe(args);
+        this.mockingInstance.disableEventsBroadcast(args);
+    }
+
     getOriginalInstance() {
 
         if (this.pubnubInstance) {

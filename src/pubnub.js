@@ -113,6 +113,15 @@ import Broadcast from './broadcast.js';
         subscribe: function (args) {
 
             this.getInstance(config.default_instance_name).subscribe(args);
+        },
+        /**
+         * Unsubscribe method wrapper for default instance
+         *
+         * @param {object} args
+         */
+        unsubscribe: function (args) {
+
+            this.getInstance(config.default_instance_name).unsubscribe(args);
         }
     });
 

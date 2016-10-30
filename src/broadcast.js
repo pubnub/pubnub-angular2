@@ -51,7 +51,7 @@ module.exports = class {
 
         let subscriber = ('_').concat(event);
 
-        if (this[subscriber][channel]) {
+        if (this[subscriber] && this[subscriber][channel]) {
 
             this[subscriber][channel].call(null, obj);
         }

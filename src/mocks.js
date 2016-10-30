@@ -64,8 +64,16 @@ module.exports = class {
                 });
             }
         });
-
-
     }
 
+    disableEventsBroadcast(args) {
+
+        args.channels.forEach((channel) => {
+
+            if (this.broadcastChannels[channel]) {
+
+                delete this.broadcastChannels[channel];
+            }
+        });
+    }
 };
