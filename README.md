@@ -2,12 +2,17 @@
 
 ![SDK Logo](http://cl.ly/241N0q2P2q22/Screen%20Shot%202016-02-03%20at%205.32.32%20PM.png)
 
+[![Build Status](https://travis-ci.org/pubnub/pubnub-angular2.svg?branch=master)](https://travis-ci.org/pubnub/pubnub-angular2)
+[![Codecov](https://img.shields.io/codecov/c/github/pubnub/pubnub-angular2.svg?maxAge=2592000)](https://codecov.io/github/pubnub/pubnub-angular2?branch=master)
+[![npm](https://img.shields.io/npm/v/pubnub-angular2.svg)](https://www.npmjs.com/package/pubnub-angular2)
+![Bower](https://img.shields.io/bower/v/pubnub-angular2.svg)
+
 Welcome! We're here to get you started quickly with your
 integration between PubNub and Angular2. PubNub makes it
 easy to integrate real-time bidirectional communication
 into your app.
 
-**Pubnub Angular2** service is a wrapper for **PubNub JavaScript SDK** [version 4](https://www.pubnub.com/docs/javascript/pubnub-javascript-sdk-v4) 
+**Pubnub Angular2** service is a wrapper for **PubNub JavaScript SDK** [version 4](https://www.pubnub.com/docs/javascript/pubnub-javascript-sdk-v4)
 that adds a few of extra features to simplify Angular integrations:
 
 You can still use the native PubNub JavaScript SDK if you feel this will be
@@ -66,7 +71,7 @@ your_module.js
 (function (app) {
 
     var pubnub = new window.Pubnub();
-    
+
     pubnub.init({
         publish_key: 'your pub key',
         subscribe_key: 'your sub key'
@@ -99,7 +104,7 @@ How to inject **pubnub service** inside the angular component.
 
 ```
 
-## Differences in usage with native JavaScript SDK 
+## Differences in usage with native JavaScript SDK
 
 In **Pubnub Angular2 SDK** instances are hidden inside service and are accessible via instance getter.
 
