@@ -7,7 +7,7 @@ import Broadcast from './broadcast';
 (function () {
   let wrappers = {};
 
-  window.Pubnub = ng.core.Class({
+  window.PubNubAngular = ng.core.Class({
     constructor: function (initConfig) {
       if (typeof PubNub === 'undefined' || PubNub === null) {
         throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');

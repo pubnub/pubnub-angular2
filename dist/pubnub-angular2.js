@@ -1,4 +1,4 @@
-/*! 1.0.0.beta.1 */
+/*! 1.0.0-beta.2 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -105,7 +105,7 @@
 	(function () {
 	  var wrappers = {};
 
-	  window.Pubnub = ng.core.Class({
+	  window.PubNubAngular = ng.core.Class({
 	    constructor: function constructor(initConfig) {
 	      if (typeof PubNub === 'undefined' || PubNub === null) {
 	        throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');

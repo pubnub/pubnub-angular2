@@ -47,7 +47,7 @@ Your HTML page will include 2 key libraries:
     bower install pubnub-angular2
     ```
   - From CDN:
-    
+
     ```html
     <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).js"></script>
     <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).min.js"></script>
@@ -68,12 +68,10 @@ Pubnub is going to be defined inside your ngModule.
 ```javascript
 
 (function (app) {
-    var pubnub = new window.Pubnub();
-
-    pubnub.init({
-        publish_key: 'your pub key',
-        subscribe_key: 'your sub key'
-    });
+    var pubnub = new window.PubNubAngular({
+          publishKey: 'your pub key',
+          subscribeKey: 'your sub key'
+        });
 
     app.your_module = ng.core.NgModule({
         imports: [...],
@@ -114,7 +112,7 @@ var defaultInstance = new PubNub({
 ### Creating a default instance PubNub Angular 2 SDK
 
 ```javascript
-var pubnub = new window.Pubnub({
+var pubnub = new window.PubNubAngular({
     publishKey: 'your pub key',
     subscribeKey: 'your sub key'
 });
@@ -126,7 +124,7 @@ In most use cases, usage of the default PubNub instance will be sufficient, but 
 different credentials are needed, the ```Pubnub.getInstance(instanceName)``` getter needs to be utilized.
 
 ```javascript
-var pubnub = new window.Pubnub();
+var pubnub = new window.PubNubAngular();
 
 pubnub.getInstance("another").init({
 	publishKey: 'your pub key',
