@@ -31,7 +31,7 @@ gulp.task('lint', function () {
 });
 
 gulp.task('create_version', function () {
-  return gulp.src('dist/web/pubnub.js')
+  return gulp.src('dist/pubnub-angular2.js')
     .pipe(gulpRename('pubnub.' + version + '.js'))
     .pipe(gulp.dest('upload/normal'));
 });
