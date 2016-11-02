@@ -2,10 +2,18 @@ language: node_js
 sudo: false
 node_js:
   - '6'
-compiler: clang
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+before_install:
+  - npm install -g gulp-cli yarn
 install:
-  - npm install -g gulp-cli
-
+  - yarn install
 script:
   - gulp test
 
