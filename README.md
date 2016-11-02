@@ -47,6 +47,7 @@ Your HTML page will include 2 key libraries:
     bower install pubnub-angular2
     ```
   - From CDN:
+    
     ```html
     <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).js"></script>
     <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).min.js"></script>
