@@ -1,0 +1,9 @@
+name: pubnub-angular2
+version: 1.0.0.beta1
+schema: 1
+scm: github.com/pubnub/pubnub-angular2
+changelog:
+  - version: v1.0.0.beta1
+    changes:
+      - type: feature
+        text: first public beta of the wrapper.

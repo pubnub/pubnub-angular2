@@ -27,33 +27,33 @@ more suitable for your situation.
 Your HTML page will include 2 key libraries:
 
 * PubNub JavaScript SDK V4
+
+  - With NPM:
+      ```shell
+      npm install pubnub
+      ```
+  - With Bower:
+    ```shell
+    bower install pubnub
+    ```
+
 * PubNub JavaScript SDK Angular2 Service
-
-```bower install --save pubnub```
-
-Or using CDNs:
-
-```html
-
-```
-
-Also available as minified:
-
-```html
-
-```
+  - With NPM:
+      ```shell
+      npm install pubnub-angular2
+      ```
+  - With Bower:
+    ```shell
+    bower install pubnub-angular2
+    ```
+  - From CDN:
+    ```html
+    <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).js"></script>
+    <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).min.js"></script>
+    ```
 
 To utilize this wrapper, include the scripts in the following order:
-```html
-  <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
-  <script src="https://unpkg.com/zone.js@0.6.25?main=browser"></script>
-  <script src="https://unpkg.com/reflect-metadata@0.1.3"></script>
-  <script src="https://unpkg.com/rxjs@5.0.0-beta.12/bundles/Rx.js"></script>
-  <script src="https://unpkg.com/@angular/core/bundles/core.umd.js"></script>
-  <script src="https://unpkg.com/@angular/common/bundles/common.umd.js"></script>
-  <script src="https://unpkg.com/@angular/compiler/bundles/compiler.umd.js"></script>
-  <script src="https://unpkg.com/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
-  <script src="https://unpkg.com/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
+```html  
   <script src="(latest version of PubNub JS SDK from https://github.com/pubnub/javascript)"></script>
   <script src="(pubnub-angular2.js)"></script>
 ```

@@ -1,6 +1,6 @@
 {
   "name": "pubnub-angular2",
-  "version": "1.0.0.beta1",
+  "version": "1.0.0.beta.1",
   "description": "Official PubNub Angular2",
   "main": "dist/pubnub-angular2.min.js",
   "devDependencies": {
@@ -56,8 +56,5 @@
   },
   "author": "PubNub <support@pubnub.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/pubnub/pubnub-angular2/issues"
-  },
   "homepage": "https://github.com/pubnub/pubnub-angular2#readme"
 }
