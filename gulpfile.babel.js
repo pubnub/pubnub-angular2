@@ -7,6 +7,7 @@ import gulpLint from 'gulp-eslint';
 import gulpWebpack from 'webpack-stream';
 import gulpUglify from 'gulp-uglify';
 import gulpRename from 'gulp-rename';
+import gulpGzip from 'gulp-gzip';
 import gulpMocha from 'gulp-mocha';
 import runSequence from 'run-sequence';
 import karma from 'karma';
@@ -19,7 +20,7 @@ const src = 'src';
 const dist = 'dist';
 
 gulp.task('clean', function () {
-  return gulp.src(dist, { read: false }).pipe(gulpClean());
+  return gulp.src(['dist', 'coverage', 'upload'], { read: false }).pipe(gulpClean());
 });
 
 gulp.task('lint', function () {
@@ -27,6 +28,18 @@ gulp.task('lint', function () {
       .pipe(gulpLint())
       .pipe(gulpLint.format())
       .pipe(gulpLint.failAfterError());
+});
+
+gulp.task('create_version', function () {
+  return gulp.src('dist/web/pubnub.js')
+    .pipe(gulpRename('pubnub.' + version + '.js'))
+    .pipe(gulp.dest('upload/normal'));
+});
+
+gulp.task('create_version_gzip', function () {
+  return gulp.src('upload/normal/*.js')
+    .pipe(gulpGzip({ append: false }))
+    .pipe(gulp.dest('upload/gzip'));
 });
 
 gulp.task('webpack', function () {
@@ -40,7 +53,10 @@ gulp.task('uglify', function () {
   return gulp.src(dist + '/pubnub-angular2.js')
       .pipe(gulpUglify({ mangle: true, compress: true }))
       .pipe(gulpRename('pubnub-angular2.min.js'))
-      .pipe(gulp.dest(dist));
+      .pipe(gulp.dest(dist))
+      .pipe(gulpRename('pubnub.' + version + '.min.js'))
+      .pipe(gulp.dest('upload/normal'));
+
 });
 
 gulp.task('include-sourcemaps', function () {
@@ -65,5 +81,5 @@ gulp.task('test', (done) => {
 });
 
 gulp.task('compile', (done) => {
-  runSequence('clean', 'webpack', 'uglify', done);
+  runSequence('clean', 'webpack', 'create_version', 'uglify', 'create_version_gzip', done);
 });
