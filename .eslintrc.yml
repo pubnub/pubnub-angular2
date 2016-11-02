@@ -13,12 +13,11 @@ rules:
   no-underscore-dangle: 0
   no-restricted-syntax: 0
   object-shorthand: 0
-  indent: [2, 4]
   new-cap:
     - 2
     - {"newIsCap": true, "capIsNew": false}
+  import/no-extraneous-dependencies: 0
 globals:
   ng: true
   PubNub: true
   config: true
-

@@ -1,88 +1,82 @@
+/* global window */
+
 import config from '../config.json';
-import Wrapper from './wrapper.js';
-import Broadcast from './broadcast.js';
+import Wrapper from './wrapper';
+import Broadcast from './broadcast';
 
 (function () {
+  let wrappers = {};
 
-    let wrappers = {};
+  window.Pubnub = ng.core.Class({
+    constructor: function (initConfig) {
+      if (typeof PubNub === 'undefined' || PubNub === null) {
+        throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
+      }
 
-    window.Pubnub = ng.core.Class({
+      if (initConfig) this.init(initConfig);
 
-        constructor: function (initConfig) {
+      this.broadcastOn = new Broadcast();
+    },
 
-            if (typeof PubNub === undefined || PubNub === null) {
+    /**
+     * Initializer for default instance
+     *
+     * @param {Object} initConfig
+     */
+    init: function (initConfig) {
 
-                throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4.0.13 file is included before pubnub-angular2.js');
-            }
+      let instance = this.getInstance(config.default_instance_name);
 
-            if (initConfig) this.init(initConfig);
+      instance.init(initConfig);
 
-            this.broadcastOn = new Broadcast();
-        },
-        /**
-         * Initializer for default instance
-         *
-         * @param {Object} initConfig
-         */
-        init: function (initConfig) {
+      return instance;
+    },
 
-            let instance = this.getInstance(config.default_instance_name);
+    /**
+     * Instance getter
+     *
+     * @param instanceName
+     * @returns {Wrapper}
+     */
+    getInstance: function (instanceName) {
+      let instance = wrappers[instanceName];
 
-            instance.init(initConfig);
+      if (instance && instance instanceof Wrapper) {
+        return instance;
+      } else if (typeof instanceName === 'string' && instanceName.length > 0) {
+        wrappers[instanceName] = new Wrapper(instanceName, this);
 
-            return instance;
-        },
-        /**
-         * Instance getter
-         *
-         * @param instanceName
-         * @returns {Wrapper}
-         */
-        getInstance: function (instanceName) {
+        config.methods_to_delegate.forEach((method) => {
+          wrappers[instanceName].wrapMethod(method);
 
-            let instance = wrappers[instanceName];
+          this[method] = function (args) {
+            return this.getInstance(config.default_instance_name)[method](args);
+          };
+        });
 
-            if (instance && instance instanceof Wrapper) {
+        return wrappers[instanceName];
+      }
 
-                return instance;
+      return instance;
+    },
 
-            } else if (typeof instanceName === 'string' && instanceName.length > 0) {
+    /**
+     * Subscribe method wrapper for default instance
+     *
+     * @param {object} args
+     */
+    subscribe: function (args) {
+      this.getInstance(config.default_instance_name).subscribe(args);
+    },
 
-                wrappers[instanceName] = new Wrapper(instanceName, this);
-
-                config.methods_to_delegate.forEach(method => {
-
-                    wrappers[instanceName].wrapMethod(method);
-
-                    this[method] = function (args) {
-
-                        return this.getInstance(config.default_instance_name)[method](args);
-                    };
-                });
-
-                return wrappers[instanceName];
-            }
-
-            return instance;
-        },
-        /**
-         * Subscribe method wrapper for default instance
-         *
-         * @param {object} args
-         */
-        subscribe: function (args) {
-
-            this.getInstance(config.default_instance_name).subscribe(args);
-        },
-        /**
-         * Unsubscribe method wrapper for default instance
-         *
-         * @param {object} args
-         */
-        unsubscribe: function (args) {
-
-            this.getInstance(config.default_instance_name).unsubscribe(args);
-        }
-    });
+    /**
+     * Unsubscribe method wrapper for default instance
+     *
+     * @param {object} args
+     */
+    unsubscribe: function (args) {
+      this.getInstance(config.default_instance_name).unsubscribe(args);
+    }
+  });
 
 })();

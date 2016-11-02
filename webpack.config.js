@@ -3,7 +3,6 @@ var webpack = require('webpack');
 
 var config = {
     // webpack options
-    devtool: 'source-map',
     entry: './src/index.js',
     module: {
         loaders: [

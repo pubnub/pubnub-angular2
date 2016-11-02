@@ -14,8 +14,8 @@ module.exports = function(config) {
 
 
         // list of files / patterns to load in the browser
-        files: [
-            'test/polyfills/bind.js',
+      files: [
+        'test/polyfills/bind.js',
             'node_modules/core-js/client/shim.min.js',
             'node_modules/rxjs/bundles/Rx.js',
             'node_modules/@angular/core/bundles/core.umd.js',
@@ -27,7 +27,7 @@ module.exports = function(config) {
             'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
             'node_modules/@angular/router/bundles/router.umd.js',
             'node_modules/@angular/upgrade/bundles/upgrade.umd.js',
-            'bower_components/pubnub/dist/web/pubnub.js',
+            'node_modules/pubnub/dist/web/pubnub.js',
             'dist/pubnub-angular2.js',
             'test/testHelper.js',
             'test/e2e/*.test.js',
