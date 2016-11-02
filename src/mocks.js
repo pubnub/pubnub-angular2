@@ -24,7 +24,7 @@ module.exports = class {
                     if (received.channel && self.broadcastChannels[received.channel] &&
                         self.broadcastChannels[received.channel].includes(event)) {
 
-                        self.service.on.emit(event, received.channel, received);
+                        self.service.broadcastOn.emit(event, received.channel, received);
 
                     } else if (event === 'status') {
 
@@ -32,7 +32,7 @@ module.exports = class {
 
                             if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
 
-                                self.service.on.emit(event, channel, received);
+                                self.service.broadcastOn.emit(event, channel, received);
                             }
                         });
                     }

@@ -17,7 +17,7 @@ import Broadcast from './broadcast.js';
 
             if (initConfig) this.init(initConfig);
 
-            this.on = new Broadcast();
+            this.broadcastOn = new Broadcast();
         },
         /**
          * Initializer for default instance
@@ -64,46 +64,6 @@ import Broadcast from './broadcast.js';
             }
 
             return instance;
-        },
-        /**
-         * Generate unique method/callback event name
-         *
-         * @param {string} methodName
-         * @param {string} callbackName
-         * @param {string} instanceName
-         * @returns {string} event name
-         */
-        getEventNameFor: function (methodName, callbackName, instanceName) {
-
-            if (!instanceName) instanceName = config.default_instance_name;
-
-            return [config.pubnub_prefix, instanceName, methodName, callbackName].join(':');
-        },
-        /**
-         * Generate unique message event name for specified channel
-         *
-         * @param {string} channelName
-         * @param {string} instanceName
-         * @returns {string} event name
-         */
-        getMessageEventNameFor: function (channelName, instanceName) {
-
-            if (!instanceName) instanceName = config.default_instance_name;
-
-            return [config.pubnub_prefix, instanceName, 'subscribe', 'callback', channelName].join(':');
-        },
-        /**
-         * Generate unique presence event name for specified channel
-         *
-         * @param {string} channelName
-         * @param {string} instanceName
-         * @returns {string} event name
-         */
-        getPresenceEventNameFor: function (channelName, instanceName) {
-
-            if (!instanceName) instanceName = config.default_instance_name;
-
-            return [config.pubnub_prefix, instanceName, 'subscribe', 'presence', channelName].join(':');
         },
         /**
          * Subscribe method wrapper for default instance

@@ -76,7 +76,7 @@ your_module.js
 
         imports: [...],
         declarations: [...],
-        providers: [pubnubService],
+        providers: [pubnub],
         bootstrap: [...]
 
     }).Class({
@@ -91,6 +91,12 @@ your_module.js
     });
 
 })(window.app || (window.app = {}));
+```
+
+How to inject **pubnub service** inside the angular component.
+
+```javascript
+
 ```
 
 ## Differences in usage with native JavaScript SDK 
@@ -167,15 +173,79 @@ That's it - you're ready to start using the Angular2 PubNub SDK!
 
 ## Events
 
+Another key feature of this SDK is the ability to trigger method events in addition to passed in callbacks. By default events will not be triggered.
 
+To enable all possible events for certain method, add ```triggerEvents: true``` option to the method arguments.
+
+```javascript
+pubnub.subscribe({channels: ['myChannel1'], triggerEvents: true, withPresence: true});
+```
+
+To enable specific triggerEvents, add ```triggerEvents: ['message', 'presence', 'status']```option to the method arguments.
+
+```javascript
+pubnub.subscribe({channels: ['myChannel1'], triggerEvents: ['message', 'status']});
+```
+
+To get that `presence` event works, do not forget to add ```withPresence: true```
 
 ### Triggering and listening to events for the subscribe method
 
+For listening trigger events is available `broadcastOn` this allows to intercept events using a callback per channel
+or callback per a set of channels.
 
-**Listening to a message event of a specific channel or channel group:**
+**Listening to a message event of a specific channel:**
 
+```javascript
 
-**Listening to a presence event of a specific channel or channel group:**
+pubnub.broadcastOn.message('myChannel', (msg) => {
+    console.log(msg);
+});
+```
 
+**Listening to a message event of a specific set of channels:**
+
+```javascript
+
+pubnub.broadcastOn.message(['myChannel1', 'myChannel2', 'myChannel3'], (msg) => {
+    console.log(msg.message);
+    console.log(msg.channel);
+});
+```
+
+**Listening to a presence event of a specific channel:**
+
+```javascript
+
+pubnub.broadcastOn.presence('myChannel', (pse) => {
+    console.log(pse);
+});
+```
+
+**Listening to a presence event of a specific set of channels:**
+
+```javascript
+
+pubnub.broadcastOn.presence(['myChannel1', 'myChannel2', 'myChannel3'], (pse) => {
+    console.log(pse);
+    console.log(pse.subscribedChannel);
+});
+```
 
 **Listening to the global status events:**
+
+```javascript
+
+pubnub.broadcastOn.status('myChannel', (st) => {
+    console.log(st);
+});
+```
+
+**Listening to a presence event of a specific set of channels:**
+
+```javascript
+
+pubnub.broadcastOn.status(['myChannel1', 'myChannel2', 'myChannel3'], (st) => {
+    console.log(st);
+});
+```

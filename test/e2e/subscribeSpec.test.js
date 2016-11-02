@@ -31,7 +31,7 @@ describe('#subscribe()', function () {
                 }
             });
 
-            pubnub.subscribe({channels: [channelName]});
+            pubnub.subscribe({channels: [channelName, 'test1', 'test2']});
 
             pubnub.publish({channel: channelName, message: stringMessage});
         });
@@ -82,7 +82,7 @@ describe('#subscribe()', function () {
 
         it('Should be triggered (message)', function (done) {
 
-            pubnub.on.message(channelName, function (m) {
+            pubnub.broadcastOn.message(channelName, function (m) {
 
                 expect(m).to.not.equal(null);
                 expect(m.channel).to.be.equal(channelName);
@@ -99,7 +99,7 @@ describe('#subscribe()', function () {
             var uuid = 'blah';
             var subscribedChannel = channelName + '-pnpres';
 
-            pubnub.on.presence(channelName, function (ps) {
+            pubnub.broadcastOn.presence(channelName, function (ps) {
 
                 expect(ps).to.not.equal(null);
                 expect(ps.subscribedChannel).to.be.equal(subscribedChannel);
@@ -113,7 +113,7 @@ describe('#subscribe()', function () {
 
         it('Should be triggered (status)', function(done) {
 
-            pubnub.on.status(channelName, function (st) {
+            pubnub.broadcastOn.status(channelName, function (st) {
 
                 expect(st).to.not.equal(null);
                 expect(st.category).to.be.equal('PNConnectedCategory');
