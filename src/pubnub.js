@@ -44,12 +44,26 @@ import Broadcast from './broadcast';
       } else if (typeof instanceName === 'string' && instanceName.length > 0) {
         wrappers[instanceName] = new Wrapper(instanceName, this);
 
+        config.attributes_to_delegate.forEach((attribute) => {
+          wrappers[instanceName].wrapAttribute(attribute);
+
+          if (!this[attribute]) {
+            Object.defineProperty(this, attribute, {
+              get: function () {
+                return this.getInstance(config.default_instance_name)[attribute];
+              }
+            });
+          }
+        });
+
         config.methods_to_delegate.forEach((method) => {
           wrappers[instanceName].wrapMethod(method);
 
-          this[method] = function (args) {
-            return this.getInstance(config.default_instance_name)[method](args);
-          };
+          if (!this[method]) {
+            this[method] = function (args) {
+              return this.getInstance(config.default_instance_name)[method](args);
+            };
+          }
         });
 
         return wrappers[instanceName];

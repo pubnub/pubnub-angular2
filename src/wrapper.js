@@ -36,6 +36,14 @@ module.exports = class {
     }
   }
 
+  wrapAttribute(attributeName) {
+    Object.defineProperty(this, attributeName, {
+      get: function () {
+        return this.getOriginalInstance()[attributeName];
+      }
+    });
+  }
+
   wrapMethod(methodName) {
     this[methodName] = function (args) {
       return this.getOriginalInstance()[methodName](args);

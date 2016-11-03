@@ -144,12 +144,26 @@
 	      } else if (typeof instanceName === 'string' && instanceName.length > 0) {
 	        wrappers[instanceName] = new _wrapper2.default(instanceName, this);
 
+	        _config2.default.attributes_to_delegate.forEach(function (attribute) {
+	          wrappers[instanceName].wrapAttribute(attribute);
+
+	          if (!_this[attribute]) {
+	            Object.defineProperty(_this, attribute, {
+	              get: function get() {
+	                return this.getInstance(_config2.default.default_instance_name)[attribute];
+	              }
+	            });
+	          }
+	        });
+
 	        _config2.default.methods_to_delegate.forEach(function (method) {
 	          wrappers[instanceName].wrapMethod(method);
 
-	          _this[method] = function (args) {
-	            return this.getInstance(_config2.default.default_instance_name)[method](args);
-	          };
+	          if (!_this[method]) {
+	            _this[method] = function (args) {
+	              return this.getInstance(_config2.default.default_instance_name)[method](args);
+	            };
+	          }
 	        });
 
 	        return wrappers[instanceName];
@@ -185,12 +199,14 @@
 	module.exports = {
 		"pubnub_prefix": "pubnub",
 		"default_instance_name": "default",
+		"attributes_to_delegate": [
+			"channelGroups",
+			"push"
+		],
 		"methods_to_delegate": [
 			"addListener",
 			"removeListener",
 			"removeAllListeners",
-			"channelGroups",
-			"push",
 			"hereNow",
 			"whereNow",
 			"getState",
@@ -284,6 +300,15 @@
 	      } else {
 	        throw new ReferenceError('Pubnub default instance is not initialized yet. Invoke #init() method first.');
 	      }
+	    }
+	  }, {
+	    key: 'wrapAttribute',
+	    value: function wrapAttribute(attributeName) {
+	      Object.defineProperty(this, attributeName, {
+	        get: function get() {
+	          return this.getOriginalInstance()[attributeName];
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'wrapMethod',
