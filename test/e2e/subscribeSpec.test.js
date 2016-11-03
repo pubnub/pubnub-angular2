@@ -1,8 +1,10 @@
 describe('#subscribe()', function () {
 
-  var pubnub = new window.PubNubAngular(config.demo);
+  var pubnub = new window.PubNubAngular();
   var channelName = undefined;
   var stringMessage = 'hey';
+
+  pubnub.init(config.demo);
 
   beforeEach(function () {
     channelName = getRandomChannel();

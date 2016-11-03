@@ -4,7 +4,6 @@ import Mock from './mocks';
 module.exports = class {
 
   constructor(label, service) {
-    this.config = config;
     this.label = label;
     this.pubnubInstance = null;
     this.mockingInstance = new Mock(service);

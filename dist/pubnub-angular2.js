@@ -106,12 +106,10 @@
 	  var wrappers = {};
 
 	  window.PubNubAngular = ng.core.Class({
-	    constructor: function constructor(initConfig) {
+	    constructor: function constructor() {
 	      if (typeof PubNub === 'undefined' || PubNub === null) {
 	        throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
 	      }
-
-	      if (initConfig) this.init(initConfig);
 
 	      this.broadcastOn = new _broadcast2.default();
 	    },
@@ -250,7 +248,6 @@
 	  function _class(label, service) {
 	    _classCallCheck(this, _class);
 
-	    this.config = config;
 	    this.label = label;
 	    this.pubnubInstance = null;
 	    this.mockingInstance = new _mocks2.default(service);

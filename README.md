@@ -59,24 +59,19 @@ To utilize this wrapper, include the scripts in the following order:
   <script src="(pubnub-angular2.js)"></script>
 ```
 
-You have to register `Pubnub` inside `providers` property either in yours ngModule or
+You have to register `PubNubAngular` inside `providers` property either in yours ngModule or
 ngComponent, this is going to depend on how far do you want to get your Pubnub instance.
 
 This will make sure that the Pubnub object is available to get injected into your ngComponents,
-Pubnub is going to be defined inside your ngModule.
+Pubnub is going to be defined inside your ngModule, it allows that `PubNubAngular` is accessible globally.
 
 ```javascript
-
 (function (app) {
-    var pubnub = new window.PubNubAngular({
-          publishKey: 'your pub key',
-          subscribeKey: 'your sub key'
-        });
-
+    
     app.your_module = ng.core.NgModule({
         imports: [...],
         declarations: [...],
-        providers: [pubnub],
+        providers: [window.PubNubAngular],
         bootstrap: [...]
     }).Class({
         constructor: function(){}
@@ -91,14 +86,35 @@ Pubnub is going to be defined inside your ngModule.
 
 How to inject **pubnub service** inside the angular component.
 
-```javascript
+If it was not used ngModule to register PubNub like above, this there has to register directly from ngComponent.
 
+```javascript
+(function (app) {
+
+    app.main_component = ng.core.Component({
+
+        selector: '...',
+        templateUrl: '...'
+
+    }).Class({
+
+        constructor: [window.PubNubAngular, function(pubnubService){
+
+            pubnubService.init({
+                publishKey: 'your pub key',
+                subscribeKey: 'your sub key'
+            });
+            
+            ...
+        }]
+    });
+
+})(window.app || (window.app = {}));
 ```
 
 ## Differences in usage with native JavaScript SDK
 
 In **Pubnub Angular2 SDK** instances are hidden inside service and are accessible via instance getter.
-
 
 ### Creating a default instance PubNub JS V4
 
@@ -112,7 +128,9 @@ var defaultInstance = new PubNub({
 ### Creating a default instance PubNub Angular 2 SDK
 
 ```javascript
-var pubnub = new window.PubNubAngular({
+var pubnubService = new window.PubNubAngular();
+
+pubnubService.init({
     publishKey: 'your pub key',
     subscribeKey: 'your sub key'
 });
@@ -121,12 +139,12 @@ var pubnub = new window.PubNubAngular({
 ### Creating an other instance
 
 In most use cases, usage of the default PubNub instance will be sufficient, but if multiple instances with
-different credentials are needed, the ```Pubnub.getInstance(instanceName)``` getter needs to be utilized.
+different credentials are needed, the ```pubnubService.getInstance(instanceName)``` getter needs to be utilized.
 
 ```javascript
-var pubnub = new window.PubNubAngular();
+var pubnubService = new window.PubNubAngular();
 
-pubnub.getInstance("another").init({
+pubnubService.getInstance("another").init({
 	publishKey: 'your pub key',
 	subscribeKey: 'your sub key'
 });
@@ -136,8 +154,8 @@ pubnub.getInstance("another").init({
 
 All methods of the Native Javascript SDKs are wrapped within the **Pubnub Angular2 SDK**.
 
-- Methods of default instance are mapped directly to PubNub service like ```Pubnub.publish({...})```.
-- Methods of the other instances are available via the instance getter like ```Pubnub.getInstance(instanceName).publish()```.
+- Methods of default instance are mapped directly to PubNub service like ```pubnubService.publish({...})```.
+- Methods of the other instances are available via the instance getter like ```pubnubService.getInstance(instanceName).publish()```.
 
 To learn about PubNub JavaScript features and methods available refer to the API Reference of the Javascript SDK that you are using:
 
@@ -146,7 +164,7 @@ To learn about PubNub JavaScript features and methods available refer to the API
 **Examples:**
 
 ```javascript
-pubnub.publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
+pubnubService.publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
     console.log(response);
 });
 ```
@@ -154,7 +172,7 @@ pubnub.publish({channel: 'myChannel', message: 'Hello!'}, function(status, respo
 With an other instance
 
 ```javascript
-pubnub.getInstance("another").publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
+pubnubService.getInstance("another").publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
     console.log(response);
 });
 ```
@@ -168,13 +186,13 @@ Another key feature of this SDK is the ability to trigger method events in addit
 To enable all possible events for certain method, add ```triggerEvents: true``` option to the method arguments.
 
 ```javascript
-pubnub.subscribe({channels: ['myChannel1'], triggerEvents: true, withPresence: true});
+pubnubService.subscribe({channels: ['myChannel1'], triggerEvents: true, withPresence: true});
 ```
 
 To enable specific triggerEvents, add ```triggerEvents: ['message', 'presence', 'status']```option to the method arguments.
 
 ```javascript
-pubnub.subscribe({channels: ['myChannel1'], triggerEvents: ['message', 'status']});
+pubnubService.subscribe({channels: ['myChannel1'], triggerEvents: ['message', 'status']});
 ```
 
 To get that `presence` event works, do not forget to add ```withPresence: true```
@@ -187,7 +205,7 @@ or callback per a set of channels.
 **Listening to a message event of a specific channel:**
 
 ```javascript
-pubnub.broadcastOn.message('myChannel', (msg) => {
+pubnubService.broadcastOn.message('myChannel', (msg) => {
     console.log(msg);
 });
 ```
@@ -195,7 +213,7 @@ pubnub.broadcastOn.message('myChannel', (msg) => {
 **Listening to a message event of a specific set of channels:**
 
 ```javascript
-pubnub.broadcastOn.message(['myChannel1', 'myChannel2', 'myChannel3'], (msg) => {
+pubnubService.broadcastOn.message(['myChannel1', 'myChannel2', 'myChannel3'], (msg) => {
     console.log(msg.message);
     console.log(msg.channel);
 });
@@ -204,7 +222,7 @@ pubnub.broadcastOn.message(['myChannel1', 'myChannel2', 'myChannel3'], (msg) => 
 **Listening to a presence event of a specific channel:**
 
 ```javascript
-pubnub.broadcastOn.presence('myChannel', (pse) => {
+pubnubService.broadcastOn.presence('myChannel', (pse) => {
     console.log(pse);
 });
 ```
@@ -212,7 +230,7 @@ pubnub.broadcastOn.presence('myChannel', (pse) => {
 **Listening to a presence event of a specific set of channels:**
 
 ```javascript
-pubnub.broadcastOn.presence(['myChannel1', 'myChannel2', 'myChannel3'], (pse) => {
+pubnubService.broadcastOn.presence(['myChannel1', 'myChannel2', 'myChannel3'], (pse) => {
     console.log(pse);
     console.log(pse.subscribedChannel);
 });
@@ -221,7 +239,7 @@ pubnub.broadcastOn.presence(['myChannel1', 'myChannel2', 'myChannel3'], (pse) =>
 **Listening to the global status events:**
 
 ```javascript
-pubnub.broadcastOn.status('myChannel', (st) => {
+pubnubService.broadcastOn.status('myChannel', (st) => {
     console.log(st);
 });
 ```
@@ -229,7 +247,7 @@ pubnub.broadcastOn.status('myChannel', (st) => {
 **Listening to a presence event of a specific set of channels:**
 
 ```javascript
-pubnub.broadcastOn.status(['myChannel1', 'myChannel2', 'myChannel3'], (st) => {
+pubnubService.broadcastOn.status(['myChannel1', 'myChannel2', 'myChannel3'], (st) => {
     console.log(st);
 });
 ```
