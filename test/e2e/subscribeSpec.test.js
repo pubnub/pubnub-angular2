@@ -1,6 +1,7 @@
 describe('#subscribe()', function () {
 
 	var pubnub = new window.PubNubAngular();
+
 	var channelName = undefined;
 	var stringMessage = 'hey';
 
@@ -30,7 +31,7 @@ describe('#subscribe()', function () {
 				}
 			});
 
-			pubnub.subscribe({channels: [channelName, 'test1', 'test2']});
+			pubnub.subscribe({channels: [channelName]});
 
 			pubnub.publish({channel: channelName, message: stringMessage});
 		});
@@ -90,7 +91,7 @@ describe('#subscribe()', function () {
 			});
 
 			pubnub.publish({channel: channelName, message: stringMessage});
-			pubnub.subscribe({channels: [channelName], triggerEvents: true});
+			pubnub.subscribe({channels: [channelName], triggerEvents: ['message']});
 		});
 
 		it('Should be triggered (presence)', function (done) {
@@ -122,6 +123,5 @@ describe('#subscribe()', function () {
 			pubnub.publish({channel: channelName, message: stringMessage});
 			pubnub.subscribe({channels: [channelName], triggerEvents: true});
 		});
-
 	});
 });

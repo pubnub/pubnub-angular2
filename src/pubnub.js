@@ -5,7 +5,6 @@ import Wrapper from './wrapper';
 import Broadcast from './broadcast';
 
 (function () {
-  let wrappers = {};
 
   window.PubNubAngular = ng.core.Class({
     constructor: function () {
@@ -13,6 +12,7 @@ import Broadcast from './broadcast';
         throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
       }
 
+      this.wrappers = {};
       this.broadcastOn = new Broadcast();
     },
 
@@ -37,15 +37,15 @@ import Broadcast from './broadcast';
      * @returns {Wrapper}
      */
     getInstance: function (instanceName) {
-      let instance = wrappers[instanceName];
+      let instance = this.wrappers[instanceName];
 
       if (instance && instance instanceof Wrapper) {
         return instance;
       } else if (typeof instanceName === 'string' && instanceName.length > 0) {
-        wrappers[instanceName] = new Wrapper(instanceName, this);
+        this.wrappers[instanceName] = new Wrapper(instanceName, this);
 
         config.attributes_to_delegate.forEach((attribute) => {
-          wrappers[instanceName].wrapAttribute(attribute);
+          this.wrappers[instanceName].wrapAttribute(attribute);
 
           if (!this[attribute]) {
             Object.defineProperty(this, attribute, {
@@ -57,7 +57,7 @@ import Broadcast from './broadcast';
         });
 
         config.methods_to_delegate.forEach((method) => {
-          wrappers[instanceName].wrapMethod(method);
+          this.wrappers[instanceName].wrapMethod(method);
 
           if (!this[method]) {
             this[method] = function (args) {
@@ -66,7 +66,7 @@ import Broadcast from './broadcast';
           }
         });
 
-        return wrappers[instanceName];
+        return this.wrappers[instanceName];
       }
 
       return instance;

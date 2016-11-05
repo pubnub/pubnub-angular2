@@ -103,7 +103,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	(function () {
-	  var wrappers = {};
 
 	  window.PubNubAngular = ng.core.Class({
 	    constructor: function constructor() {
@@ -111,6 +110,7 @@
 	        throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
 	      }
 
+	      this.wrappers = {};
 	      this.broadcastOn = new _broadcast2.default();
 	    },
 
@@ -137,15 +137,15 @@
 	    getInstance: function getInstance(instanceName) {
 	      var _this = this;
 
-	      var instance = wrappers[instanceName];
+	      var instance = this.wrappers[instanceName];
 
 	      if (instance && instance instanceof _wrapper2.default) {
 	        return instance;
 	      } else if (typeof instanceName === 'string' && instanceName.length > 0) {
-	        wrappers[instanceName] = new _wrapper2.default(instanceName, this);
+	        this.wrappers[instanceName] = new _wrapper2.default(instanceName, this);
 
 	        _config2.default.attributes_to_delegate.forEach(function (attribute) {
-	          wrappers[instanceName].wrapAttribute(attribute);
+	          _this.wrappers[instanceName].wrapAttribute(attribute);
 
 	          if (!_this[attribute]) {
 	            Object.defineProperty(_this, attribute, {
@@ -157,7 +157,7 @@
 	        });
 
 	        _config2.default.methods_to_delegate.forEach(function (method) {
-	          wrappers[instanceName].wrapMethod(method);
+	          _this.wrappers[instanceName].wrapMethod(method);
 
 	          if (!_this[method]) {
 	            _this[method] = function (args) {
@@ -166,7 +166,7 @@
 	          }
 	        });
 
-	        return wrappers[instanceName];
+	        return this.wrappers[instanceName];
 	      }
 
 	      return instance;

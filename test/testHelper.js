@@ -38,10 +38,14 @@ config.demoWithHistoryRetention = {
     subscribeKey: 'demo-36'
 };
 
-config.channelWithHistory = 'channel-with-history-messages';
+config.channelWithHistory = 'channel-with-history-messages-';
 
 function getRandomChannel() {
     return "pubnub-angular-test-publish-" + getRandom();
+}
+
+function getRandomChannelGroup() {
+    return "pubnub-angular-test-publish-group" + getRandom();
 }
 
 function getRandom(max) {
