@@ -1,4 +1,4 @@
-/*! 1.0.0-beta.2 */
+/*! 1.0.0-beta.3 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
