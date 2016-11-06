@@ -360,12 +360,28 @@
 
 	          _config2.default.subscribe_listener_events_to_broadcast.forEach(function (event) {
 	            self.listener[event] = function (received) {
+	              if (received.subscription && self.broadcastChannels[received.subscription] && self.broadcastChannels[received.subscription].includes(event)) {
+	                self.service.broadcastOn.emit(event, received.subscription, received);
+
+	                if (received.channel) {
+	                  self.service.broadcastOn.emit(event, received.channel, received);
+	                }
+	              }
+
 	              if (received.channel && self.broadcastChannels[received.channel] && self.broadcastChannels[received.channel].includes(event)) {
 	                self.service.broadcastOn.emit(event, received.channel, received);
-	              } else if (event === 'status') {
+	              }
+
+	              if (event === 'status') {
 	                received.affectedChannels.forEach(function (channel) {
 	                  if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
 	                    self.service.broadcastOn.emit(event, channel, received);
+	                  }
+	                });
+
+	                received.affectedChannelGroups.forEach(function (channelGroup) {
+	                  if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
+	                    self.service.broadcastOn.emit(event, channelGroup, received);
 	                  }
 	                });
 	              }
@@ -377,17 +393,17 @@
 	      }
 	    }
 	  }, {
-	    key: 'enableEventsBroadcast',
-	    value: function enableEventsBroadcast(args) {
+	    key: 'addEventsBroadcast',
+	    value: function addEventsBroadcast(channels, triggerEvents) {
 	      var _this2 = this;
 
-	      args.channels.forEach(function (channel) {
-	        if (typeof args.triggerEvents === 'boolean') {
+	      channels.forEach(function (channel) {
+	        if (typeof triggerEvents === 'boolean') {
 	          _this2.broadcastChannels[channel] = _config2.default.subscribe_listener_events_to_broadcast;
-	        } else if (Array.isArray(args.triggerEvents)) {
+	        } else if (Array.isArray(triggerEvents)) {
 	          _this2.broadcastChannels[channel] = [];
 
-	          args.triggerEvents.forEach(function (trigger) {
+	          triggerEvents.forEach(function (trigger) {
 	            if (_config2.default.subscribe_listener_events_to_broadcast.includes(trigger)) {
 	              _this2.broadcastChannels[channel].push(trigger);
 	            }
@@ -396,15 +412,37 @@
 	      });
 	    }
 	  }, {
-	    key: 'disableEventsBroadcast',
-	    value: function disableEventsBroadcast(args) {
+	    key: 'removeEventBroadcast',
+	    value: function removeEventBroadcast(channels) {
 	      var _this3 = this;
 
-	      args.channels.forEach(function (channel) {
+	      channels.forEach(function (channel) {
 	        if (_this3.broadcastChannels[channel]) {
 	          delete _this3.broadcastChannels[channel];
 	        }
 	      });
+	    }
+	  }, {
+	    key: 'enableEventsBroadcast',
+	    value: function enableEventsBroadcast(args) {
+	      if (args.channels) {
+	        this.addEventsBroadcast(args.channels, args.triggerEvents);
+	      }
+
+	      if (args.channelGroups) {
+	        this.addEventsBroadcast(args.channelGroups, args.triggerEvents);
+	      }
+	    }
+	  }, {
+	    key: 'disableEventsBroadcast',
+	    value: function disableEventsBroadcast(args) {
+	      if (args.channels) {
+	        this.removeEventBroadcast(args.channels);
+	      }
+
+	      if (args.channelGroups) {
+	        this.removeEventBroadcast(args.channelGroups);
+	      }
 	    }
 	  }]);
 
