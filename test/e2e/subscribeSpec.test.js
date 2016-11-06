@@ -78,6 +78,8 @@ describe('#subscribe()', function () {
 		});
 	});
 
+	this.timeout(20000);
+
 	describe('Triggered all events', function () {
 
 		it('Should be triggered (message)', function (done) {
