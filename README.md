@@ -164,7 +164,7 @@ To learn about PubNub JavaScript features and methods available refer to the API
 **Examples:**
 
 ```javascript
-pubnubService.publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
+pubnubService.publish({channel: 'myChannel', message: 'Hello!'}, (status, response) => {
     console.log(response);
 });
 ```
@@ -172,7 +172,7 @@ pubnubService.publish({channel: 'myChannel', message: 'Hello!'}, function(status
 With an other instance
 
 ```javascript
-pubnubService.getInstance("another").publish({channel: 'myChannel', message: 'Hello!'}, function(status, response){
+pubnubService.getInstance("another").publish({channel: 'myChannel', message: 'Hello!'}, (status, response) => {
     console.log(response);
 });
 ```
@@ -202,52 +202,80 @@ To get that `presence` event works, do not forget to add ```withPresence: true``
 For listening trigger events is available `broadcastOn` this allows to intercept events using a callback per channel
 or callback per a set of channels.
 
-**Listening to a message event of a specific channel:**
+With Javascript V4, you can trigger 3 different events (message, presence and status)
+
+```javascript
+Pubnub.subscribe({
+    channels  : ['myChannel1', 'myChannel2', 'myChannel3'],
+    channelGroups: ['myGroup1', 'myGroup2'],
+    withPresence: true,
+    triggerEvents: ['message', 'presence', 'status']
+  });
+};
+```
+
+You can also enable all possible events using `triggerEvents: true`
+
+**Listening to a message event of a specific channel or channel group:**
 
 ```javascript
 pubnubService.broadcastOn.message('myChannel', (msg) => {
     console.log(msg);
 });
+
+pubnubService.broadcastOn.message('myGroup1', (msg) => {
+    console.log(msg);
+});
 ```
 
-**Listening to a message event of a specific set of channels:**
+**Listening to a message event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.broadcastOn.message(['myChannel1', 'myChannel2', 'myChannel3'], (msg) => {
+pubnubService.broadcastOn.message(['myChannel1', 'myChannel2', 'myGroup1'], (msg) => {
     console.log(msg.message);
     console.log(msg.channel);
 });
 ```
 
-**Listening to a presence event of a specific channel:**
+**Listening to a presence event of a specific channel or channel group:**
 
 ```javascript
 pubnubService.broadcastOn.presence('myChannel', (pse) => {
     console.log(pse);
 });
+
+pubnubService.broadcastOn.presence('myGroup1', (pse) => {
+    console.log(pse);
+});
 ```
 
-**Listening to a presence event of a specific set of channels:**
+**Listening to a presence event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.broadcastOn.presence(['myChannel1', 'myChannel2', 'myChannel3'], (pse) => {
+pubnubService.broadcastOn.presence(['myChannel1', 'myChannel2', 'myGroup1'], (pse) => {
     console.log(pse);
     console.log(pse.subscribedChannel);
 });
 ```
 
-**Listening to the global status events:**
+**Listening to the global status for a channel or channel group:**
 
 ```javascript
 pubnubService.broadcastOn.status('myChannel', (st) => {
     console.log(st);
 });
-```
 
-**Listening to a presence event of a specific set of channels:**
-
-```javascript
-pubnubService.broadcastOn.status(['myChannel1', 'myChannel2', 'myChannel3'], (st) => {
+pubnubService.broadcastOn.status('myGroup1', (st) => {
     console.log(st);
 });
 ```
+
+**Listening to the global status for a specific set of channels or channel group:**
+
+```javascript
+pubnubService.broadcastOn.status(['myChannel1', 'myChannel2', 'myGroup1'], (st) => {
+    console.log(st);
+});
+```
+
+### 
