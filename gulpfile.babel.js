@@ -73,7 +73,7 @@ gulp.task('test_release', function () {
 });
 
 gulp.task('test_client', (done) => {
-  new karma.Server({ configFile: path.join(__dirname, '/karma.config.js') }, () => done()).start();
+  new karma.Server({ configFile: path.join(__dirname, '/karma.config.js') }, err => done(err)).start();
 });
 
 gulp.task('test', (done) => {
