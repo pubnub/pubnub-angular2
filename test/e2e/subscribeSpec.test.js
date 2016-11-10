@@ -4,6 +4,7 @@ describe('#subscribe()', function () {
 
 	var channelName = undefined;
 	var stringMessage = 'hey';
+	var listener = null;
 
 	pubnub.init(config.demo);
 
@@ -12,7 +13,7 @@ describe('#subscribe()', function () {
 	});
 
 	afterEach(function () {
-
+		pubnub.removeListener(listener);
 		pubnub.unsubscribe({channels: [channelName]});
 	});
 
@@ -22,14 +23,15 @@ describe('#subscribe()', function () {
 
 		it('should be invoked', function (done) {
 
-			pubnub.addListener({
-				message: function (m) {
-
-					expect(m.message).to.be.equal(stringMessage);
-					expect(m.channel).to.be.equal(channelName);
+			listener = {
+				status: function (st) {
+					expect(st.category).to.not.equal(null);
+					expect(st.category).to.be.equal('PNConnectedCategory');
 					done();
 				}
-			});
+			};
+
+			pubnub.addListener(listener);
 
 			pubnub.subscribe({channels: [channelName]});
 
@@ -47,13 +49,14 @@ describe('#subscribe()', function () {
 
 			pubnub.getInstance('another').setUUID(uuid);
 
-			pubnub.getInstance('another').addListener({
+			listener = {
 				presence: function (p) {
-
 					expect(p.uuid).to.be.equal(uuid);
 					done();
 				}
-			});
+			};
+
+			pubnub.getInstance('another').addListener(listener);
 
 			pubnub.getInstance('another').subscribe({channels: [channelName], withPresence: true});
 		});
@@ -62,68 +65,22 @@ describe('#subscribe()', function () {
 
 	describe('Message callback', function () {
 
-		it('The message callback should be invoked as usual', function (done) {
+		it('should be invoked', function (done) {
 
-			pubnub.addListener({
+			pubnub.getInstance('another2').init(config.demo);
+
+			listener = {
 				message: function (m) {
-
 					expect(m.message).to.be.equal(stringMessage);
 					done();
 				}
-			});
+			};
 
-			pubnub.subscribe({channels: [channelName]});
+			pubnub.getInstance('another2').addListener(listener);
 
-			pubnub.publish({channel: channelName, message: stringMessage});
-		});
-	});
+			pubnub.getInstance('another2').subscribe({channels: [channelName]});
 
-	this.timeout(20000);
-
-	describe('Triggered all events', function () {
-
-		it('Should be triggered (message)', function (done) {
-
-			pubnub.broadcastOn.message(channelName, function (m) {
-
-				expect(m).to.not.equal(null);
-				expect(m.channel).to.be.equal(channelName);
-				expect(m.message).to.be.equal(stringMessage);
-				done();
-			});
-
-			pubnub.publish({channel: channelName, message: stringMessage});
-			pubnub.subscribe({channels: [channelName], triggerEvents: ['message']});
-		});
-
-		it('Should be triggered (presence)', function (done) {
-
-			var uuid = 'blah';
-			var subscribedChannel = channelName + '-pnpres';
-
-			pubnub.broadcastOn.presence(channelName, function (ps) {
-
-				expect(ps).to.not.equal(null);
-				expect(ps.subscribedChannel).to.be.equal(subscribedChannel);
-				done();
-			});
-
-			pubnub.setUUID(uuid);
-			pubnub.publish({channel: channelName, message: stringMessage});
-			pubnub.subscribe({channels: [channelName], triggerEvents: true, withPresence: true});
-		});
-
-		it('Should be triggered (status)', function (done) {
-
-			pubnub.broadcastOn.status(channelName, function (st) {
-
-				expect(st).to.not.equal(null);
-				expect(st.category).to.be.equal('PNConnectedCategory');
-				done();
-			});
-
-			pubnub.publish({channel: channelName, message: stringMessage});
-			pubnub.subscribe({channels: [channelName], triggerEvents: true});
+			pubnub.getInstance('another2').publish({channel: channelName, message: stringMessage});
 		});
 	});
 });
