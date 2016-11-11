@@ -9,6 +9,10 @@ describe('#Triggered all events()', function () {
 
 	pubnub3.init(config.demo);
 
+	pubnub3.broadcastOn.error(function(err) {
+		console.error(err);
+	});
+
 	before(function () {
 		pubnub3.setUUID(uuid);
 		pubnub3.subscribe({channels: [channelName1, channelName2], triggerEvents: true, withPresence: true});

@@ -29,17 +29,21 @@ module.exports = class {
           }
 
           if (event === 'status') {
-            received.affectedChannels.forEach((channel) => {
-              if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
-                self.service.broadcastOn.emit(event, channel, received);
-              }
-            });
+            if (received.error) {
+              self.service.broadcastOn.emitError(received);
+            } else {
+              received.affectedChannels.forEach((channel) => {
+                if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
+                  self.service.broadcastOn.emit(event, channel, received);
+                }
+              });
 
-            received.affectedChannelGroups.forEach((channelGroup) => {
-              if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
-                self.service.broadcastOn.emit(event, channelGroup, received);
-              }
-            });
+              received.affectedChannelGroups.forEach((channelGroup) => {
+                if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
+                  self.service.broadcastOn.emit(event, channelGroup, received);
+                }
+              });
+            }
           }
         };
       });
