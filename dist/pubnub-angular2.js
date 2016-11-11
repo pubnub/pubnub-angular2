@@ -515,7 +515,6 @@
 	    key: 'error',
 	    value: function error(callback) {
 	      this._error = callback;
-	      console.log(this._error);
 	    }
 	  }, {
 	    key: 'emitError',

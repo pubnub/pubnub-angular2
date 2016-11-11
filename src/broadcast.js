@@ -40,7 +40,6 @@ module.exports = class {
 
   error(callback) {
     this._error = callback;
-    console.log(this._error);
   }
 
   emitError(args) {
