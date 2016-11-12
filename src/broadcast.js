@@ -30,11 +30,21 @@ module.exports = class {
     });
   }
 
-  emit(event, channel, obj) {
+  emit(event, channel, args) {
     let subscriber = ('_').concat(event);
 
     if (this[subscriber] && this[subscriber][channel]) {
-      this[subscriber][channel].call(null, obj);
+      this[subscriber][channel].call(null, args);
+    }
+  }
+
+  error(callback) {
+    this._error = callback;
+  }
+
+  emitError(args) {
+    if (this._error) {
+      this._error.call(null, args);
     }
   }
 

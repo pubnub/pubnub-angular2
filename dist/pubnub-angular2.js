@@ -373,17 +373,21 @@
 	              }
 
 	              if (event === 'status') {
-	                received.affectedChannels.forEach(function (channel) {
-	                  if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
-	                    self.service.broadcastOn.emit(event, channel, received);
-	                  }
-	                });
+	                if (received.error) {
+	                  self.service.broadcastOn.emitError(received);
+	                } else {
+	                  received.affectedChannels.forEach(function (channel) {
+	                    if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
+	                      self.service.broadcastOn.emit(event, channel, received);
+	                    }
+	                  });
 
-	                received.affectedChannelGroups.forEach(function (channelGroup) {
-	                  if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
-	                    self.service.broadcastOn.emit(event, channelGroup, received);
-	                  }
-	                });
+	                  received.affectedChannelGroups.forEach(function (channelGroup) {
+	                    if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
+	                      self.service.broadcastOn.emit(event, channelGroup, received);
+	                    }
+	                  });
+	                }
 	              }
 	            };
 	          });
@@ -500,11 +504,23 @@
 
 	  _createClass(_class, [{
 	    key: 'emit',
-	    value: function emit(event, channel, obj) {
+	    value: function emit(event, channel, args) {
 	      var subscriber = '_'.concat(event);
 
 	      if (this[subscriber] && this[subscriber][channel]) {
-	        this[subscriber][channel].call(null, obj);
+	        this[subscriber][channel].call(null, args);
+	      }
+	    }
+	  }, {
+	    key: 'error',
+	    value: function error(callback) {
+	      this._error = callback;
+	    }
+	  }, {
+	    key: 'emitError',
+	    value: function emitError(args) {
+	      if (this._error) {
+	        this._error.call(null, args);
 	      }
 	    }
 	  }, {

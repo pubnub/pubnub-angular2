@@ -8,20 +8,24 @@ describe('#subscribe_channelGroups', function () {
 	var channels = [];
 	var stringMessage = 'hey';
 	var listener = null;
+	var error = false;
 
 	for (var x = 0; x < 3; x++) {
 		channels.push(getRandomChannel());
 	}
 
-	pubnub2.channelGroups.addChannels(
-		{
-			channels: channels,
-			channelGroup: channelGroup
-		},
-		function(status) {
-			expect(status.error).to.be.equal(false);
-		}
-	);
+	before(function (done) {
+		pubnub2.channelGroups.addChannels(
+			{
+				channels: channels,
+				channelGroup: channelGroup
+			},
+			function(status) {
+				error = status.error;
+				done();
+			}
+		);
+	});
 
 	afterEach(function () {
 		if (listener) {
@@ -33,7 +37,6 @@ describe('#subscribe_channelGroups', function () {
 		pubnub2.channelGroups.deleteGroup(
 			{channelGroup: channelGroup},
 			function(status) {
-				expect(status.error).to.be.equal(false);
 			}
 		);
 	});
@@ -42,6 +45,8 @@ describe('#subscribe_channelGroups', function () {
 
 	describe('Using trigger events', function () {
 		it('It is able to listen using trigger events', function (done) {
+			if(error) this.skip();
+
 			pubnub2.broadcastOn.message(channelGroup, function (m) {
 
 				expect(m).to.not.equal(null);
@@ -56,6 +61,8 @@ describe('#subscribe_channelGroups', function () {
 		});
 
 		it('It is able to listen from a channel associated to the channel group', function (done) {
+			if(error) this.skip();
+
 			pubnub2.broadcastOn.message(channels[1], function (m) {
 
 				expect(m).to.not.equal(null);
@@ -70,6 +77,7 @@ describe('#subscribe_channelGroups', function () {
 
 	describe('Listening from a channel group', function () {
 		it('It is able to listen over a channel group', function (done) {
+			if(error) this.skip();
 
 			listener = {
 				message: function (m) {

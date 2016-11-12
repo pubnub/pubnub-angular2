@@ -278,4 +278,11 @@ pubnubService.broadcastOn.status(['myChannel1', 'myChannel2', 'myGroup1'], (st) 
 });
 ```
 
+**Catching trigger errors**
+
+```javascript
+pubnubService.broadcastOn.error((err) => {
+    console.log(err);
+});
+```
 ### 
