@@ -49,8 +49,6 @@
 
 	__webpack_require__(1);
 	__webpack_require__(2);
-	//  require('./pubnub_channel.js');
-	//  require('./pubnub_channel_group.js');
 
 /***/ },
 /* 1 */
@@ -269,29 +267,64 @@
 	    this.mockingInstance = new _mocks2.default(service);
 	  }
 
+	  /**
+	   * Initialize the wrapper
+	   *
+	   * @param {object} initConfig
+	   */
+
+
 	  _createClass(_class, [{
 	    key: 'init',
 	    value: function init(initConfig) {
 	      this.pubnubInstance = new PubNub(initConfig);
 	      this.mockingInstance.initializeListener(this);
 	    }
+
+	    /**
+	     * Get the name of the instance
+	     *
+	     * @returns {*|string|null|string}
+	     */
+
 	  }, {
 	    key: 'getLabel',
 	    value: function getLabel() {
 	      return this.label;
 	    }
+
+	    /**
+	     * Wrap the subscribe method to enable trigger events to the broadcast
+	     *
+	     * @param {object} args
+	     */
+
 	  }, {
 	    key: 'subscribe',
 	    value: function subscribe(args) {
 	      this.getOriginalInstance().subscribe(args);
 	      this.mockingInstance.enableEventsBroadcast(args);
 	    }
+
+	    /**
+	     * Wrap the unsubscribe method to disable the trigger events to the broadcast
+	     *
+	     * @param args
+	     */
+
 	  }, {
 	    key: 'unsubscribe',
 	    value: function unsubscribe(args) {
 	      this.getOriginalInstance().unsubscribe(args);
 	      this.mockingInstance.disableEventsBroadcast(args);
 	    }
+
+	    /**
+	     * get the PubNub instance wrapped or throw an exception if this is not instanced yet
+	     *
+	     * @returns {PubNub|*|null}
+	     */
+
 	  }, {
 	    key: 'getOriginalInstance',
 	    value: function getOriginalInstance() {
@@ -301,6 +334,13 @@
 	        throw new ReferenceError('Pubnub default instance is not initialized yet. Invoke #init() method first.');
 	      }
 	    }
+
+	    /**
+	     * Wrap a PubNub's attribute
+	     *
+	     * @param {string} attributeName
+	     */
+
 	  }, {
 	    key: 'wrapAttribute',
 	    value: function wrapAttribute(attributeName) {
@@ -310,6 +350,13 @@
 	        }
 	      });
 	    }
+
+	    /**
+	     * Wrap a PubNub's method
+	     *
+	     * @param methodName
+	     */
+
 	  }, {
 	    key: 'wrapMethod',
 	    value: function wrapMethod(methodName) {
@@ -346,6 +393,13 @@
 	    this.service = service;
 	    this.broadcastChannels = {};
 	  }
+
+	  /**
+	   * Initialize the listener for broadcasting all events
+	   *
+	   * @param {wrapper} instance
+	   */
+
 
 	  _createClass(_class, [{
 	    key: 'initializeListener',
@@ -396,6 +450,14 @@
 	        })();
 	      }
 	    }
+
+	    /**
+	     * Adds a set of channels to all events to broadcast
+	     *
+	     * @param {[string]} channels
+	     * @param {true|['message', 'presence', 'status']} triggerEvents
+	     */
+
 	  }, {
 	    key: 'addEventsBroadcast',
 	    value: function addEventsBroadcast(channels, triggerEvents) {
@@ -415,6 +477,13 @@
 	        }
 	      });
 	    }
+
+	    /**
+	     * Removes a set of channels from of all events to broadcast
+	     *
+	     * @param {[string]} channels
+	     */
+
 	  }, {
 	    key: 'removeEventBroadcast',
 	    value: function removeEventBroadcast(channels) {
@@ -426,6 +495,13 @@
 	        }
 	      });
 	    }
+
+	    /**
+	     * Enable a set of channels or group of channels to the broadcaster
+	     *
+	     * @param {object} args
+	     */
+
 	  }, {
 	    key: 'enableEventsBroadcast',
 	    value: function enableEventsBroadcast(args) {
@@ -437,6 +513,13 @@
 	        this.addEventsBroadcast(args.channelGroups, args.triggerEvents);
 	      }
 	    }
+
+	    /**
+	     * Disable a set of channels or group of channels from the broadcaster
+	     *
+	     * @param {object} args
+	     */
+
 	  }, {
 	    key: 'disableEventsBroadcast',
 	    value: function disableEventsBroadcast(args) {
@@ -469,22 +552,35 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function subscribeChannel(subscriber, channel, callback) {
+	/**
+	 * Subscribe a channel to a trigger event
+	 *
+	 * @param {string} event - (message, presence, status)
+	 * @param {string|[string]} channel
+	 * @param {function} callback to execute.
+	 */
+	function subscribeChannel(event, channel, callback) {
 	  if (Array.isArray(channel)) {
 	    channel.forEach(function (ch) {
-	      subscriber[ch] = callback;
+	      event[ch] = callback;
 	    });
 	  } else {
-	    subscriber[channel] = callback;
+	    event[channel] = callback;
 	  }
 	}
 
-	function unsubscriberChannel(subscriber, channel) {
+	/**
+	 * Unsubscribe a channel of a trigger event
+	 *
+	 * @param {string} event - (message, presence, status)
+	 * @param {string|[string]} channel
+	 */
+	function unsubscribeChannel(event, channel) {
 	  if (Array.isArray(channel)) {
 	    channel.forEach(function (ch) {
-	      if (subscriber[ch]) delete subscriber[ch];
+	      if (event[ch]) delete event[ch];
 	    });
-	  } else if (subscriber[channel]) delete subscriber[channel];
+	  } else if (event[channel]) delete event[channel];
 	}
 
 	module.exports = function () {
@@ -493,14 +589,31 @@
 
 	    _classCallCheck(this, _class);
 
-	    _config2.default.subscribe_listener_events_to_broadcast.forEach(function (event) {
-	      var subscriber = '_'.concat(event);
-	      _this[subscriber] = {};
-	      _this[event] = function (channel, callback) {
-	        subscribeChannel(this[subscriber], channel, callback);
+	    _config2.default.subscribe_listener_events_to_broadcast.forEach(function (eventName) {
+	      var event = '_'.concat(eventName);
+
+	      _this[event] = {};
+
+	      /**
+	       * Subscribe a channel with its callback to an event
+	       *
+	       * @param {string} channel
+	       * @param {function} callback
+	       */
+	      _this[eventName] = function (channel, callback) {
+	        subscribeChannel(this[event], channel, callback);
 	      };
 	    });
 	  }
+
+	  /**
+	   * Emit a message to a channel through an event
+	   *
+	   * @param {string} event - (message, presence, status)
+	   * @param {string} channel
+	   * @param {object} args
+	   */
+
 
 	  _createClass(_class, [{
 	    key: 'emit',
@@ -511,11 +624,25 @@
 	        this[subscriber][channel].call(null, args);
 	      }
 	    }
+
+	    /**
+	     * Subscribe or unsubscribe for catching errors from trigger events
+	     *
+	     * @param {function|null} callback
+	     */
+
 	  }, {
 	    key: 'error',
 	    value: function error(callback) {
 	      this._error = callback;
 	    }
+
+	    /**
+	     * Emit an error to the callback subscribed
+	     *
+	     * @param {object} args
+	     */
+
 	  }, {
 	    key: 'emitError',
 	    value: function emitError(args) {
@@ -523,6 +650,13 @@
 	        this._error.call(null, args);
 	      }
 	    }
+
+	    /**
+	     * Unsubscribe a channel of all events
+	     *
+	     * @param {string} channel
+	     */
+
 	  }, {
 	    key: 'unsubscribe',
 	    value: function unsubscribe(channel) {
@@ -531,7 +665,7 @@
 	      _config2.default.subscribe_listener_events_to_broadcast.forEach(function (event) {
 	        var subscriber = '_'.concat(event);
 
-	        unsubscriberChannel(_this2[subscriber], channel);
+	        unsubscribeChannel(_this2[subscriber], channel);
 	      });
 	    }
 	  }]);
