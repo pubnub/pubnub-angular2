@@ -8,6 +8,11 @@ module.exports = class {
     this.broadcastChannels = {};
   }
 
+  /**
+   * Initialize the listener for broadcasting all events
+   *
+   * @param {wrapper} instance
+   */
   initializeListener(instance) {
     if (this.listener === null) {
       let self = this;
@@ -52,6 +57,12 @@ module.exports = class {
     }
   }
 
+  /**
+   * Adds a set of channels to all events to broadcast
+   *
+   * @param {[string]} channels
+   * @param {true|['message', 'presence', 'status']} triggerEvents
+   */
   addEventsBroadcast(channels, triggerEvents) {
     channels.forEach((channel) => {
       if (typeof triggerEvents === 'boolean') {
@@ -68,6 +79,11 @@ module.exports = class {
     });
   }
 
+  /**
+   * Removes a set of channels from of all events to broadcast
+   *
+   * @param {[string]} channels
+   */
   removeEventBroadcast(channels) {
     channels.forEach((channel) => {
       if (this.broadcastChannels[channel]) {
@@ -76,6 +92,11 @@ module.exports = class {
     });
   }
 
+  /**
+   * Enable a set of channels or group of channels to the broadcaster
+   *
+   * @param {object} args
+   */
   enableEventsBroadcast(args) {
     if (args.channels) {
       this.addEventsBroadcast(args.channels, args.triggerEvents);
@@ -86,6 +107,11 @@ module.exports = class {
     }
   }
 
+  /**
+   * Disable a set of channels or group of channels from the broadcaster
+   *
+   * @param {object} args
+   */
   disableEventsBroadcast(args) {
     if (args.channels) {
       this.removeEventBroadcast(args.channels);

@@ -1,35 +1,63 @@
 import config from '../config.json';
 
-function subscribeChannel(subscriber, channel, callback) {
+/**
+ * Subscribe a channel to a trigger event
+ *
+ * @param {string} event - (message, presence, status)
+ * @param {string|[string]} channel
+ * @param {function} callback to execute.
+ */
+function subscribeChannel(event, channel, callback) {
   if (Array.isArray(channel)) {
     channel.forEach((ch) => {
-      subscriber[ch] = callback;
+      event[ch] = callback;
     });
   } else {
-    subscriber[channel] = callback;
+    event[channel] = callback;
   }
 }
 
-function unsubscriberChannel(subscriber, channel) {
+/**
+ * Unsubscribe a channel of a trigger event
+ *
+ * @param {string} event - (message, presence, status)
+ * @param {string|[string]} channel
+ */
+function unsubscribeChannel(event, channel) {
   if (Array.isArray(channel)) {
     channel.forEach((ch) => {
-      if (subscriber[ch]) delete subscriber[ch];
+      if (event[ch]) delete event[ch];
     });
-  } else if (subscriber[channel]) delete subscriber[channel];
+  } else if (event[channel]) delete event[channel];
 }
 
 module.exports = class {
 
   constructor() {
-    config.subscribe_listener_events_to_broadcast.forEach((event) => {
-      let subscriber = ('_').concat(event);
-      this[subscriber] = {};
-      this[event] = function (channel, callback) {
-        subscribeChannel(this[subscriber], channel, callback);
+    config.subscribe_listener_events_to_broadcast.forEach((eventName) => {
+      let event = ('_').concat(eventName);
+
+      this[event] = {};
+
+      /**
+       * Subscribe a channel with its callback to an event
+       *
+       * @param {string} channel
+       * @param {function} callback
+       */
+      this[eventName] = function (channel, callback) {
+        subscribeChannel(this[event], channel, callback);
       };
     });
   }
 
+  /**
+   * Emit a message to a channel through an event
+   *
+   * @param {string} event - (message, presence, status)
+   * @param {string} channel
+   * @param {object} args
+   */
   emit(event, channel, args) {
     let subscriber = ('_').concat(event);
 
@@ -38,21 +66,36 @@ module.exports = class {
     }
   }
 
+  /**
+   * Subscribe or unsubscribe for catching errors from trigger events
+   *
+   * @param {function|null} callback
+   */
   error(callback) {
     this._error = callback;
   }
 
+  /**
+   * Emit an error to the callback subscribed
+   *
+   * @param {object} args
+   */
   emitError(args) {
     if (this._error) {
       this._error.call(null, args);
     }
   }
 
+  /**
+   * Unsubscribe a channel of all events
+   *
+   * @param {string} channel
+   */
   unsubscribe(channel) {
     config.subscribe_listener_events_to_broadcast.forEach((event) => {
       let subscriber = ('_').concat(event);
 
-      unsubscriberChannel(this[subscriber], channel);
+      unsubscribeChannel(this[subscriber], channel);
     });
   }
 };
