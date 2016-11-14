@@ -32,7 +32,7 @@ gulp.task('lint', function () {
 
 gulp.task('create_version', function () {
   return gulp.src('dist/pubnub-angular2.js')
-    .pipe(gulpRename('pubnub.' + version + '.js'))
+    .pipe(gulpRename('pubnub-angular2.' + version + '.js'))
     .pipe(gulp.dest('upload/normal'));
 });
 
@@ -54,7 +54,7 @@ gulp.task('uglify', function () {
       .pipe(gulpUglify({ mangle: true, compress: true }))
       .pipe(gulpRename('pubnub-angular2.min.js'))
       .pipe(gulp.dest(dist))
-      .pipe(gulpRename('pubnub.' + version + '.min.js'))
+      .pipe(gulpRename('pubnub-angular2.' + version + '.min.js'))
       .pipe(gulp.dest('upload/normal'));
 
 });

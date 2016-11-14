@@ -49,8 +49,8 @@ Your HTML page will include 2 key libraries:
   - From CDN:
 
     ```html
-    <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).js"></script>
-    <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2-(version).min.js"></script>
+    <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2.(version).js"></script>
+    <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2.(version).min.js"></script>
     ```
 
 To utilize this wrapper, include the scripts in the following order:
@@ -67,7 +67,7 @@ Pubnub is going to be defined inside your ngModule, it allows that `PubNubAngula
 
 ```javascript
 (function (app) {
-    
+
     app.your_module = ng.core.NgModule({
         imports: [...],
         declarations: [...],
@@ -104,7 +104,7 @@ If it was not used ngModule to register PubNub like above, this there has to reg
                 publishKey: 'your pub key',
                 subscribeKey: 'your sub key'
             });
-            
+
             ...
         }]
     });
@@ -285,4 +285,4 @@ pubnubService.broadcastOn.error((err) => {
     console.log(err);
 });
 ```
-### 
+###
