@@ -2,9 +2,9 @@ import config from '../config.json';
 
 module.exports = class {
 
-  constructor(service) {
+  constructor(broadcaster) {
     this.listener = null;
-    this.service = service;
+    this.broadcaster = broadcaster;
     this.broadcastChannels = {};
   }
 
@@ -22,30 +22,30 @@ module.exports = class {
       config.subscribe_listener_events_to_broadcast.forEach((event) => {
         self.listener[event] = function (received) {
           if (received.subscription && self.broadcastChannels[received.subscription] && self.broadcastChannels[received.subscription].includes(event)) {
-            self.service.broadcastOn.emit(event, received.subscription, received);
+            self.broadcaster.emit(event, received.subscription, received);
 
             if (received.channel) {
-              self.service.broadcastOn.emit(event, received.channel, received);
+              self.broadcaster.emit(event, received.channel, received);
             }
           }
 
           if (received.channel && self.broadcastChannels[received.channel] && self.broadcastChannels[received.channel].includes(event)) {
-            self.service.broadcastOn.emit(event, received.channel, received);
+            self.broadcaster.emit(event, received.channel, received);
           }
 
           if (event === 'status') {
             if (received.error) {
-              self.service.broadcastOn.emitError(received);
+              self.broadcaster.emitError(received);
             } else {
               received.affectedChannels.forEach((channel) => {
                 if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
-                  self.service.broadcastOn.emit(event, channel, received);
+                  self.broadcaster.emit(event, channel, received);
                 }
               });
 
               received.affectedChannelGroups.forEach((channelGroup) => {
                 if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
-                  self.service.broadcastOn.emit(event, channelGroup, received);
+                  self.broadcaster.emit(event, channelGroup, received);
                 }
               });
             }

@@ -219,11 +219,11 @@ You can also enable all possible events using `triggerEvents: true`
 **Listening to a message event of a specific channel or channel group:**
 
 ```javascript
-pubnubService.broadcastOn.message('myChannel', (msg) => {
+pubnubService.getMessage('myChannel', (msg) => {
     console.log(msg);
 });
 
-pubnubService.broadcastOn.message('myGroup1', (msg) => {
+pubnubService.getMessage('myGroup1', (msg) => {
     console.log(msg);
 });
 ```
@@ -231,7 +231,7 @@ pubnubService.broadcastOn.message('myGroup1', (msg) => {
 **Listening to a message event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.broadcastOn.message(['myChannel1', 'myChannel2', 'myGroup1'], (msg) => {
+pubnubService.getMessage(['myChannel1', 'myChannel2', 'myGroup1'], (msg) => {
     console.log(msg.message);
     console.log(msg.channel);
 });
@@ -240,11 +240,11 @@ pubnubService.broadcastOn.message(['myChannel1', 'myChannel2', 'myGroup1'], (msg
 **Listening to a presence event of a specific channel or channel group:**
 
 ```javascript
-pubnubService.broadcastOn.presence('myChannel', (pse) => {
+pubnubService.getPresence('myChannel', (pse) => {
     console.log(pse);
 });
 
-pubnubService.broadcastOn.presence('myGroup1', (pse) => {
+pubnubService.getPresence('myGroup1', (pse) => {
     console.log(pse);
 });
 ```
@@ -252,7 +252,7 @@ pubnubService.broadcastOn.presence('myGroup1', (pse) => {
 **Listening to a presence event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.broadcastOn.presence(['myChannel1', 'myChannel2', 'myGroup1'], (pse) => {
+pubnubService.getPresence(['myChannel1', 'myChannel2', 'myGroup1'], (pse) => {
     console.log(pse);
     console.log(pse.subscribedChannel);
 });
@@ -261,11 +261,11 @@ pubnubService.broadcastOn.presence(['myChannel1', 'myChannel2', 'myGroup1'], (ps
 **Listening to the global status for a channel or channel group:**
 
 ```javascript
-pubnubService.broadcastOn.status('myChannel', (st) => {
+pubnubService.getStatus('myChannel', (st) => {
     console.log(st);
 });
 
-pubnubService.broadcastOn.status('myGroup1', (st) => {
+pubnubService.getStatus('myGroup1', (st) => {
     console.log(st);
 });
 ```
@@ -273,7 +273,7 @@ pubnubService.broadcastOn.status('myGroup1', (st) => {
 **Listening to the global status for a specific set of channels or channel group:**
 
 ```javascript
-pubnubService.broadcastOn.status(['myChannel1', 'myChannel2', 'myGroup1'], (st) => {
+pubnubService.getStatus(['myChannel1', 'myChannel2', 'myGroup1'], (st) => {
     console.log(st);
 });
 ```
@@ -281,7 +281,7 @@ pubnubService.broadcastOn.status(['myChannel1', 'myChannel2', 'myGroup1'], (st) 
 **Catching trigger errors**
 
 ```javascript
-pubnubService.broadcastOn.error((err) => {
+pubnubService.getError((err) => {
     console.log(err);
 });
 ```

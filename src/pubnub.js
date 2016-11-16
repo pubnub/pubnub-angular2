@@ -2,7 +2,6 @@
 
 import config from '../config.json';
 import Wrapper from './wrapper';
-import Broadcast from './broadcast';
 
 (function () {
 
@@ -13,7 +12,6 @@ import Broadcast from './broadcast';
       }
 
       this.wrappers = {};
-      this.broadcastOn = new Broadcast();
     },
 
     /**
@@ -73,7 +71,7 @@ import Broadcast from './broadcast';
     },
 
     /**
-     * Subscribe method wrapper for default instance
+     * Subscribe method wrapped for default instance
      *
      * @param {object} args
      */
@@ -82,12 +80,51 @@ import Broadcast from './broadcast';
     },
 
     /**
-     * Unsubscribe method wrapper for default instance
+     * Unsubscribe method wrapped for default instance
      *
      * @param {object} args
      */
     unsubscribe: function (args) {
       this.getInstance(config.default_instance_name).unsubscribe(args);
+    },
+
+    /**
+     * GetMessage method wrapped for default instance
+     *
+     * @param {string|[string]} channel
+     * @param callback
+     */
+    getMessage: function (channel, callback) {
+      this.getInstance(config.default_instance_name).getMessage(channel, callback);
+    },
+
+    /**
+     * GetPresence method wrapped for default instance
+     *
+     * @param {string|[string]} channel
+     * @param callback
+     */
+    getPresence: function (channel, callback) {
+      this.getInstance(config.default_instance_name).getPresence(channel, callback);
+    },
+
+    /**
+     * GetStatus method wrapped for default instance
+     *
+     * @param {string|[string]} channel
+     * @param callback
+     */
+    getStatus: function (channel, callback) {
+      this.getInstance(config.default_instance_name).getStatus(channel, callback);
+    },
+
+    /**
+     * GetError method wrapped for default instance
+     *
+     * @param callback
+     */
+    getError: function (callback) {
+      this.getInstance(config.default_instance_name).getError(callback);
     }
   });
 
