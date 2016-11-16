@@ -94,11 +94,9 @@
 
 	var _wrapper2 = _interopRequireDefault(_wrapper);
 
-	var _broadcast = __webpack_require__(6);
-
-	var _broadcast2 = _interopRequireDefault(_broadcast);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/* global window */
 
 	(function () {
 
@@ -109,7 +107,6 @@
 	      }
 
 	      this.wrappers = {};
-	      this.broadcastOn = new _broadcast2.default();
 	    },
 
 	    /**
@@ -171,7 +168,7 @@
 	    },
 
 	    /**
-	     * Subscribe method wrapper for default instance
+	     * Subscribe method wrapped for default instance
 	     *
 	     * @param {object} args
 	     */
@@ -180,15 +177,54 @@
 	    },
 
 	    /**
-	     * Unsubscribe method wrapper for default instance
+	     * Unsubscribe method wrapped for default instance
 	     *
 	     * @param {object} args
 	     */
 	    unsubscribe: function unsubscribe(args) {
 	      this.getInstance(_config2.default.default_instance_name).unsubscribe(args);
+	    },
+
+	    /**
+	       * GetMessage method wrapped for default instance
+	       *
+	     * @param {string|[string]} channel
+	     * @param callback
+	     */
+	    getMessage: function getMessage(channel, callback) {
+	      this.getInstance(_config2.default.default_instance_name).getMessage(channel, callback);
+	    },
+
+	    /**
+	       * GetPresence method wrapped for default instance
+	       *
+	     * @param {string|[string]} channel
+	     * @param callback
+	     */
+	    getPresence: function getPresence(channel, callback) {
+	      this.getInstance(_config2.default.default_instance_name).getPresence(channel, callback);
+	    },
+
+	    /**
+	       * GetStatus method wrapped for default instance
+	       *
+	     * @param {string|[string]} channel
+	     * @param callback
+	     */
+	    getStatus: function getStatus(channel, callback) {
+	      this.getInstance(_config2.default.default_instance_name).getStatus(channel, callback);
+	    },
+
+	    /**
+	       * GetError method wrapped for default instance
+	       *
+	     * @param callback
+	     */
+	    getError: function getError(callback) {
+	      this.getInstance(_config2.default.default_instance_name).getError(callback);
 	    }
 	  });
-	})(); /* global window */
+	})();
 
 /***/ },
 /* 3 */
@@ -254,6 +290,10 @@
 
 	var _mocks2 = _interopRequireDefault(_mocks);
 
+	var _broadcast = __webpack_require__(6);
+
+	var _broadcast2 = _interopRequireDefault(_broadcast);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -264,7 +304,8 @@
 
 	    this.label = label;
 	    this.pubnubInstance = null;
-	    this.mockingInstance = new _mocks2.default(service);
+	    this.broadcastOn = new _broadcast2.default();
+	    this.mockingInstance = new _mocks2.default(this.broadcastOn);
 	  }
 
 	  /**
@@ -320,7 +361,66 @@
 	    }
 
 	    /**
-	     * get the PubNub instance wrapped or throw an exception if this is not instanced yet
+	      * Get to receive messages from a channel or a set of channels through a callback
+	      *
+	     * @param {string|[string]} channel
+	     * @param callback
+	     */
+
+	  }, {
+	    key: 'getMessage',
+	    value: function getMessage(channel, callback) {
+	      if (this.broadcastOn) {
+	        this.broadcastOn.message(channel, callback);
+	      }
+	    }
+
+	    /**
+	      * Get to receive presence information from a channel or a set of channels through a callback
+	      *
+	     * @param {string|[string]} channel
+	     * @param callback
+	     */
+
+	  }, {
+	    key: 'getPresence',
+	    value: function getPresence(channel, callback) {
+	      if (this.broadcastOn) {
+	        this.broadcastOn.presence(channel, callback);
+	      }
+	    }
+
+	    /**
+	      * Get to receive status information from a channel or a set of channels through a callback
+	      *
+	     * @param {string|[string]} channel
+	     * @param callback
+	     */
+
+	  }, {
+	    key: 'getStatus',
+	    value: function getStatus(channel, callback) {
+	      if (this.broadcastOn) {
+	        this.broadcastOn.status(channel, callback);
+	      }
+	    }
+
+	    /**
+	      * Get to receive error information from PubNub Service through a callback
+	      *
+	     * @param callback
+	     */
+
+	  }, {
+	    key: 'getError',
+	    value: function getError(callback) {
+	      if (this.broadcastOn) {
+	        this.broadcastOn.error(callback);
+	      }
+	    }
+
+	    /**
+	     * Get the PubNub instance wrapped or throw an exception if this is not instanced yet
 	     *
 	     * @returns {PubNub|*|null}
 	     */
@@ -386,11 +486,11 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	module.exports = function () {
-	  function _class(service) {
+	  function _class(broadcaster) {
 	    _classCallCheck(this, _class);
 
 	    this.listener = null;
-	    this.service = service;
+	    this.broadcaster = broadcaster;
 	    this.broadcastChannels = {};
 	  }
 
@@ -415,30 +515,30 @@
 	          _config2.default.subscribe_listener_events_to_broadcast.forEach(function (event) {
 	            self.listener[event] = function (received) {
 	              if (received.subscription && self.broadcastChannels[received.subscription] && self.broadcastChannels[received.subscription].includes(event)) {
-	                self.service.broadcastOn.emit(event, received.subscription, received);
+	                self.broadcaster.emit(event, received.subscription, received);
 
 	                if (received.channel) {
-	                  self.service.broadcastOn.emit(event, received.channel, received);
+	                  self.broadcaster.emit(event, received.channel, received);
 	                }
 	              }
 
 	              if (received.channel && self.broadcastChannels[received.channel] && self.broadcastChannels[received.channel].includes(event)) {
-	                self.service.broadcastOn.emit(event, received.channel, received);
+	                self.broadcaster.emit(event, received.channel, received);
 	              }
 
 	              if (event === 'status') {
 	                if (received.error) {
-	                  self.service.broadcastOn.emitError(received);
+	                  self.broadcaster.emitError(received);
 	                } else {
 	                  received.affectedChannels.forEach(function (channel) {
 	                    if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
-	                      self.service.broadcastOn.emit(event, channel, received);
+	                      self.broadcaster.emit(event, channel, received);
 	                    }
 	                  });
 
 	                  received.affectedChannelGroups.forEach(function (channelGroup) {
 	                    if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
-	                      self.service.broadcastOn.emit(event, channelGroup, received);
+	                      self.broadcaster.emit(event, channelGroup, received);
 	                    }
 	                  });
 	                }

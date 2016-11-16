@@ -4,12 +4,13 @@ describe('#Triggered all events()', function () {
 
 	var channelName1 = getRandomChannel();
 	var channelName2 = getRandomChannel();
+	var channelName3 = getRandomChannel();
 	var stringMessage = 'hey';
 	var uuid = 'blah1';
 
 	pubnub3.init(config.demo);
 
-	pubnub3.broadcastOn.error(function(err) {
+	pubnub3.getError(function(err) {
 		console.error(err);
 	});
 
@@ -26,7 +27,7 @@ describe('#Triggered all events()', function () {
 
 	describe('Status', function () {
 		it('Should be triggered', function (done) {
-			pubnub3.broadcastOn.status(channelName1, function (st) {
+			pubnub3.getStatus(channelName1, function (st) {
 				expect(st).to.not.equal(null);
 				expect(st.category).to.be.equal('PNConnectedCategory');
 				done();
@@ -36,7 +37,7 @@ describe('#Triggered all events()', function () {
 
 	describe('Presence', function () {
 		it('Should be triggered', function (done) {
-			pubnub3.broadcastOn.presence(channelName2, function (ps) {
+			pubnub3.getPresence(channelName2, function (ps) {
 				expect(ps).to.not.equal(null);
 				expect(ps.uuid).to.be.equal(uuid);
 				done();
@@ -48,7 +49,7 @@ describe('#Triggered all events()', function () {
 
 	describe('Message', function () {
 		it('Should be triggered', function (done) {
-			pubnub3.broadcastOn.message(channelName1, function (m) {
+			pubnub3.getMessage(channelName1, function (m) {
 				expect(m).to.not.equal(null);
 				expect(m.channel).to.be.equal(channelName1);
 				expect(m.message).to.be.equal(stringMessage);
@@ -56,6 +57,23 @@ describe('#Triggered all events()', function () {
 			});
 
 			pubnub3.publish({channel: channelName1, message: stringMessage});
+		});
+	});
+
+	describe('Message from other instance', function(){
+		it('Should be triggered', function (done) {
+			pubnub3.getInstance('another').init(config.demo);
+
+			pubnub3.getInstance('another').subscribe({channels: [channelName3], triggerEvents: true});
+
+			pubnub3.getInstance('another').getMessage(channelName3, function(m) {
+				expect(m).to.not.equal(null);
+				expect(m.channel).to.be.equal(channelName3);
+				expect(m.message).to.be.equal(stringMessage);
+				done();
+			});
+
+			pubnub3.getInstance('another').publish({channel: channelName3, message: stringMessage});
 		});
 	});
 });

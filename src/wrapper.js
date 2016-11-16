@@ -1,12 +1,14 @@
 /* global angular PUBNUB */
 import Mock from './mocks';
+import Broadcast from './broadcast';
 
 module.exports = class {
 
   constructor(label, service) {
     this.label = label;
     this.pubnubInstance = null;
-    this.mockingInstance = new Mock(service);
+		this.broadcastOn = new Broadcast();
+    this.mockingInstance = new Mock(this.broadcastOn);
   }
 
   /**
@@ -17,6 +19,7 @@ module.exports = class {
   init(initConfig) {
     this.pubnubInstance = new PubNub(initConfig);
     this.mockingInstance.initializeListener(this);
+
   }
 
   /**
@@ -27,7 +30,6 @@ module.exports = class {
   getLabel() {
     return this.label;
   }
-
 
   /**
    * Wrap the subscribe method to enable trigger events to the broadcast
@@ -49,8 +51,55 @@ module.exports = class {
     this.mockingInstance.disableEventsBroadcast(args);
   }
 
+	/**
+   * Get to receive messages from a channel or a set of channels through a callback
+   *
+	 * @param {string|[string]} channel
+	 * @param callback
+	 */
+	getMessage(channel, callback) {
+    if (this.broadcastOn) {
+      this.broadcastOn.message(channel, callback);
+    }
+  }
+
+	/**
+   * Get to receive presence information from a channel or a set of channels through a callback
+   *
+	 * @param {string|[string]} channel
+	 * @param callback
+	 */
+	getPresence(channel, callback) {
+    if (this.broadcastOn) {
+      this.broadcastOn.presence(channel, callback);
+    }
+  }
+
+	/**
+   * Get to receive status information from a channel or a set of channels through a callback
+   *
+	 * @param {string|[string]} channel
+	 * @param callback
+	 */
+  getStatus(channel, callback) {
+    if (this.broadcastOn) {
+      this.broadcastOn.status(channel, callback);
+    }
+  }
+
+	/**
+   * Get to receive error information from PubNub Service through a callback
+   *
+	 * @param callback
+	 */
+	getError(callback) {
+    if (this.broadcastOn) {
+      this.broadcastOn.error(callback);
+    }
+  }
+
   /**
-   * get the PubNub instance wrapped or throw an exception if this is not instanced yet
+   * Get the PubNub instance wrapped or throw an exception if this is not instanced yet
    *
    * @returns {PubNub|*|null}
    */
