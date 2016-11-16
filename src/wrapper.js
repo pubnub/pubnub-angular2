@@ -4,10 +4,10 @@ import Broadcast from './broadcast';
 
 module.exports = class {
 
-  constructor(label, service) {
+  constructor(label) {
     this.label = label;
     this.pubnubInstance = null;
-		this.broadcastOn = new Broadcast();
+    this.broadcastOn = new Broadcast();
     this.mockingInstance = new Mock(this.broadcastOn);
   }
 
@@ -51,48 +51,48 @@ module.exports = class {
     this.mockingInstance.disableEventsBroadcast(args);
   }
 
-	/**
+  /**
    * Get to receive messages from a channel or a set of channels through a callback
    *
-	 * @param {string|[string]} channel
-	 * @param callback
-	 */
-	getMessage(channel, callback) {
+   * @param {string|[string]} channel
+   * @param callback
+   */
+  getMessage(channel, callback) {
     if (this.broadcastOn) {
       this.broadcastOn.message(channel, callback);
     }
   }
 
-	/**
+  /**
    * Get to receive presence information from a channel or a set of channels through a callback
    *
-	 * @param {string|[string]} channel
-	 * @param callback
-	 */
-	getPresence(channel, callback) {
+   * @param {string|[string]} channel
+   * @param callback
+   */
+  getPresence(channel, callback) {
     if (this.broadcastOn) {
       this.broadcastOn.presence(channel, callback);
     }
   }
 
-	/**
+  /**
    * Get to receive status information from a channel or a set of channels through a callback
    *
-	 * @param {string|[string]} channel
-	 * @param callback
-	 */
+   * @param {string|[string]} channel
+   * @param callback
+   */
   getStatus(channel, callback) {
     if (this.broadcastOn) {
       this.broadcastOn.status(channel, callback);
     }
   }
 
-	/**
+  /**
    * Get to receive error information from PubNub Service through a callback
    *
-	 * @param callback
-	 */
-	getError(callback) {
+   * @param callback
+   */
+  getError(callback) {
     if (this.broadcastOn) {
       this.broadcastOn.error(callback);
     }
