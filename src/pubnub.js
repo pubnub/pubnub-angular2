@@ -93,9 +93,10 @@ import Wrapper from './wrapper';
      *
      * @param {string|[string]} channel
      * @param callback
+     * @returns [object] array
      */
     getMessage: function (channel, callback) {
-      this.getInstance(config.default_instance_name).getMessage(channel, callback);
+      return this.getInstance(config.default_instance_name).getMessage(channel, callback);
     },
 
     /**

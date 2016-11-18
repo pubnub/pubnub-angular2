@@ -39,6 +39,17 @@ describe('#subscribe()', function () {
 		});
 	});
 
+	describe('Unsubscribe successfully', function () {
+		it('should be invoked', function (done) {
+			var channelTest = getRandomChannel();
+
+			pubnub.subscribe({channels: [channelTest]});
+			pubnub.unsubscribe({channels: [channelTest]});
+
+			done();
+		});
+	});
+
 	describe('Presence callback', function () {
 
 		it('should be invoked', function (done) {

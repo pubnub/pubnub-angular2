@@ -205,7 +205,7 @@ or callback per a set of channels.
 With Javascript V4, you can trigger 3 different events (message, presence and status)
 
 ```javascript
-Pubnub.subscribe({
+pubnubService.subscribe({
     channels  : ['myChannel1', 'myChannel2', 'myChannel3'],
     channelGroups: ['myGroup1', 'myGroup2'],
     withPresence: true,
@@ -282,7 +282,15 @@ pubnubService.getStatus(['myChannel1', 'myChannel2', 'myGroup1'], (st) => {
 
 ```javascript
 pubnubService.getError((err) => {
-    console.log(err);
+	console.log(err);
 });
 ```
+**Listening to other instances:**
+
+```javascript
+pubnubService.getInstance("another").getMessage('myChannel', (msg) => {
+	console.log(msg);
+});
+```
+
 ###
