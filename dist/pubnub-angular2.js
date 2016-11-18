@@ -1,4 +1,4 @@
-/*! 1.0.0-beta.4 */
+/*! 1.0.0-beta.5 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -186,8 +186,8 @@
 	    },
 
 	    /**
-	       * GetMessage method wrapped for default instance
-	       *
+	     * GetMessage method wrapped for default instance
+	     *
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
@@ -196,8 +196,8 @@
 	    },
 
 	    /**
-	       * GetPresence method wrapped for default instance
-	       *
+	     * GetPresence method wrapped for default instance
+	     *
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
@@ -206,8 +206,8 @@
 	    },
 
 	    /**
-	       * GetStatus method wrapped for default instance
-	       *
+	     * GetStatus method wrapped for default instance
+	     *
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
@@ -216,8 +216,8 @@
 	    },
 
 	    /**
-	       * GetError method wrapped for default instance
-	       *
+	     * GetError method wrapped for default instance
+	     *
 	     * @param callback
 	     */
 	    getError: function getError(callback) {
@@ -299,7 +299,7 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	module.exports = function () {
-	  function _class(label, service) {
+	  function _class(label) {
 	    _classCallCheck(this, _class);
 
 	    this.label = label;
@@ -361,8 +361,8 @@
 	    }
 
 	    /**
-	      * Get to receive messages from a channel or a set of channels through a callback
-	      *
+	     * Get to receive messages from a channel or a set of channels through a callback
+	     *
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
@@ -376,8 +376,8 @@
 	    }
 
 	    /**
-	      * Get to receive presence information from a channel or a set of channels through a callback
-	      *
+	     * Get to receive presence information from a channel or a set of channels through a callback
+	     *
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
@@ -391,8 +391,8 @@
 	    }
 
 	    /**
-	      * Get to receive status information from a channel or a set of channels through a callback
-	      *
+	     * Get to receive status information from a channel or a set of channels through a callback
+	     *
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
@@ -406,8 +406,8 @@
 	    }
 
 	    /**
-	      * Get to receive error information from PubNub Service through a callback
-	      *
+	     * Get to receive error information from PubNub Service through a callback
+	     *
 	     * @param callback
 	     */
 
