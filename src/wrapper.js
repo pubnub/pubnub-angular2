@@ -21,7 +21,6 @@ module.exports = class {
   init(initConfig) {
     this.pubnubInstance = new PubNub(initConfig);
     this.mockingInstance.initializeListener(this);
-
   }
 
   /**
