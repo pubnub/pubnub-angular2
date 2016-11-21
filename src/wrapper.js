@@ -1,6 +1,7 @@
 /* global angular PUBNUB */
 import Mock from './mocks';
 import Broadcast from './broadcast';
+import Output from './output';
 
 module.exports = class {
 
@@ -8,6 +9,7 @@ module.exports = class {
     this.label = label;
     this.pubnubInstance = null;
     this.broadcastOn = new Broadcast();
+    this.outputOn = new Output();
     this.mockingInstance = new Mock(this.broadcastOn);
   }
 
@@ -19,7 +21,6 @@ module.exports = class {
   init(initConfig) {
     this.pubnubInstance = new PubNub(initConfig);
     this.mockingInstance.initializeListener(this);
-
   }
 
   /**
@@ -58,9 +59,16 @@ module.exports = class {
    * @param callback
    */
   getMessage(channel, callback) {
-    if (this.broadcastOn) {
-      this.broadcastOn.message(channel, callback);
+    this.outputOn.subscribe(channel);
+
+    if (callback) {
+      this.broadcastOn.message(channel, (message) => {
+        this.outputOn.push(channel, message);
+        callback(message);
+      });
     }
+
+    return this.outputOn.get(channel);
   }
 
   /**

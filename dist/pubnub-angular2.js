@@ -190,9 +190,10 @@
 	     *
 	     * @param {string|[string]} channel
 	     * @param callback
+	     * @returns [object] array
 	     */
 	    getMessage: function getMessage(channel, callback) {
-	      this.getInstance(_config2.default.default_instance_name).getMessage(channel, callback);
+	      return this.getInstance(_config2.default.default_instance_name).getMessage(channel, callback);
 	    },
 
 	    /**
@@ -294,6 +295,10 @@
 
 	var _broadcast2 = _interopRequireDefault(_broadcast);
 
+	var _output = __webpack_require__(7);
+
+	var _output2 = _interopRequireDefault(_output);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -305,6 +310,7 @@
 	    this.label = label;
 	    this.pubnubInstance = null;
 	    this.broadcastOn = new _broadcast2.default();
+	    this.outputOn = new _output2.default();
 	    this.mockingInstance = new _mocks2.default(this.broadcastOn);
 	  }
 
@@ -370,9 +376,18 @@
 	  }, {
 	    key: 'getMessage',
 	    value: function getMessage(channel, callback) {
-	      if (this.broadcastOn) {
-	        this.broadcastOn.message(channel, callback);
+	      var _this = this;
+
+	      this.outputOn.subscribe(channel);
+
+	      if (callback) {
+	        this.broadcastOn.message(channel, function (message) {
+	          _this.outputOn.push(channel, message);
+	          callback(message);
+	        });
 	      }
+
+	      return this.outputOn.get(channel);
 	    }
 
 	    /**
@@ -767,6 +782,93 @@
 
 	        unsubscribeChannel(_this2[subscriber], channel);
 	      });
+	    }
+	  }]);
+
+	  return _class;
+	}();
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	module.exports = function () {
+	  function _class() {
+	    _classCallCheck(this, _class);
+
+	    this.channels = {};
+	    this.multiChannels = {};
+	  }
+
+	  _createClass(_class, [{
+	    key: "push",
+	    value: function push(channel, message) {
+	      var _this = this;
+
+	      if (Array.isArray(channel)) {
+	        channel.forEach(function (ch) {
+	          if (_this.channels[ch]) _this.channels[ch].push(message);
+	        });
+	      } else if (this.channels[channel]) {
+	        this.channels[channel].push(message);
+	      }
+
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = Object.keys(this.multiChannels)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var key = _step.value;
+
+	          if (key.includes(channel)) {
+	            this.multiChannels[key].push(message);
+	            break;
+	          }
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+	    }
+	  }, {
+	    key: "get",
+	    value: function get(channel) {
+	      if (Array.isArray(channel)) {
+	        return this.multiChannels[channel];
+	      } else {
+	        return this.channels[channel];
+	      }
+	    }
+	  }, {
+	    key: "subscribe",
+	    value: function subscribe(channel) {
+	      if (Array.isArray(channel)) {
+	        if (!this.multiChannels[channel]) this.multiChannels[channel] = [];
+	      } else if (!this.channels[channel]) {
+	        this.channels[channel] = [];
+	      }
+	    }
+	  }, {
+	    key: "unsubscribe",
+	    value: function unsubscribe(channel) {
+	      if (this.channels[channel]) delete this.channels[channel];
 	    }
 	  }]);
 
