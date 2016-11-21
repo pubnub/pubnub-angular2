@@ -293,4 +293,40 @@ pubnubService.getInstance("another").getMessage('myChannel', (msg) => {
 });
 ```
 
-###
+### How to get the stack of messages or inject it directly in the HTML
+
+The ```getMessage``` method is more than a mechanism for registering a channel, a set of channels or even a channel group
+to a callback method that acts like a receptor to receive message by message when it is activated the triggerEvents option
+at the moment of subscribing channels.
+
+The stack is going to hold all messages since when you register your channel with ```getMessage``` method.
+
+**Getting stack of messages for each register of channel:**
+
+```javascript
+var myStack1 = pubnubService.getMessage('myChannel1', (msg) => {
+	console.log(msg);
+});
+```
+
+**Getting stack of messages without having a callback associated to the channel**
+
+```javascript
+var myStack1 = pubnubService.getMessage('myChannel1');
+```
+
+You can also get the stack of messages with the code above in whatever moment after registering the channel. Remember
+that you can use this code to associate this to a field in your ngComponent and the stack of message is going to be
+available inside your html.
+
+**Getting stack of messages directly in the HTML**
+
+Inside the HTML that you have defined like a template in your ngComponent, you can inject the ```getMessage``` method
+with name of your channel subscribed.
+
+```html
+<ul *ngFor="let item of pubnubService.getMessage('myChannel1')">
+    <li>{{ item.message }}</li>
+</ul>
+```
+
