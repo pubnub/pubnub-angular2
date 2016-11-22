@@ -1,4 +1,14 @@
 
+## [v1.0.0.beta.6](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.6)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.5...v1.0.0.beta.6)
+
+- 🌟invoke pubnub features via HTML
+
+
+
+
 ## [v1.0.0.beta.5](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.5)
 
 
