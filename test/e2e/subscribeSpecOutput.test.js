@@ -15,7 +15,7 @@ describe('#Allocate messages in arrays of output()', function () {
 
 	var result1 = pubnub4.getMessage(channelName1);
 
-	describe('Get an array with length equal 1', function () {
+	describe('Get the stack of message with length equal to 1', function () {
 		var newStringMessege = stringMessage + '1';
 
 		it('Should be triggered', function (done) {
@@ -30,7 +30,7 @@ describe('#Allocate messages in arrays of output()', function () {
 		});
 	});
 
-	describe('Get an array with length equal 2', function () {
+	describe('Get the stack of message with length equal to 2', function () {
 		it('Should be triggered', function (done) {
 			var newStringMessege = stringMessage + '2';
 
@@ -45,7 +45,7 @@ describe('#Allocate messages in arrays of output()', function () {
 		});
 	});
 
-	describe('Get an array with length equal 3', function () {
+	describe('Get the stack of message with length equal to 3', function () {
 		it('Should be triggered', function (done) {
 			var newStringMessege = stringMessage + '3';
 

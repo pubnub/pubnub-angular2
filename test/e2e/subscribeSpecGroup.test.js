@@ -2,7 +2,7 @@ describe('#subscribe_channelGroups', function () {
 
 	var pubnub2 = new window.PubNubAngular();
 
-	pubnub2.init(config.demo);
+	pubnub2.init(config.with_channel_groups);
 
 	var channelGroup = getRandomChannelGroup();
 	var channels = [];
@@ -45,9 +45,9 @@ describe('#subscribe_channelGroups', function () {
 
 	describe('Using trigger events', function () {
 		it('It is able to listen using trigger events', function (done) {
-			if(error) this.skip();
+			if (error) this.skip();
 
-			pubnub2.broadcastOn.message(channelGroup, function (m) {
+			pubnub2.getMessage(channelGroup, function (m) {
 
 				expect(m).to.not.equal(null);
 				expect(m.subscription).to.be.equal(channelGroup);
@@ -61,9 +61,9 @@ describe('#subscribe_channelGroups', function () {
 		});
 
 		it('It is able to listen from a channel associated to the channel group', function (done) {
-			if(error) this.skip();
+			if (error) this.skip();
 
-			pubnub2.broadcastOn.message(channels[1], function (m) {
+			pubnub2.getMessage(channels[1], function (m) {
 
 				expect(m).to.not.equal(null);
 				expect(m.channel).to.be.equal(channels[1]);
@@ -77,7 +77,7 @@ describe('#subscribe_channelGroups', function () {
 
 	describe('Listening from a channel group', function () {
 		it('It is able to listen over a channel group', function (done) {
-			if(error) this.skip();
+			if (error) this.skip();
 
 			listener = {
 				message: function (m) {
@@ -89,6 +89,20 @@ describe('#subscribe_channelGroups', function () {
 			pubnub2.addListener(listener);
 
 			pubnub2.subscribe({channelGroups: [channelGroup]});
+
+			pubnub2.publish({channel: channels[0], message: stringMessage});
+		});
+	});
+
+	describe('Get the stack of messages of the channel group', function (){
+		it('Should be triggered', function (done){
+			if (error) this.skip();
+
+			var stack = pubnub2.getMessage(channelGroup, function (m) {
+
+				expect(stack).to.have.length(4);
+				done();
+			});
 
 			pubnub2.publish({channel: channels[0], message: stringMessage});
 		});

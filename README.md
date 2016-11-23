@@ -301,7 +301,7 @@ at the moment of subscribing channels.
 
 The stack is going to hold all messages since when you register your channel with ```getMessage``` method.
 
-**Getting stack of messages for each register of channel:**
+**Getting stack of messages for each register of channel or channel group:**
 
 ```javascript
 var myStack1 = pubnubService.getMessage('myChannel1', (msg) => {
@@ -309,20 +309,30 @@ var myStack1 = pubnubService.getMessage('myChannel1', (msg) => {
 });
 ```
 
-**Getting stack of messages without having a callback associated to the channel**
+```javascript
+var myStack1 = pubnubService.getMessage('myGroup1', (msg) => {
+	console.log(msg);
+});
+```
+
+**Getting stack of messages without having a callback associated to the channel or channel group:**
 
 ```javascript
 var myStack1 = pubnubService.getMessage('myChannel1');
 ```
 
+```javascript
+var myStack1 = pubnubService.getMessage('myGroup1');
+```
+
 You can also get the stack of messages with the code above in whatever moment after registering the channel. Remember
-that you can use this code to associate this to a field in your ngComponent and the stack of message is going to be
+that you can use this code to associate this to a field in your ngComponent and the stack of messages is going to be
 available inside your html.
 
-**Getting stack of messages directly in the HTML**
+**Getting stack of messages directly in the HTML:**
 
 Inside the HTML that you have defined like a template in your ngComponent, you can inject the ```getMessage``` method
-with name of your channel subscribed.
+with name of your channel or channel group subscribed.
 
 ```html
 <ul *ngFor="let item of pubnubService.getMessage('myChannel1')">
