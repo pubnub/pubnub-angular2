@@ -50,6 +50,7 @@ module.exports = class {
   unsubscribe(args) {
     this.getOriginalInstance().unsubscribe(args);
     this.mockingInstance.disableEventsBroadcast(args);
+    this.outputOn.unsubscribe(args);
   }
 
   /**

@@ -123,4 +123,15 @@ describe('#Allocate messages in arrays of output()', function () {
 			done();
 		});
 	});
+
+	describe('Unsubscribe', function (){
+		it('Should be triggered', function (done) {
+			var stack = pubnub4.getMessage([channelName1, channelName3]);
+
+			pubnub4.unsubscribe([channelName1, channelName3]);
+
+			expect(stack).to.have.length(0);
+			done();
+		});
+	});
 });

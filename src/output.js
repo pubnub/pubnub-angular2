@@ -68,7 +68,6 @@ module.exports = class {
   subscribe(channel) {
     if (Array.isArray(channel)) {
       if (!this.multiChannels[channel]) this.multiChannels[channel] = [];
-
     } else if (!this.channels[channel]) {
       this.channels[channel] = [];
     }
@@ -80,6 +79,12 @@ module.exports = class {
    * @param {string|[string]} channel
    */
   unsubscribe(channel) {
-    if (this.channels[channel]) delete this.channels[channel];
+    this.clean(channel);
+
+		if (Array.isArray(channel)) {
+			if (this.multiChannels[channel]) delete this.multiChannels[channel];
+		} else if (!this.channels[channel]) {
+			delete this.channels[channel];
+		}
   }
 };

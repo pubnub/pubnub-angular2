@@ -373,6 +373,7 @@
 	    value: function unsubscribe(args) {
 	      this.getOriginalInstance().unsubscribe(args);
 	      this.mockingInstance.disableEventsBroadcast(args);
+	      this.outputOn.unsubscribe(args);
 	    }
 
 	    /**
@@ -941,7 +942,13 @@
 	  }, {
 	    key: "unsubscribe",
 	    value: function unsubscribe(channel) {
-	      if (this.channels[channel]) delete this.channels[channel];
+	      this.clean(channel);
+
+	      if (Array.isArray(channel)) {
+	        if (this.multiChannels[channel]) delete this.multiChannels[channel];
+	      } else if (!this.channels[channel]) {
+	        delete this.channels[channel];
+	      }
 	    }
 	  }]);
 
