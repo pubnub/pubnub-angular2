@@ -5,6 +5,12 @@ module.exports = class {
     this.multiChannels = {};
   }
 
+  /**
+   * Push a message to a channel's stack or a set of channels' stack
+   *
+   * @param {string|[string]} channel
+   * @param {object} message
+   */
   push(channel, message) {
     if (Array.isArray(channel)) {
       channel.forEach((ch) => {
@@ -22,6 +28,12 @@ module.exports = class {
     }
   }
 
+  /**
+   * Get a stack of messages for a channel or a set of channels
+   *
+   * @param {string|[string]} channel
+   * @returns [object] array
+   */
   get(channel) {
     if (Array.isArray(channel)) {
       return this.multiChannels[channel];
@@ -30,6 +42,11 @@ module.exports = class {
     }
   }
 
+  /**
+   * Clean a stack of message for a channel or a set of channels
+   *
+   * @param {string|[string]} channel
+   */
   clean(channel) {
     if (Array.isArray(channel)) {
       channel.forEach((ch) => {
@@ -43,6 +60,11 @@ module.exports = class {
     }
   }
 
+  /**
+   * Subscribe a channel or a set of channels to create a stack of messages
+   *
+   * @param {string|[string]} channel
+   */
   subscribe(channel) {
     if (Array.isArray(channel)) {
       if (!this.multiChannels[channel]) this.multiChannels[channel] = [];
@@ -52,6 +74,11 @@ module.exports = class {
     }
   }
 
+  /**
+   * Unsubscribe a channel or a set of channels of the stack of message
+   *
+   * @param {string|[string]} channel
+   */
   unsubscribe(channel) {
     if (this.channels[channel]) delete this.channels[channel];
   }

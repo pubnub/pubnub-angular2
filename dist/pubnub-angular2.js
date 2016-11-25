@@ -226,8 +226,8 @@
 	    },
 
 	    /**
-	       * Clean Method wrapped for default instance
-	       *
+	     * Clean Method wrapped for default instance
+	     *
 	     * @param {string|[string]} channel
 	     */
 	    clean: function clean(channel) {
@@ -444,8 +444,8 @@
 	    }
 
 	    /**
-	      * Clean the stack of messages for a channel or a set of channels
-	      *
+	     * Clean the stack of messages for a channel or a set of channels
+	     *
 	     * @param {string|[string]} channel
 	     */
 
@@ -827,6 +827,14 @@
 	    this.multiChannels = {};
 	  }
 
+	  /**
+	   * Push a message to a channel's stack or a set of channels' stack
+	   *
+	   * @param {string|[string]} channel
+	   * @param {object} message
+	   */
+
+
 	  _createClass(_class, [{
 	    key: "push",
 	    value: function push(channel, message) {
@@ -868,6 +876,14 @@
 	        }
 	      }
 	    }
+
+	    /**
+	     * Get a stack of messages for a channel or a set of channels
+	     *
+	     * @param {string|[string]} channel
+	     * @returns [object] array
+	     */
+
 	  }, {
 	    key: "get",
 	    value: function get(channel) {
@@ -877,6 +893,13 @@
 	        return this.channels[channel];
 	      }
 	    }
+
+	    /**
+	     * Clean a stack of message for a channel or a set of channels
+	     *
+	     * @param {string|[string]} channel
+	     */
+
 	  }, {
 	    key: "clean",
 	    value: function clean(channel) {
@@ -888,10 +911,17 @@
 	        });
 
 	        if (this.multiChannels[channel]) this.multiChannels[channel].length = 0;
-	      } else {
-	        if (this.channels[channel]) this.channels[channel].length = 0;
+	      } else if (this.channels[channel]) {
+	        this.channels[channel].length = 0;
 	      }
 	    }
+
+	    /**
+	     * Subscribe a channel or a set of channels to create a stack of messages
+	     *
+	     * @param {string|[string]} channel
+	     */
+
 	  }, {
 	    key: "subscribe",
 	    value: function subscribe(channel) {
@@ -901,6 +931,13 @@
 	        this.channels[channel] = [];
 	      }
 	    }
+
+	    /**
+	     * Unsubscribe a channel or a set of channels of the stack of message
+	     *
+	     * @param {string|[string]} channel
+	     */
+
 	  }, {
 	    key: "unsubscribe",
 	    value: function unsubscribe(channel) {
