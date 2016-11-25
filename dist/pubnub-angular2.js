@@ -223,6 +223,15 @@
 	     */
 	    getError: function getError(callback) {
 	      this.getInstance(_config2.default.default_instance_name).getError(callback);
+	    },
+
+	    /**
+	       * Clean Method wrapped for default instance
+	       *
+	     * @param {string|[string]} channel
+	     */
+	    clean: function clean(channel) {
+	      this.getInstance(_config2.default.default_instance_name).clean(channel);
 	    }
 	  });
 	})();
@@ -432,6 +441,18 @@
 	      if (this.broadcastOn) {
 	        this.broadcastOn.error(callback);
 	      }
+	    }
+
+	    /**
+	      * Clean the stack of messages for a channel or a set of channels
+	      *
+	     * @param {string|[string]} channel
+	     */
+
+	  }, {
+	    key: 'clean',
+	    value: function clean(channel) {
+	      this.outputOn.clean(channel);
 	    }
 
 	    /**
@@ -854,6 +875,21 @@
 	        return this.multiChannels[channel];
 	      } else {
 	        return this.channels[channel];
+	      }
+	    }
+	  }, {
+	    key: "clean",
+	    value: function clean(channel) {
+	      var _this2 = this;
+
+	      if (Array.isArray(channel)) {
+	        channel.forEach(function (ch) {
+	          if (_this2.channels[ch]) _this2.channels[ch].length = 0;
+	        });
+
+	        if (this.multiChannels[channel]) this.multiChannels[channel].length = 0;
+	      } else {
+	        if (this.channels[channel]) this.channels[channel].length = 0;
 	      }
 	    }
 	  }, {

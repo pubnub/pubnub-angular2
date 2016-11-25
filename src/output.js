@@ -30,6 +30,19 @@ module.exports = class {
     }
   }
 
+  clean(channel) {
+    if (Array.isArray(channel)) {
+      channel.forEach((ch) => {
+        if (this.channels[ch]) this.channels[ch].length = 0;
+      });
+
+      if (this.multiChannels[channel]) this.multiChannels[channel].length = 0;
+
+    } else if (this.channels[channel]) {
+      this.channels[channel].length = 0;
+    }
+  }
+
   subscribe(channel) {
     if (Array.isArray(channel)) {
       if (!this.multiChannels[channel]) this.multiChannels[channel] = [];

@@ -126,6 +126,15 @@ import Wrapper from './wrapper';
      */
     getError: function (callback) {
       this.getInstance(config.default_instance_name).getError(callback);
+    },
+
+    /**
+     * Clean Method wrapped for default instance
+     *
+     * @param {string|[string]} channel
+     */
+    clean: function (channel) {
+      this.getInstance(config.default_instance_name).clean(channel);
     }
   });
 

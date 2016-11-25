@@ -77,7 +77,7 @@ describe('#Allocate messages in arrays of output()', function () {
 		});
 	});
 
-	describe('Receive a message from the callback equal to the message pushed in an array', function() {
+	describe('Receive a message from the callback equal to the message pushed in an array', function () {
 		it('Should be triggered', function(done) {
 			var result3 = pubnub4.getMessage([channelName1, channelName3]);
 
@@ -91,6 +91,36 @@ describe('#Allocate messages in arrays of output()', function () {
 			});
 
 			pubnub4.publish({channel: channelName1, message: newStringMessege});
+		});
+	});
+
+	describe('Clean stack of message', function (){
+		it('For a channel', function(done) {
+			var stack = pubnub4.getMessage(channelName3);
+
+			pubnub4.clean(channelName3);
+
+			expect(stack).to.have.length(0);
+			done();
+		});
+
+		it('For a set of channels', function (done) {
+			var stack = pubnub4.getMessage([channelName1, channelName2]);
+			var stack1 = pubnub4.getMessage(channelName1);
+			var stack2 = pubnub4.getMessage(channelName2);
+
+			pubnub4.clean([channelName1, channelName2]);
+
+			expect(stack).to.have.length(0);
+			expect(stack1).to.have.length(0);
+			expect(stack2).to.have.length(0);
+			done();
+		});
+
+		it('For a channel does not register', function (done) {
+
+			pubnub4.clean(getRandomChannel());
+			done();
 		});
 	});
 });

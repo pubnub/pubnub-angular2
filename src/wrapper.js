@@ -107,6 +107,15 @@ module.exports = class {
   }
 
   /**
+   * Clean the stack of messages for a channel or a set of channels
+   *
+   * @param {string|[string]} channel
+   */
+  clean(channel) {
+    this.outputOn.clean(channel);
+  }
+
+  /**
    * Get the PubNub instance wrapped or throw an exception if this is not instanced yet
    *
    * @returns {PubNub|*|null}
