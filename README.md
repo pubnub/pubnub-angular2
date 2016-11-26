@@ -288,9 +288,15 @@ pubnubService.getError((err) => {
 **Listening to other instances:**
 
 ```javascript
-pubnubService.getInstance("another").getMessage('myChannel', (msg) => {
+pubnubService.getInstance('another').getMessage('myChannel', (msg) => {
 	console.log(msg);
 });
+```
+
+**Unsubscribe a channel:**
+
+```javascript
+pubnubService.unsubscribe('myChannel1');
 ```
 
 ### How to get the stack of messages or inject it directly in the HTML
@@ -328,6 +334,20 @@ var myStack1 = pubnubService.getMessage('myGroup1');
 You can also get the stack of messages with the code above in whatever moment after registering the channel. Remember
 that you can use this code to associate this to a field in your ngComponent and the stack of messages is going to be
 available inside your html.
+
+**Cleaning the stack of messages:**
+
+```javascript
+pubnubService.clean('myChannel1');
+```
+
+```javascript
+pubnubService.clean('myGroup1');
+```
+
+```javascript
+pubnubService.clean(['myChannel1', 'myChannel2']);
+```
 
 **Getting stack of messages directly in the HTML:**
 
