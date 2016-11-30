@@ -34,11 +34,12 @@ config.fake = {
 };
 
 config.demoWithHistoryRetention = {
-    publishKey: 'demo-36',
-    subscribeKey: 'demo-36'
+	publishKey: 'demo-36',
+	subscribeKey: 'demo-36',
+	secretKey: 'demo'
 };
 
-config.channelWithHistory = 'channel-with-history-messages-';
+config.channelWithHistory = 'channel-with-history-messages';
 
 function getRandomChannel() {
     return "pubnub-angular-test-publish-" + getRandom();
