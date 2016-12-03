@@ -2,6 +2,7 @@
 import Mock from './mocks';
 import Broadcast from './broadcast';
 import Output from './output';
+import Autoload from './autoload';
 
 module.exports = class {
 
@@ -11,6 +12,7 @@ module.exports = class {
     this.broadcastOn = new Broadcast();
     this.outputOn = new Output();
     this.mockingInstance = new Mock(this.broadcastOn);
+    this.autoload = new Autoload();
   }
 
   /**
@@ -21,6 +23,7 @@ module.exports = class {
   init(initConfig) {
     this.pubnubInstance = new PubNub(initConfig);
     this.mockingInstance.initializeListener(this);
+    this.autoload.initialize(this);
   }
 
   /**
@@ -40,6 +43,7 @@ module.exports = class {
   subscribe(args) {
     this.getOriginalInstance().subscribe(args);
     this.mockingInstance.enableEventsBroadcast(args);
+    this.autoload.enableLoad(args);
   }
 
   /**
@@ -50,6 +54,7 @@ module.exports = class {
   unsubscribe(args) {
     this.getOriginalInstance().unsubscribe(args);
     this.mockingInstance.disableEventsBroadcast(args);
+    this.autoload.disableLoad(args);
     this.outputOn.unsubscribe(args);
   }
 
@@ -61,6 +66,8 @@ module.exports = class {
    */
   getMessage(channel, callback) {
     this.outputOn.subscribe(channel);
+
+    this.autoload.getHistory(channel, callback);
 
     if (callback) {
       this.broadcastOn.message(channel, (message) => {

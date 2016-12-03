@@ -359,4 +359,13 @@ with name of your channel or channel group subscribed.
     <li>{{ item.message }}</li>
 </ul>
 ```
+### Channels with history
 
+You can retrieve published messages from archival storage for this requires that [Storage and Playback](http://www.pubnub.com/knowledge-base/discussion/644/how-do-i-enable-add-on-features-for-my-keys) add-on is enabled
+for your keys. In order to get more information about this feature - see [History](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4#history).
+
+```javascript
+pubnubService.history({channel: 'myChannel1'}).then((response) => {
+	console.log(response);
+});
+```
