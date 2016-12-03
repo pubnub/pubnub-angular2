@@ -308,6 +308,10 @@
 
 	var _output2 = _interopRequireDefault(_output);
 
+	var _autoload = __webpack_require__(8);
+
+	var _autoload2 = _interopRequireDefault(_autoload);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -321,6 +325,7 @@
 	    this.broadcastOn = new _broadcast2.default();
 	    this.outputOn = new _output2.default();
 	    this.mockingInstance = new _mocks2.default(this.broadcastOn);
+	    this.autoload = new _autoload2.default();
 	  }
 
 	  /**
@@ -335,6 +340,7 @@
 	    value: function init(initConfig) {
 	      this.pubnubInstance = new PubNub(initConfig);
 	      this.mockingInstance.initializeListener(this);
+	      this.autoload.initialize(this);
 	    }
 
 	    /**
@@ -360,6 +366,7 @@
 	    value: function subscribe(args) {
 	      this.getOriginalInstance().subscribe(args);
 	      this.mockingInstance.enableEventsBroadcast(args);
+	      this.autoload.enableLoad(args);
 	    }
 
 	    /**
@@ -373,6 +380,7 @@
 	    value: function unsubscribe(args) {
 	      this.getOriginalInstance().unsubscribe(args);
 	      this.mockingInstance.disableEventsBroadcast(args);
+	      this.autoload.disableLoad(args);
 	      this.outputOn.unsubscribe(args);
 	    }
 
@@ -389,6 +397,8 @@
 	      var _this = this;
 
 	      this.outputOn.subscribe(channel);
+
+	      this.autoload.getHistory(channel, callback);
 
 	      if (callback) {
 	        this.broadcastOn.message(channel, function (message) {
@@ -953,6 +963,87 @@
 	  }]);
 
 	  return _class;
+	}();
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	module.exports = function () {
+		function _class() {
+			_classCallCheck(this, _class);
+
+			this.count = {};
+			this.instance = undefined;
+		}
+
+		_createClass(_class, [{
+			key: 'initialize',
+			value: function initialize(instance) {
+				this.instance = instance;
+			}
+		}, {
+			key: 'enableLoad',
+			value: function enableLoad(args) {
+				var _this = this;
+
+				if (args.autoload && typeof args.autoload === 'number') {
+					this.count[args.channels] = args.autoload;
+
+					args.channels.forEach(function (channel) {
+						_this.count[channel] = args.autoload;
+					});
+				}
+			}
+		}, {
+			key: 'getHistory',
+			value: function getHistory(channel, callback) {
+				var _this2 = this;
+
+				if (this.count[channel]) {
+					(function () {
+						var instance = _this2.instance;
+						var _channels = Array.isArray(channel) ? channel : [channel];
+						var times = _channels.length;
+
+						_channels.forEach(function (ch) {
+							instance.history({ channel: ch, count: _this2.count[channel] }).then(function (response) {
+
+								response.messages.forEach(function (m) {
+									m.message = m.entry;
+									m.channel = ch;
+
+									instance.outputOn.push(channel, m);
+								});
+
+								if (callback && --times === 0) callback();
+							}).catch(function (error) {/*console.log(error);*/});
+						});
+					})();
+				}
+			}
+		}, {
+			key: 'disableLoad',
+			value: function disableLoad(args) {
+				var _this3 = this;
+
+				if (Array.isArray(args.channels)) {
+					args.channels.forEach(function (ch) {
+						delete _this3.count[ch];
+					});
+				} else {
+					delete this.count[args.channels];
+				}
+			}
+		}]);
+
+		return _class;
 	}();
 
 /***/ }

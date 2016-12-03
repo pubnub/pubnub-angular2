@@ -1,37 +1,56 @@
 describe('#History()', function () {
 
-	var pubnub5 = new window.PubNubAngular();
+  var pubnub5 = new window.PubNubAngular();
 
-	pubnub5.init(config.demoWithHistoryRetention);
+  pubnub5.init(config.demoWithHistoryRetention);
+  pubnub5.getInstance('another').init(config.demoWithHistoryRetention);
 
-	this.timeout(20000);
+  pubnub5.subscribe({channels: [config.channelWithHistory, 'channel-with-history-messages1'], triggerEvents: true, withPresence: true, autoload: 100});
 
-	describe('Get messages from a channel with history', function () {
-		it('Get messages ', function (done) {
+  this.timeout(20000);
 
-			var t = pubnub5.history({
-				channel : config.channelWithHistory,
-				reverse : false
-			});
+  describe('Get messages from a channel with history', function () {
+    it('Get messages ', function (done) {
 
-			t.then(function(r){
-				expect(r.messages).to.have.length(100);
-				done();
-			});
-		});
+      var t = pubnub5.history({
+        channel : config.channelWithHistory,
+        reverse : false
+      });
 
-		it('Get the last 10 messages', function (done) {
+      t.then(function(r){
+        expect(r.messages).to.have.length(100);
+        done();
+      });
+    });
 
-			var t = pubnub5.history({
-				channel : config.channelWithHistory,
-				count: 10,
-				reverse : false
-			});
+    it('Get the last 10 messages', function (done) {
 
-			t.then(function(r){
-				expect(r.messages).to.not.length(0);
-				done();
-			});
-		});
-	});
+      var t = pubnub5.history({
+        channel : config.channelWithHistory,
+        count: 10,
+        reverse : false
+      });
+
+      t.then(function(r){
+        expect(r.messages).to.have.length(10);
+        done();
+      });
+    });
+  });
+
+  describe('Autoload', function () {
+    it('Should be to recovery history messages from a channel', function (done){
+      var stack = pubnub5.getMessage(config.channelWithHistory, function(){
+        expect(stack).to.have.length(100);
+        done();
+      });
+    });
+
+    it('Should be to recovery history message from a set of channels', function (done){
+      var stack = pubnub5.getMessage([config.channelWithHistory, 'channel-with-history-messages1'], function(){
+        expect(stack).to.have.length(100);
+        done();
+      });
+    });
+  });
 });
