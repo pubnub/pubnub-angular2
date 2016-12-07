@@ -5,7 +5,7 @@ describe('#History()', function () {
   pubnub5.init(config.demoWithHistoryRetention);
   pubnub5.getInstance('another').init(config.demoWithHistoryRetention);
 
-  pubnub5.subscribe({channels: [config.channelWithHistory, 'channel-with-history-messages1'], triggerEvents: true, withPresence: true, autoload: 100});
+  pubnub5.subscribe({channels: [config.channelWithHistory, config.channelWithHistory], triggerEvents: true, withPresence: true, autoload: 100});
 
   this.timeout(20000);
 
@@ -47,8 +47,8 @@ describe('#History()', function () {
     });
 
     it('Should be to recovery history message from a set of channels', function (done){
-      var stack = pubnub5.getMessage([config.channelWithHistory, 'channel-with-history-messages1'], function(){
-        expect(stack).to.have.length(100);
+      var stack = pubnub5.getMessage([config.channelWithHistory, config.channelWithHistory], function(){
+        expect(stack).to.have.length(200);
         done();
       });
     });

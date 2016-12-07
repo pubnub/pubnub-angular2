@@ -12,19 +12,10 @@ module.exports = class {
    * @param {object} message
    */
   push(channel, message) {
-    if (Array.isArray(channel)) {
-      channel.forEach((ch) => {
-        if (this.channels[ch]) this.channels[ch].push(message);
-      });
+    if (Array.isArray(channel) && this.multiChannels[channel]) {
+			this.multiChannels[channel].push(message);
     } else if (this.channels[channel]) {
       this.channels[channel].push(message);
-    }
-
-    for (let key of Object.keys(this.multiChannels)) {
-      if (key.includes(channel)) {
-        this.multiChannels[key].push(message);
-        break;
-      }
     }
   }
 
@@ -48,13 +39,8 @@ module.exports = class {
    * @param {string|[string]} channel
    */
   clean(channel) {
-    if (Array.isArray(channel)) {
-      channel.forEach((ch) => {
-        if (this.channels[ch]) this.channels[ch].length = 0;
-      });
-
-      if (this.multiChannels[channel]) this.multiChannels[channel].length = 0;
-
+    if (Array.isArray(channel) && this.multiChannels[channel]) {
+			this.multiChannels[channel].length = 0;
     } else if (this.channels[channel]) {
       this.channels[channel].length = 0;
     }
@@ -70,6 +56,22 @@ module.exports = class {
       if (!this.multiChannels[channel]) this.multiChannels[channel] = [];
     } else if (!this.channels[channel]) {
       this.channels[channel] = [];
+    }
+  }
+
+  sort(channel, key) {
+    if (Array.isArray(channel) && this.multiChannels[channel]) {
+      this.multiChannels[channel].sort((a, b) => {
+        if (a[key] > b[key]) return 1;
+        else if (a[key] < b[key]) return -1;
+        else return 0;
+      });
+    } else if (this.channels[channel]) {
+      this.channels[channel].sort((a, b) => {
+				if (a[key] > b[key]) return 1;
+				else if (a[key] < b[key]) return -1;
+				else return 0;
+			});
     }
   }
 

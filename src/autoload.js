@@ -1,3 +1,5 @@
+import config from '../config.json';
+
 module.exports = class {
   constructor() {
     this.count = {};
@@ -36,7 +38,10 @@ module.exports = class {
 
           times -= 1;
 
-          if (callback && times === 0) callback();
+          if (callback && times === 0) {
+            instance.outputOn.sort(channel, config.history_sort_attribute);
+            callback();
+					}
         }).catch(() => {});
       });
     }

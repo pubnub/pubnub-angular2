@@ -42,5 +42,6 @@
     "message",
     "presence",
     "status"
-  ]
+  ],
+  "history_sort_attribute": "timetoken"
 }
