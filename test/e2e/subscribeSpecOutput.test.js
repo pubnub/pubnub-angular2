@@ -69,7 +69,7 @@ describe('#Allocate messages in arrays of output()', function () {
 
       pubnub4.getMessage([channelName1, channelName2], function (m) {
         expect(m).to.not.equal(null);
-        expect(result1).to.have.length(4);
+        expect(result1).to.have.length(3);
         expect(result2).to.have.length(1);
         done();
       });
@@ -85,7 +85,7 @@ describe('#Allocate messages in arrays of output()', function () {
       var newStringMessege = stringMessage + '5';
 
       pubnub4.getMessage([channelName1, channelName3], function (m) {
-        expect(result1).to.have.length(5);
+        expect(result1).to.have.length(3);
         expect(result2).to.have.length(1);
         expect(result3).to.have.length(1);
         done();
@@ -95,7 +95,7 @@ describe('#Allocate messages in arrays of output()', function () {
     });
   });
 
-  describe('Clean stack of message', function (){
+  describe('Clean stack of messages', function (){
     it('For a channel', function(done) {
       var stack = pubnub4.getMessage(channelName3);
 
@@ -113,7 +113,7 @@ describe('#Allocate messages in arrays of output()', function () {
       pubnub4.clean([channelName1, channelName2]);
 
       expect(stack).to.have.length(0);
-      expect(stack1).to.have.length(0);
+      expect(stack1).to.have.length(3);
       expect(stack2).to.have.length(0);
       done();
     });

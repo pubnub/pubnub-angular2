@@ -2,7 +2,6 @@ module.exports = class {
 
   constructor() {
     this.channels = {};
-    this.multiChannels = {};
   }
 
   /**
@@ -12,19 +11,8 @@ module.exports = class {
    * @param {object} message
    */
   push(channel, message) {
-    if (Array.isArray(channel)) {
-      channel.forEach((ch) => {
-        if (this.channels[ch]) this.channels[ch].push(message);
-      });
-    } else if (this.channels[channel]) {
+    if (this.channels[channel]) {
       this.channels[channel].push(message);
-    }
-
-    for (let key of Object.keys(this.multiChannels)) {
-      if (key.includes(channel)) {
-        this.multiChannels[key].push(message);
-        break;
-      }
     }
   }
 
@@ -35,10 +23,10 @@ module.exports = class {
    * @returns [object] array
    */
   get(channel) {
-    if (Array.isArray(channel)) {
-      return this.multiChannels[channel];
-    } else {
+    if (this.channels[channel]) {
       return this.channels[channel];
+    } else {
+      return null;
     }
   }
 
@@ -48,14 +36,7 @@ module.exports = class {
    * @param {string|[string]} channel
    */
   clean(channel) {
-    if (Array.isArray(channel)) {
-      channel.forEach((ch) => {
-        if (this.channels[ch]) this.channels[ch].length = 0;
-      });
-
-      if (this.multiChannels[channel]) this.multiChannels[channel].length = 0;
-
-    } else if (this.channels[channel]) {
+    if (this.channels[channel]) {
       this.channels[channel].length = 0;
     }
   }
@@ -66,10 +47,18 @@ module.exports = class {
    * @param {string|[string]} channel
    */
   subscribe(channel) {
-    if (Array.isArray(channel)) {
-      if (!this.multiChannels[channel]) this.multiChannels[channel] = [];
-    } else if (!this.channels[channel]) {
+    if (!this.channels[channel]) {
       this.channels[channel] = [];
+    }
+  }
+
+  sort(channel, key) {
+    if (this.channels[channel]) {
+      this.channels[channel].sort((a, b) => {
+        if (a[key] > b[key]) return 1;
+        else if (a[key] < b[key]) return -1;
+        else return 0;
+      });
     }
   }
 
@@ -79,11 +68,8 @@ module.exports = class {
    * @param {string|[string]} channel
    */
   unsubscribe(channel) {
-    this.clean(channel);
-
-    if (Array.isArray(channel)) {
-      if (this.multiChannels[channel]) delete this.multiChannels[channel];
-    } else if (!this.channels[channel]) {
+    if (this.channels[channel]) {
+      this.clean(channel);
       delete this.channels[channel];
     }
   }

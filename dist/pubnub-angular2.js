@@ -284,7 +284,8 @@
 			"message",
 			"presence",
 			"status"
-		]
+		],
+		"history_sort_attribute": "timetoken"
 	};
 
 /***/ },
@@ -835,7 +836,6 @@
 	    _classCallCheck(this, _class);
 
 	    this.channels = {};
-	    this.multiChannels = {};
 	  }
 
 	  /**
@@ -849,42 +849,8 @@
 	  _createClass(_class, [{
 	    key: "push",
 	    value: function push(channel, message) {
-	      var _this = this;
-
-	      if (Array.isArray(channel)) {
-	        channel.forEach(function (ch) {
-	          if (_this.channels[ch]) _this.channels[ch].push(message);
-	        });
-	      } else if (this.channels[channel]) {
+	      if (this.channels[channel]) {
 	        this.channels[channel].push(message);
-	      }
-
-	      var _iteratorNormalCompletion = true;
-	      var _didIteratorError = false;
-	      var _iteratorError = undefined;
-
-	      try {
-	        for (var _iterator = Object.keys(this.multiChannels)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var key = _step.value;
-
-	          if (key.includes(channel)) {
-	            this.multiChannels[key].push(message);
-	            break;
-	          }
-	        }
-	      } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion && _iterator.return) {
-	            _iterator.return();
-	          }
-	        } finally {
-	          if (_didIteratorError) {
-	            throw _iteratorError;
-	          }
-	        }
 	      }
 	    }
 
@@ -898,10 +864,10 @@
 	  }, {
 	    key: "get",
 	    value: function get(channel) {
-	      if (Array.isArray(channel)) {
-	        return this.multiChannels[channel];
-	      } else {
+	      if (this.channels[channel]) {
 	        return this.channels[channel];
+	      } else {
+	        return null;
 	      }
 	    }
 
@@ -914,15 +880,7 @@
 	  }, {
 	    key: "clean",
 	    value: function clean(channel) {
-	      var _this2 = this;
-
-	      if (Array.isArray(channel)) {
-	        channel.forEach(function (ch) {
-	          if (_this2.channels[ch]) _this2.channels[ch].length = 0;
-	        });
-
-	        if (this.multiChannels[channel]) this.multiChannels[channel].length = 0;
-	      } else if (this.channels[channel]) {
+	      if (this.channels[channel]) {
 	        this.channels[channel].length = 0;
 	      }
 	    }
@@ -936,10 +894,17 @@
 	  }, {
 	    key: "subscribe",
 	    value: function subscribe(channel) {
-	      if (Array.isArray(channel)) {
-	        if (!this.multiChannels[channel]) this.multiChannels[channel] = [];
-	      } else if (!this.channels[channel]) {
+	      if (!this.channels[channel]) {
 	        this.channels[channel] = [];
+	      }
+	    }
+	  }, {
+	    key: "sort",
+	    value: function sort(channel, key) {
+	      if (this.channels[channel]) {
+	        this.channels[channel].sort(function (a, b) {
+	          if (a[key] > b[key]) return 1;else if (a[key] < b[key]) return -1;else return 0;
+	        });
 	      }
 	    }
 
@@ -952,11 +917,8 @@
 	  }, {
 	    key: "unsubscribe",
 	    value: function unsubscribe(channel) {
-	      this.clean(channel);
-
-	      if (Array.isArray(channel)) {
-	        if (this.multiChannels[channel]) delete this.multiChannels[channel];
-	      } else if (!this.channels[channel]) {
+	      if (this.channels[channel]) {
+	        this.clean(channel);
 	        delete this.channels[channel];
 	      }
 	    }
@@ -967,83 +929,94 @@
 
 /***/ },
 /* 8 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _config = __webpack_require__(3);
+
+	var _config2 = _interopRequireDefault(_config);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	module.exports = function () {
-		function _class() {
-			_classCallCheck(this, _class);
+	  function _class() {
+	    _classCallCheck(this, _class);
 
-			this.count = {};
-			this.instance = undefined;
-		}
+	    this.count = {};
+	    this.instance = undefined;
+	  }
 
-		_createClass(_class, [{
-			key: 'initialize',
-			value: function initialize(instance) {
-				this.instance = instance;
-			}
-		}, {
-			key: 'enableLoad',
-			value: function enableLoad(args) {
-				var _this = this;
+	  _createClass(_class, [{
+	    key: 'initialize',
+	    value: function initialize(instance) {
+	      this.instance = instance;
+	    }
+	  }, {
+	    key: 'enableLoad',
+	    value: function enableLoad(args) {
+	      var _this = this;
 
-				if (args.autoload && typeof args.autoload === 'number') {
-					this.count[args.channels] = args.autoload;
+	      if (args.autoload && typeof args.autoload === 'number') {
+	        this.count[args.channels] = args.autoload;
 
-					args.channels.forEach(function (channel) {
-						_this.count[channel] = args.autoload;
-					});
-				}
-			}
-		}, {
-			key: 'getHistory',
-			value: function getHistory(channel, callback) {
-				var _this2 = this;
+	        args.channels.forEach(function (channel) {
+	          _this.count[channel] = args.autoload;
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'getHistory',
+	    value: function getHistory(channel, callback) {
+	      var _this2 = this;
 
-				if (this.count[channel]) {
-					(function () {
-						var instance = _this2.instance;
-						var _channels = Array.isArray(channel) ? channel : [channel];
-						var times = _channels.length;
+	      if (this.count[channel]) {
+	        (function () {
+	          var instance = _this2.instance;
+	          var _channels = Array.isArray(channel) ? channel : [channel];
+	          var times = _channels.length;
 
-						_channels.forEach(function (ch) {
-							instance.history({ channel: ch, count: _this2.count[channel] }).then(function (response) {
+	          _channels.forEach(function (ch) {
+	            instance.history({ channel: ch, count: _this2.count[channel] }).then(function (response) {
 
-								response.messages.forEach(function (m) {
-									m.message = m.entry;
-									m.channel = ch;
+	              response.messages.forEach(function (m) {
+	                m.message = m.entry;
+	                m.channel = ch;
 
-									instance.outputOn.push(channel, m);
-								});
+	                instance.outputOn.push(channel, m);
+	              });
 
-								if (callback && --times === 0) callback();
-							}).catch(function (error) {/*console.log(error);*/});
-						});
-					})();
-				}
-			}
-		}, {
-			key: 'disableLoad',
-			value: function disableLoad(args) {
-				var _this3 = this;
+	              times -= 1;
 
-				if (Array.isArray(args.channels)) {
-					args.channels.forEach(function (ch) {
-						delete _this3.count[ch];
-					});
-				} else {
-					delete this.count[args.channels];
-				}
-			}
-		}]);
+	              if (callback && times === 0) {
+	                instance.outputOn.sort(channel, _config2.default.history_sort_attribute);
+	                callback();
+	              }
+	            }).catch(function () {});
+	          });
+	        })();
+	      }
+	    }
+	  }, {
+	    key: 'disableLoad',
+	    value: function disableLoad(args) {
+	      var _this3 = this;
 
-		return _class;
+	      if (Array.isArray(args.channels)) {
+	        args.channels.forEach(function (ch) {
+	          if (_this3.count[ch]) delete _this3.count[ch];
+	        });
+	      } else if (this.count[args.channels]) {
+	        delete this.count[args.channels];
+	      }
+	    }
+	  }]);
+
+	  return _class;
 	}();
 
 /***/ }
