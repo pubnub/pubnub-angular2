@@ -369,3 +369,24 @@ pubnubService.history({channel: 'myChannel1'}).then((response) => {
 	console.log(response);
 });
 ```
+
+**Retriving the history from ```getMessage``` method:**
+
+At the moment that you are subscribing a channel you can pass the optional parameter ```autoload``` this value has to
+contain a value from 1 to 100 in order to retrieve the last messages published in the channel. When the ```getMessage```
+is called this going to retrieve the history.
+
+```javascript
+pubnubService.subscribe({channels: ['myChannel1'], triggerEvents: true, withPresence: true, autoload: 100});
+
+var myStack1 = pubnubService.getMessage('myChannel1');
+```
+
+Also you can use a callback to know when the retrieving process has finished.
+
+```javascript
+var myStack1 = pubnubService.getMessage('myChannel1', () => {
+	console.log(myStack1);
+});
+```
+
