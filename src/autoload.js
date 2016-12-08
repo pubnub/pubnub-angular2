@@ -41,7 +41,7 @@ module.exports = class {
           if (callback && times === 0) {
             instance.outputOn.sort(channel, config.history_sort_attribute);
             callback();
-					}
+          }
         }).catch(() => {});
       });
     }

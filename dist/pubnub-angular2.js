@@ -836,7 +836,6 @@
 	    _classCallCheck(this, _class);
 
 	    this.channels = {};
-	    this.multiChannels = {};
 	  }
 
 	  /**
@@ -850,9 +849,7 @@
 	  _createClass(_class, [{
 	    key: "push",
 	    value: function push(channel, message) {
-	      if (Array.isArray(channel) && this.multiChannels[channel]) {
-	        this.multiChannels[channel].push(message);
-	      } else if (this.channels[channel]) {
+	      if (this.channels[channel]) {
 	        this.channels[channel].push(message);
 	      }
 	    }
@@ -867,10 +864,10 @@
 	  }, {
 	    key: "get",
 	    value: function get(channel) {
-	      if (Array.isArray(channel)) {
-	        return this.multiChannels[channel];
-	      } else {
+	      if (this.channels[channel]) {
 	        return this.channels[channel];
+	      } else {
+	        return null;
 	      }
 	    }
 
@@ -883,9 +880,7 @@
 	  }, {
 	    key: "clean",
 	    value: function clean(channel) {
-	      if (Array.isArray(channel) && this.multiChannels[channel]) {
-	        this.multiChannels[channel].length = 0;
-	      } else if (this.channels[channel]) {
+	      if (this.channels[channel]) {
 	        this.channels[channel].length = 0;
 	      }
 	    }
@@ -899,20 +894,14 @@
 	  }, {
 	    key: "subscribe",
 	    value: function subscribe(channel) {
-	      if (Array.isArray(channel)) {
-	        if (!this.multiChannels[channel]) this.multiChannels[channel] = [];
-	      } else if (!this.channels[channel]) {
+	      if (!this.channels[channel]) {
 	        this.channels[channel] = [];
 	      }
 	    }
 	  }, {
 	    key: "sort",
 	    value: function sort(channel, key) {
-	      if (Array.isArray(channel) && this.multiChannels[channel]) {
-	        this.multiChannels[channel].sort(function (a, b) {
-	          if (a[key] > b[key]) return 1;else if (a[key] < b[key]) return -1;else return 0;
-	        });
-	      } else if (this.channels[channel]) {
+	      if (this.channels[channel]) {
 	        this.channels[channel].sort(function (a, b) {
 	          if (a[key] > b[key]) return 1;else if (a[key] < b[key]) return -1;else return 0;
 	        });
@@ -928,11 +917,8 @@
 	  }, {
 	    key: "unsubscribe",
 	    value: function unsubscribe(channel) {
-	      this.clean(channel);
-
-	      if (Array.isArray(channel)) {
-	        if (this.multiChannels[channel]) delete this.multiChannels[channel];
-	      } else if (!this.channels[channel]) {
+	      if (this.channels[channel]) {
+	        this.clean(channel);
 	        delete this.channels[channel];
 	      }
 	    }
