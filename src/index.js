@@ -1,2 +1,3 @@
-require('./vendor/polyfill.js');
-require('./pubnub.js');
+import pubnub from './pubnub';
+
+export default pubnub;

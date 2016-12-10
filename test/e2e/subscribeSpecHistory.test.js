@@ -1,6 +1,6 @@
 describe('#History()', function () {
 
-  var pubnub5 = new window.PubNubAngular();
+  var pubnub5 = new PubNubAngular();
 
   pubnub5.init(config.demoWithHistoryRetention);
   pubnub5.getInstance('another').init(config.demoWithHistoryRetention);

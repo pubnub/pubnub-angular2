@@ -1,6 +1,6 @@
 import config from '../config.json';
 
-module.exports = class {
+export default class Autoload {
   constructor() {
     this.count = {};
     this.instance = undefined;
@@ -56,4 +56,4 @@ module.exports = class {
       delete this.count[args.channels];
     }
   }
-};
+}

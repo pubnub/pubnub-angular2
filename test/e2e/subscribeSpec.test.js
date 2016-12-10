@@ -1,6 +1,6 @@
 describe('#subscribe()', function () {
 
-	var pubnub = new window.PubNubAngular();
+	var pubnub = new PubNubAngular();
 
 	var channelName = undefined;
 	var stringMessage = 'hey';

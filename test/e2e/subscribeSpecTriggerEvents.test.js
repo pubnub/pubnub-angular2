@@ -1,6 +1,6 @@
 describe('#Triggered all events()', function () {
 
-	var pubnub3 = new window.PubNubAngular();
+	var pubnub3 = new PubNubAngular();
 
 	var channelName1 = getRandomChannel();
 	var channelName2 = getRandomChannel();

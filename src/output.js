@@ -1,5 +1,4 @@
-module.exports = class {
-
+export default class Output {
   constructor() {
     this.channels = {};
   }
@@ -73,4 +72,4 @@ module.exports = class {
       delete this.channels[channel];
     }
   }
-};
+}

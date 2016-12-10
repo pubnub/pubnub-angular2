@@ -1,11 +1,10 @@
 /* global angular PUBNUB */
-import Mock from './mocks';
+import Mock from './mock';
 import Broadcast from './broadcast';
 import Output from './output';
 import Autoload from './autoload';
 
-module.exports = class {
-
+export default class Wrapper {
   constructor(label) {
     this.label = label;
     this.pubnubInstance = null;
@@ -159,4 +158,4 @@ module.exports = class {
       return this.getOriginalInstance()[methodName](args);
     };
   }
-};
+}
