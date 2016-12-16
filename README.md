@@ -65,13 +65,14 @@ ngComponent, this is going to depend on how far do you want to get your Pubnub i
 This will make sure that the Pubnub object is available to get injected into your ngComponents,
 Pubnub is going to be defined inside your ngModule, it allows that `PubNubAngular` is accessible globally.
 
+**ECMAScript 5**
 ```javascript
 (function (app) {
 
     app.your_module = ng.core.NgModule({
         imports: [...],
         declarations: [...],
-        providers: [window.PubNubAngular],
+        providers: [PubNubAngular],
         bootstrap: [...]
     }).Class({
         constructor: function(){}
@@ -98,7 +99,7 @@ If it was not used ngModule to register PubNub like above, this there has to reg
 
     }).Class({
 
-        constructor: [window.PubNubAngular, function(pubnubService){
+        constructor: [PubNubAngular, function(pubnubService){
 
             pubnubService.init({
                 publishKey: 'your pub key',
@@ -128,7 +129,7 @@ var defaultInstance = new PubNub({
 ### Creating a default instance PubNub Angular 2 SDK
 
 ```javascript
-var pubnubService = new window.PubNubAngular();
+var pubnubService = new PubNubAngular();
 
 pubnubService.init({
     publishKey: 'your pub key',
@@ -142,7 +143,7 @@ In most use cases, usage of the default PubNub instance will be sufficient, but 
 different credentials are needed, the ```pubnubService.getInstance(instanceName)``` getter needs to be utilized.
 
 ```javascript
-var pubnubService = new window.PubNubAngular();
+var pubnubService = new PubNubAngular();
 
 pubnubService.getInstance("another").init({
 	publishKey: 'your pub key',

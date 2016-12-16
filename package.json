@@ -2,7 +2,9 @@
   "name": "pubnub-angular2",
   "version": "1.0.0-beta.6",
   "description": "Official PubNub Angular2",
-  "main": "dist/pubnub-angular2.min.js",
+  "main": "dist/pubnub-angular2.js",
+  "module": "src/index.js",
+  "typings": "src/demo.ts",
   "devDependencies": {
     "@angular/common": "~2.3.0",
     "@angular/compiler": "~2.3.0",
