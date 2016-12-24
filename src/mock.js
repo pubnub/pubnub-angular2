@@ -1,6 +1,6 @@
 import config from '../config.json';
 
-export default class Mock {
+class Mock {
 
   constructor(broadcaster) {
     this.listener = null;
@@ -122,3 +122,7 @@ export default class Mock {
     }
   }
 }
+
+module.exports = Mock;
+
+module.exports.Mock = Mock;

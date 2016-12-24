@@ -4,7 +4,7 @@ import Broadcast from './broadcast';
 import Output from './output';
 import Autoload from './autoload';
 
-export default class Wrapper {
+class Wrapper {
   constructor(label) {
     this.label = label;
     this.pubnubInstance = null;
@@ -159,3 +159,7 @@ export default class Wrapper {
     };
   }
 }
+
+module.exports = Wrapper;
+
+module.exports.Wrapper = Wrapper;

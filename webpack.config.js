@@ -3,11 +3,11 @@ var webpack = require('webpack');
 
 var config = {
 	// webpack options
-	entry: './src/index.js',
+	entry: './src/pubnub.js',
 	module: {
 		loaders: [
 			{ test: /\.json/, loader: 'json' },
-			{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+			{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
 		]
 	},
 	output: {

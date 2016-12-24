@@ -1,4 +1,4 @@
-export default class Output {
+class Output {
   constructor() {
     this.channels = {};
   }
@@ -73,3 +73,7 @@ export default class Output {
     }
   }
 }
+
+module.exports = Output;
+
+module.exports.Output = Output;
