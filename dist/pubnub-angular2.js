@@ -1,5 +1,15 @@
 /*! 1.0.0-beta.6 */
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["PubNubAngular"] = factory();
+	else
+		root["PubNubAngular"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -47,81 +57,49 @@
 
 	'use strict';
 
-	__webpack_require__(1);
-	__webpack_require__(2);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global window */
 
-/***/ },
-/* 1 */
-/***/ function(module, exports) {
 
-	'use strict';
-
-	/* istanbul ignore next */
-	// Object.create(proto[, propertiesObject])
-	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-	if (typeof Object.create !== 'function') {
-	  Object.create = function () {
-	    var Temp = function Temp() {};
-	    return function (prototype) {
-	      if (arguments.length > 1) {
-	        throw new Error('Second argument not supported');
-	      }
-	      if (prototype !== Object(prototype) && prototype !== null) {
-	        throw new TypeError('Argument must be an object or null');
-	      }
-	      if (prototype === null) {
-	        throw Error('null [[Prototype]] not supported');
-	      }
-	      Temp.prototype = prototype;
-	      var result = new Temp();
-	      Temp.prototype = null;
-	      return result;
-	    };
-	  }();
-	}
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _config = __webpack_require__(3);
+	var _config = __webpack_require__(1);
 
 	var _config2 = _interopRequireDefault(_config);
 
-	var _wrapper = __webpack_require__(4);
+	var _wrapper = __webpack_require__(2);
 
 	var _wrapper2 = _interopRequireDefault(_wrapper);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/* global window */
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	(function () {
+	var PubNubAngular = function () {
+	  function PubNubAngular() {
+	    _classCallCheck(this, PubNubAngular);
 
-	  window.PubNubAngular = ng.core.Class({
-	    constructor: function constructor() {
-	      if (typeof PubNub === 'undefined' || PubNub === null) {
-	        throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
-	      }
+	    if (typeof PubNub === 'undefined' || PubNub === null) {
+	      throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
+	    }
 
-	      this.wrappers = {};
-	    },
+	    this.wrappers = {};
+	  }
 
-	    /**
-	     * Initializer for default instance
-	     *
-	     * @param {Object} initConfig
-	     */
-	    init: function init(initConfig) {
+	  /**
+	   * Initializer for default instance
+	   *
+	   * @param {Object} initConfig
+	   */
+
+
+	  _createClass(PubNubAngular, [{
+	    key: 'init',
+	    value: function init(initConfig) {
 
 	      var instance = this.getInstance(_config2.default.default_instance_name);
 
 	      instance.init(initConfig);
 
 	      return instance;
-	    },
+	    }
 
 	    /**
 	     * Instance getter
@@ -129,7 +107,10 @@
 	     * @param instanceName
 	     * @returns {Wrapper}
 	     */
-	    getInstance: function getInstance(instanceName) {
+
+	  }, {
+	    key: 'getInstance',
+	    value: function getInstance(instanceName) {
 	      var _this = this;
 
 	      var instance = this.wrappers[instanceName];
@@ -165,25 +146,31 @@
 	      }
 
 	      return instance;
-	    },
+	    }
 
 	    /**
 	     * Subscribe method wrapped for default instance
 	     *
 	     * @param {object} args
 	     */
-	    subscribe: function subscribe(args) {
+
+	  }, {
+	    key: 'subscribe',
+	    value: function subscribe(args) {
 	      this.getInstance(_config2.default.default_instance_name).subscribe(args);
-	    },
+	    }
 
 	    /**
 	     * Unsubscribe method wrapped for default instance
 	     *
 	     * @param {object} args
 	     */
-	    unsubscribe: function unsubscribe(args) {
+
+	  }, {
+	    key: 'unsubscribe',
+	    value: function unsubscribe(args) {
 	      this.getInstance(_config2.default.default_instance_name).unsubscribe(args);
-	    },
+	    }
 
 	    /**
 	     * GetMessage method wrapped for default instance
@@ -192,9 +179,12 @@
 	     * @param callback
 	     * @returns [object] array
 	     */
-	    getMessage: function getMessage(channel, callback) {
+
+	  }, {
+	    key: 'getMessage',
+	    value: function getMessage(channel, callback) {
 	      return this.getInstance(_config2.default.default_instance_name).getMessage(channel, callback);
-	    },
+	    }
 
 	    /**
 	     * GetPresence method wrapped for default instance
@@ -202,9 +192,12 @@
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
-	    getPresence: function getPresence(channel, callback) {
+
+	  }, {
+	    key: 'getPresence',
+	    value: function getPresence(channel, callback) {
 	      this.getInstance(_config2.default.default_instance_name).getPresence(channel, callback);
-	    },
+	    }
 
 	    /**
 	     * GetStatus method wrapped for default instance
@@ -212,32 +205,47 @@
 	     * @param {string|[string]} channel
 	     * @param callback
 	     */
-	    getStatus: function getStatus(channel, callback) {
+
+	  }, {
+	    key: 'getStatus',
+	    value: function getStatus(channel, callback) {
 	      this.getInstance(_config2.default.default_instance_name).getStatus(channel, callback);
-	    },
+	    }
 
 	    /**
 	     * GetError method wrapped for default instance
 	     *
 	     * @param callback
 	     */
-	    getError: function getError(callback) {
+
+	  }, {
+	    key: 'getError',
+	    value: function getError(callback) {
 	      this.getInstance(_config2.default.default_instance_name).getError(callback);
-	    },
+	    }
 
 	    /**
 	     * Clean Method wrapped for default instance
 	     *
 	     * @param {string|[string]} channel
 	     */
-	    clean: function clean(channel) {
+
+	  }, {
+	    key: 'clean',
+	    value: function clean(channel) {
 	      this.getInstance(_config2.default.default_instance_name).clean(channel);
 	    }
-	  });
-	})();
+	  }]);
+
+	  return PubNubAngular;
+	}();
+
+	module.exports = PubNubAngular;
+
+	module.exports.PubNubAngular = PubNubAngular;
 
 /***/ },
-/* 3 */
+/* 1 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -289,7 +297,7 @@
 	};
 
 /***/ },
-/* 4 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -297,19 +305,19 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global angular PUBNUB */
 
 
-	var _mocks = __webpack_require__(5);
+	var _mock = __webpack_require__(3);
 
-	var _mocks2 = _interopRequireDefault(_mocks);
+	var _mock2 = _interopRequireDefault(_mock);
 
-	var _broadcast = __webpack_require__(6);
+	var _broadcast = __webpack_require__(4);
 
 	var _broadcast2 = _interopRequireDefault(_broadcast);
 
-	var _output = __webpack_require__(7);
+	var _output = __webpack_require__(5);
 
 	var _output2 = _interopRequireDefault(_output);
 
-	var _autoload = __webpack_require__(8);
+	var _autoload = __webpack_require__(6);
 
 	var _autoload2 = _interopRequireDefault(_autoload);
 
@@ -317,15 +325,15 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	module.exports = function () {
-	  function _class(label) {
-	    _classCallCheck(this, _class);
+	var Wrapper = function () {
+	  function Wrapper(label) {
+	    _classCallCheck(this, Wrapper);
 
 	    this.label = label;
 	    this.pubnubInstance = null;
 	    this.broadcastOn = new _broadcast2.default();
 	    this.outputOn = new _output2.default();
-	    this.mockingInstance = new _mocks2.default(this.broadcastOn);
+	    this.mockingInstance = new _mock2.default(this.broadcastOn);
 	    this.autoload = new _autoload2.default();
 	  }
 
@@ -336,7 +344,7 @@
 	   */
 
 
-	  _createClass(_class, [{
+	  _createClass(Wrapper, [{
 	    key: 'init',
 	    value: function init(initConfig) {
 	      this.pubnubInstance = new PubNub(initConfig);
@@ -514,18 +522,22 @@
 	    }
 	  }]);
 
-	  return _class;
+	  return Wrapper;
 	}();
 
+	module.exports = Wrapper;
+
+	module.exports.Wrapper = Wrapper;
+
 /***/ },
-/* 5 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _config = __webpack_require__(3);
+	var _config = __webpack_require__(1);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -533,9 +545,9 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	module.exports = function () {
-	  function _class(broadcaster) {
-	    _classCallCheck(this, _class);
+	var Mock = function () {
+	  function Mock(broadcaster) {
+	    _classCallCheck(this, Mock);
 
 	    this.listener = null;
 	    this.broadcaster = broadcaster;
@@ -549,7 +561,7 @@
 	   */
 
 
-	  _createClass(_class, [{
+	  _createClass(Mock, [{
 	    key: 'initializeListener',
 	    value: function initializeListener(instance) {
 	      var _this = this;
@@ -681,18 +693,22 @@
 	    }
 	  }]);
 
-	  return _class;
+	  return Mock;
 	}();
 
+	module.exports = Mock;
+
+	module.exports.Mock = Mock;
+
 /***/ },
-/* 6 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _config = __webpack_require__(3);
+	var _config = __webpack_require__(1);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -731,11 +747,11 @@
 	  } else if (event[channel]) delete event[channel];
 	}
 
-	module.exports = function () {
-	  function _class() {
+	var Broadcast = function () {
+	  function Broadcast() {
 	    var _this = this;
 
-	    _classCallCheck(this, _class);
+	    _classCallCheck(this, Broadcast);
 
 	    _config2.default.subscribe_listener_events_to_broadcast.forEach(function (eventName) {
 	      var event = '_'.concat(eventName);
@@ -763,7 +779,7 @@
 	   */
 
 
-	  _createClass(_class, [{
+	  _createClass(Broadcast, [{
 	    key: 'emit',
 	    value: function emit(event, channel, args) {
 	      var subscriber = '_'.concat(event);
@@ -818,11 +834,15 @@
 	    }
 	  }]);
 
-	  return _class;
+	  return Broadcast;
 	}();
 
+	module.exports = Broadcast;
+
+	module.exports.Broadcast = Broadcast;
+
 /***/ },
-/* 7 */
+/* 5 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -831,9 +851,9 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	module.exports = function () {
-	  function _class() {
-	    _classCallCheck(this, _class);
+	var Output = function () {
+	  function Output() {
+	    _classCallCheck(this, Output);
 
 	    this.channels = {};
 	  }
@@ -846,7 +866,7 @@
 	   */
 
 
-	  _createClass(_class, [{
+	  _createClass(Output, [{
 	    key: "push",
 	    value: function push(channel, message) {
 	      if (this.channels[channel]) {
@@ -924,18 +944,22 @@
 	    }
 	  }]);
 
-	  return _class;
+	  return Output;
 	}();
 
+	module.exports = Output;
+
+	module.exports.Output = Output;
+
 /***/ },
-/* 8 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _config = __webpack_require__(3);
+	var _config = __webpack_require__(1);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -943,15 +967,15 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	module.exports = function () {
-	  function _class() {
-	    _classCallCheck(this, _class);
+	var Autoload = function () {
+	  function Autoload() {
+	    _classCallCheck(this, Autoload);
 
 	    this.count = {};
 	    this.instance = undefined;
 	  }
 
-	  _createClass(_class, [{
+	  _createClass(Autoload, [{
 	    key: 'initialize',
 	    value: function initialize(instance) {
 	      this.instance = instance;
@@ -1016,8 +1040,14 @@
 	    }
 	  }]);
 
-	  return _class;
+	  return Autoload;
 	}();
 
+	module.exports = Autoload;
+
+	module.exports.Autoload = Autoload;
+
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;

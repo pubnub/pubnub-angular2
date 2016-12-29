@@ -43,7 +43,7 @@ gulp.task('create_version_gzip', function () {
 });
 
 gulp.task('webpack', function () {
-  return gulp.src(src + '/index.js')
+  return gulp.src(src + '/pubnub.js')
       .pipe(gulpWebpack(webpackConfig))
       .pipe(gulp.dest(dist))
       .pipe(gulpRename('pubnub-angular2.js'));

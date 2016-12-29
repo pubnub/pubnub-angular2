@@ -1,6 +1,6 @@
 describe('#Allocate messages in arrays of output()', function () {
 
-  var pubnub4 = new window.PubNubAngular();
+  var pubnub4 = new PubNubAngular();
 
   var channelName1 = getRandomChannel();
   var channelName2 = getRandomChannel();

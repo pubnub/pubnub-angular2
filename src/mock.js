@@ -1,6 +1,6 @@
 import config from '../config.json';
 
-module.exports = class {
+class Mock {
 
   constructor(broadcaster) {
     this.listener = null;
@@ -121,4 +121,8 @@ module.exports = class {
       this.removeEventBroadcast(args.channelGroups);
     }
   }
-};
+}
+
+module.exports = Mock;
+
+module.exports.Mock = Mock;

@@ -1,6 +1,6 @@
 describe('#subscribe_channelGroups', function () {
 
-	var pubnub2 = new window.PubNubAngular();
+	var pubnub2 = new PubNubAngular();
 
 	pubnub2.init(config.with_channel_groups);
 
