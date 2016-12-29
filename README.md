@@ -22,7 +22,7 @@ more suitable for your situation.
 - If you **need help** or have a **general question**, contact <support@pubnub.com>
 - If you **want to contribute**, please open a pull request against the `develop` branch.
 
-## Integrating PubNub Angular SDK into Your App
+## Integrating PubNub Angular SDK into Your Javascript App
 
 Your HTML page will include 2 key libraries:
 
@@ -53,11 +53,43 @@ Your HTML page will include 2 key libraries:
     <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2.(version).min.js"></script>
     ```
 
-To utilize this wrapper, include the scripts in the following order:
+To utilize this wrapper, include the scripts in the following order after you register all angular scripts which you need:
 ```html  
-  <script src="(latest version of PubNub JS SDK from https://github.com/pubnub/javascript)"></script>
+  <script src="(latest version of PubNub JS SDK Version 4 from https://github.com/pubnub/javascript)"></script>
   <script src="(pubnub-angular2.js)"></script>
 ```
+
+## Integrating PubNub Angular SDK into Your TypeScript App
+
+* PubNub JavaScript SDK V4
+
+  - With NPM:
+      ```shell
+      npm install pubnub
+      ```
+  - With Bower:
+    ```shell
+    bower install pubnub
+    ```
+
+* PubNub JavaScript SDK Angular2 Service
+  - With NPM:
+      ```shell
+      npm install pubnub-angular2
+      ```
+
+To utilize this wrapper, register the PubNub JS script Version 4 in your HTML:
+```html  
+  <script src="(latest version of PubNub JS SDK Version 4 from https://github.com/pubnub/javascript)"></script>
+```
+
+Followed of this, define the pubnub-angular2 module inside the SystemJS file after all angular modules which you need.
+
+```javascript
+'pubnub-angular2': 'npm:pubnub-angular2/dist/pubnub-angular2.js'
+```
+
+## How to use PubNubAngular
 
 You have to register `PubNubAngular` inside `providers` property either in yours ngModule or
 ngComponent, this is going to depend on how far do you want to get your Pubnub instance.
@@ -65,7 +97,7 @@ ngComponent, this is going to depend on how far do you want to get your Pubnub i
 This will make sure that the Pubnub object is available to get injected into your ngComponents,
 Pubnub is going to be defined inside your ngModule, it allows that `PubNubAngular` is accessible globally.
 
-**ECMAScript 5**
+**Javascript**
 ```javascript
 (function (app) {
 
@@ -85,10 +117,26 @@ Pubnub is going to be defined inside your ngModule, it allows that `PubNubAngula
 })(window.app || (window.app = {}));
 ```
 
+**TypeScript**
+```typescript
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { PubNubAngular } from 'pubnub-angular2';
+
+@NgModule({
+  imports:      [ BrowserModule ],
+  declarations: [ ... ],
+  bootstrap:    [ ... ],
+  providers: [ PubNubAngular ]
+})
+export class AppModule { }
+```
+
 How to inject **pubnub service** inside the angular component.
 
-If it was not used ngModule to register PubNub like above, this there has to register directly from ngComponent.
+If it was not used ngModule to register PubNub like above, this there has to register directly from ngComponent providers.
 
+**Javascript**
 ```javascript
 (function (app) {
 
@@ -113,16 +161,47 @@ If it was not used ngModule to register PubNub like above, this there has to reg
 })(window.app || (window.app = {}));
 ```
 
+**TypeScript**
+```typescript
+import {Component, Injectable, Class} from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  template: '<div>...</div>',
+})
+
+export class AppComponent  {
+  constructor(pubnubService: PubNubAngular){
+
+    pubnubService.init({
+      publishKey: 'your pub key',
+      subscribeKey: 'your sub key'
+    });
+  }
+}
+```
+
 ## Differences in usage with native JavaScript SDK
 
 In **Pubnub Angular2 SDK** instances are hidden inside service and are accessible via instance getter.
 
 ### Creating a default instance PubNub JS V4
 
+**Javascript**
 ```javascript
 var defaultInstance = new PubNub({
     publishKey: 'your pub key',
     subscribeKey: 'your sub key'
+});
+```
+
+**TypeScript**
+```typescript
+declare var PubNub: any;
+
+var defaultInstance = new PubNub({
+  publishKey: 'your pub key',
+  subscribeKey: 'your sub key'
 });
 ```
 
@@ -165,7 +244,7 @@ To learn about PubNub JavaScript features and methods available refer to the API
 **Examples:**
 
 ```javascript
-pubnubService.publish({channel: 'myChannel', message: 'Hello!'}, (status, response) => {
+pubnubService.publish({channel: 'myChannel', message: 'Hello!'}, (response) => {
     console.log(response);
 });
 ```
@@ -173,7 +252,7 @@ pubnubService.publish({channel: 'myChannel', message: 'Hello!'}, (status, respon
 With an other instance
 
 ```javascript
-pubnubService.getInstance("another").publish({channel: 'myChannel', message: 'Hello!'}, (status, response) => {
+pubnubService.getInstance("another").publish({channel: 'myChannel', message: 'Hello!'}, (response) => {
     console.log(response);
 });
 ```
@@ -211,8 +290,7 @@ pubnubService.subscribe({
     channelGroups: ['myGroup1', 'myGroup2'],
     withPresence: true,
     triggerEvents: ['message', 'presence', 'status']
-  });
-};
+});
 ```
 
 You can also enable all possible events using `triggerEvents: true`
@@ -220,11 +298,11 @@ You can also enable all possible events using `triggerEvents: true`
 **Listening to a message event of a specific channel or channel group:**
 
 ```javascript
-pubnubService.getMessage('myChannel', (msg) => {
+pubnubService.getMessage('myChannel', function(msg) {
     console.log(msg);
 });
 
-pubnubService.getMessage('myGroup1', (msg) => {
+pubnubService.getMessage('myGroup1', function(msg) {
     console.log(msg);
 });
 ```
@@ -232,7 +310,7 @@ pubnubService.getMessage('myGroup1', (msg) => {
 **Listening to a message event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.getMessage(['myChannel1', 'myChannel2', 'myGroup1'], (msg) => {
+pubnubService.getMessage(['myChannel1', 'myChannel2', 'myGroup1'], function(msg) {
     console.log(msg.message);
     console.log(msg.channel);
 });
@@ -241,11 +319,11 @@ pubnubService.getMessage(['myChannel1', 'myChannel2', 'myGroup1'], (msg) => {
 **Listening to a presence event of a specific channel or channel group:**
 
 ```javascript
-pubnubService.getPresence('myChannel', (pse) => {
+pubnubService.getPresence('myChannel', function(pse) {
     console.log(pse);
 });
 
-pubnubService.getPresence('myGroup1', (pse) => {
+pubnubService.getPresence('myGroup1', function(pse) {
     console.log(pse);
 });
 ```
@@ -253,7 +331,7 @@ pubnubService.getPresence('myGroup1', (pse) => {
 **Listening to a presence event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.getPresence(['myChannel1', 'myChannel2', 'myGroup1'], (pse) => {
+pubnubService.getPresence(['myChannel1', 'myChannel2', 'myGroup1'], function(pse) {
     console.log(pse);
     console.log(pse.subscribedChannel);
 });
@@ -262,11 +340,11 @@ pubnubService.getPresence(['myChannel1', 'myChannel2', 'myGroup1'], (pse) => {
 **Listening to the global status for a channel or channel group:**
 
 ```javascript
-pubnubService.getStatus('myChannel', (st) => {
+pubnubService.getStatus('myChannel', function(st) {
     console.log(st);
 });
 
-pubnubService.getStatus('myGroup1', (st) => {
+pubnubService.getStatus('myGroup1', function(st) {
     console.log(st);
 });
 ```
@@ -274,7 +352,7 @@ pubnubService.getStatus('myGroup1', (st) => {
 **Listening to the global status for a specific set of channels or channel group:**
 
 ```javascript
-pubnubService.getStatus(['myChannel1', 'myChannel2', 'myGroup1'], (st) => {
+pubnubService.getStatus(['myChannel1', 'myChannel2', 'myGroup1'], function(st) {
     console.log(st);
 });
 ```
@@ -289,7 +367,7 @@ pubnubService.getError((err) => {
 **Listening to other instances:**
 
 ```javascript
-pubnubService.getInstance('another').getMessage('myChannel', (msg) => {
+pubnubService.getInstance('another').getMessage('myChannel', function(msg) {
 	console.log(msg);
 });
 ```
@@ -311,13 +389,13 @@ The stack is going to hold all messages since when you register your channel wit
 **Getting stack of messages for each register of channel or channel group:**
 
 ```javascript
-var myStack1 = pubnubService.getMessage('myChannel1', (msg) => {
+var myStack1 = pubnubService.getMessage('myChannel1', function(msg) {
 	console.log(msg);
 });
 ```
 
 ```javascript
-var myStack1 = pubnubService.getMessage('myGroup1', (msg) => {
+var myStack1 = pubnubService.getMessage('myGroup1', function(msg) {
 	console.log(msg);
 });
 ```
@@ -366,7 +444,7 @@ You can retrieve published messages from archival storage for this requires that
 for your keys. In order to get more information about this feature - see [History](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4#history).
 
 ```javascript
-pubnubService.history({channel: 'myChannel1'}).then((response) => {
+pubnubService.history({channel: 'myChannel1'}).then(function(response) {
 	console.log(response);
 });
 ```
@@ -386,7 +464,7 @@ var myStack1 = pubnubService.getMessage('myChannel1');
 Also you can use a callback to know when the retrieving process has finished.
 
 ```javascript
-var myStack1 = pubnubService.getMessage('myChannel1', () => {
+var myStack1 = pubnubService.getMessage('myChannel1', function() {
 	console.log(myStack1);
 });
 ```

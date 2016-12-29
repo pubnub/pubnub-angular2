@@ -9,4 +9,6 @@ export declare class PubNubAngular {
     getStatus(channel: Object, callback: (status: Object) => void): void;
     getError(channel: Object, callback: (error: Object) => void): void;
     clean(channel: Object): void;
+    publish(message: Object, callback: (response: Object) => void): void;
+    history: Object;
 }
