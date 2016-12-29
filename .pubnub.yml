@@ -1,8 +1,12 @@
 name: pubnub-angular2
-version: 1.0.0-beta.6
+version: 1.0.0-beta.7
 schema: 1
 scm: github.com/pubnub/pubnub-angular2
 changelog:
+  - version: v1.0.0.beta.7
+    changes:
+      - type: feature
+        text: first-class support for typescript.
   - version: v1.0.0.beta.6
     changes:
       - type: feature
