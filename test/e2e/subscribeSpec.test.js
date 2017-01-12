@@ -94,4 +94,46 @@ describe('#subscribe()', function () {
 			pubnub.getInstance('another2').publish({channel: channelName, message: stringMessage});
 		});
 	});
+
+	describe('All specification', function() {
+		it('hereNow', function (done) {
+			pubnub.hereNow({
+				channels: ['ch1'],
+				channelGroups : ['cg1'],
+				includeUUIDs: true,
+				includeState: true
+			}).then(function (response) {
+					expect(response.totalChannels).to.be.equal(0);
+					done();
+				}).catch(function(err){
+					console.log(err);
+					done();
+			});
+		});
+
+		it('whereNow', function(done){
+			pubnub.whereNow({
+					uuid: "blah"
+			}).then(function (response) {
+				done();
+			}).catch(function (error) {
+				done();
+			});
+		});
+
+		it('grant', function(done) {
+			var t = pubnub.grant({
+				channels: [channelName],
+				ttl: 5,
+				read: true,
+				write: true
+			});
+
+			t.then(function (status) {
+				done();
+			}).catch(function (error) {
+				done();
+			});
+		});
+	});
 });

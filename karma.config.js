@@ -37,8 +37,8 @@ module.exports = function (config) {
 			// PubNub for Angular2
 			'dist/pubnub-angular2.js',
 			// Unit Test
-			'test/angular/*.test.js',
 			'test/testHelper.js',
+			'test/angular/*.test.js',
 			'test/e2e/*.test.js'
 		],
 

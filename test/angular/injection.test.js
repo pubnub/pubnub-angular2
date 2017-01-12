@@ -9,10 +9,7 @@ describe('#Injection Test', function () {
 
 		var instance = testBed.get(PubNubAngular);
 
-		instance.init({
-			publishKey: 'ds',
-			subscribeKey: 'ds'
-		});
+		instance.init(config.demo);
 
 		expect(instance).to.be.an.instanceOf(PubNubAngular);
 		done();
@@ -22,10 +19,7 @@ describe('#Injection Test', function () {
 		testBed.configureTestingModule({ providers: [PubNubAngular] });
 		var instance = testBed.get(PubNubAngular);
 
-		instance.init({
-			publishKey: 'ds',
-			subscribeKey: 'ds'
-		});
+		instance.init(config.demo);
 
 		var sameInstance = testBed.get(PubNubAngular);
 
