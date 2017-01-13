@@ -1,4 +1,14 @@
 
+## [v1.0.0.beta.8](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.8)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.7...v1.0.0.beta.8)
+
+- 🌟additional typescript support
+
+
+
+
 ## [v1.0.0.beta.7](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.7)
 
 

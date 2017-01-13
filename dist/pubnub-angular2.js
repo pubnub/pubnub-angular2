@@ -1,4 +1,4 @@
-/*! 1.0.0-beta.7 */
+/*! 1.0.0-beta.8 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
