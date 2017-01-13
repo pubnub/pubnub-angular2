@@ -15,6 +15,7 @@ rules:
   no-underscore-dangle: 0
   no-restricted-syntax: 0
   object-shorthand: 0
+  no-await-in-loop: 0
   new-cap:
     - 2
     - {"newIsCap": true, "capIsNew": false}
