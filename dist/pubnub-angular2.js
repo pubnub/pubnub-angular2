@@ -409,12 +409,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.autoload.getHistory(channel, callback);
 
-	      if (callback) {
-	        this.broadcastOn.message(channel, function (message) {
-	          _this.outputOn.push(channel, message);
-	          callback(message);
-	        });
-	      }
+	      this.broadcastOn.message(channel, function (message) {
+	        _this.outputOn.push(channel, message);
+	        if (callback) callback(message);
+	      });
 
 	      return this.outputOn.get(channel);
 	    }
