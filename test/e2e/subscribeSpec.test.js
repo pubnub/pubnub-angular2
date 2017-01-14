@@ -135,5 +135,33 @@ describe('#subscribe()', function () {
 				done();
 			});
 		});
+
+		it('setState', function(done){
+			var objState = {company: 'PubNub', stars: 5};
+
+			pubnub.setState({state: objState, channels: [channelName]}).then(function(response){
+				expect(objState.company).to.be.equal(response.state.company);
+				expect(objState.stars).to.be.equal(response.state.stars);
+				done();
+			}).catch(function(){
+				done();
+			});
+		});
+
+		it('getState', function(done){
+			pubnub.getState({channels: [channelName]}).then(function(response) {
+				expect(response.channels[channelName]).to.not.equal(undefined);
+				done();
+			}).catch(function() {
+				done();
+			});
+		});
+
+		it('time', function(done){
+			pubnub.time(function(status){
+				expect(status.statusCode).to.be.equal(200);
+				done();
+			});
+		});
 	});
 });
