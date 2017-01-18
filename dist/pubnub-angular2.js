@@ -405,9 +405,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getMessage(channel, callback) {
 	      var _this = this;
 
-	      this.outputOn.subscribe(channel);
-
-	      this.autoload.getHistory(channel, callback);
+	      if (this.outputOn.subscribe(channel)) {
+	        this.autoload.getHistory(channel, callback);
+	      }
 
 	      this.broadcastOn.message(channel, function (message) {
 	        _this.outputOn.push(channel, message);
@@ -914,6 +914,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function subscribe(channel) {
 	      if (!this.channels[channel]) {
 	        this.channels[channel] = [];
+	        return true;
+	      } else {
+	        return false;
 	      }
 	    }
 	  }, {

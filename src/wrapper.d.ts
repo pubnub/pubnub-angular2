@@ -7,10 +7,10 @@ export declare class Wrapper {
     unsubscribe(args: Object): void;
     unsubscribeAll(): void;
     getMessage(channel: string | string[]): Object[];
-    getMessage(channel: string | string[], callback: (message: Object) => void): Object[];
-    getPresence(channel: string | string[], callback: (presence: Object) => void): void;
-    getStatus(channel: string | string[], callback: (status: Object) => void): void;
-    getError(channel: string | string[], callback: (error: Object) => void): void;
+    getMessage(channel: string | string[], callback: (message: any) => void): any[];
+    getPresence(channel: string | string[], callback: (presence: any) => void): void;
+    getStatus(channel: string | string[], callback: (status: any) => void): void;
+    getError(channel: string | string[], callback: (error: any) => void): void;
     clean(channel: string | string[]): void;
     publish(message: Object): any;
     fire(args: Object): Object;

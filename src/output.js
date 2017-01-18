@@ -48,6 +48,9 @@ class Output {
   subscribe(channel) {
     if (!this.channels[channel]) {
       this.channels[channel] = [];
+      return true;
+    } else {
+      return false;
     }
   }
 

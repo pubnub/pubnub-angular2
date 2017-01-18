@@ -64,9 +64,9 @@ class Wrapper {
    * @param callback
    */
   getMessage(channel, callback) {
-    this.outputOn.subscribe(channel);
-
-    this.autoload.getHistory(channel, callback);
+    if (this.outputOn.subscribe(channel)) {
+      this.autoload.getHistory(channel, callback);
+    }
 
     this.broadcastOn.message(channel, (message) => {
       this.outputOn.push(channel, message);
