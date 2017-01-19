@@ -152,8 +152,8 @@ class Wrapper {
    * @param methodName
    */
   wrapMethod(methodName) {
-    this[methodName] = function (args) {
-      return this.getOriginalInstance()[methodName](args);
+    this[methodName] = function () {
+      return this.getOriginalInstance()[methodName].apply(this, arguments);
     };
   }
 }

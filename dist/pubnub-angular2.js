@@ -136,8 +136,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _this.wrappers[instanceName].wrapMethod(method);
 
 	          if (!_this[method]) {
-	            _this[method] = function (args) {
-	              return this.getInstance(_config2.default.default_instance_name)[method](args);
+	            _this[method] = function () {
+	              var defaultInstance = this.getInstance(_config2.default.default_instance_name);
+	              return defaultInstance[method].apply(defaultInstance, arguments);
 	            };
 	          }
 	        });
@@ -514,8 +515,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'wrapMethod',
 	    value: function wrapMethod(methodName) {
-	      this[methodName] = function (args) {
-	        return this.getOriginalInstance()[methodName](args);
+	      this[methodName] = function () {
+	        return this.getOriginalInstance()[methodName].apply(this, arguments);
 	      };
 	    }
 	  }]);

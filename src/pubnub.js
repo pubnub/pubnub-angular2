@@ -55,8 +55,9 @@ class PubNubAngular {
         this.wrappers[instanceName].wrapMethod(method);
 
         if (!this[method]) {
-          this[method] = function (args) {
-            return this.getInstance(config.default_instance_name)[method](args);
+          this[method] = function () {
+            let defaultInstance = this.getInstance(config.default_instance_name);
+            return defaultInstance[method].apply(defaultInstance, arguments);
           };
         }
       });

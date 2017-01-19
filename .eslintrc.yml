@@ -16,6 +16,7 @@ rules:
   no-restricted-syntax: 0
   object-shorthand: 0
   no-await-in-loop: 0
+  prefer-spread: 0
   new-cap:
     - 2
     - {"newIsCap": true, "capIsNew": false}

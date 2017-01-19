@@ -77,7 +77,6 @@ describe('#subscribe()', function () {
 	describe('Message callback', function () {
 
 		it('should be invoked', function (done) {
-
 			pubnub.getInstance('another2').init(config.demo);
 
 			listener = {
@@ -106,12 +105,11 @@ describe('#subscribe()', function () {
 					expect(response.totalChannels).to.be.equal(0);
 					done();
 				}).catch(function(err){
-					console.log(err);
 					done();
 			});
 		});
 
-		it('whereNow', function(done){
+		it('whereNow', function (done) {
 			pubnub.whereNow({
 					uuid: "blah"
 			}).then(function (response) {
@@ -121,7 +119,7 @@ describe('#subscribe()', function () {
 			});
 		});
 
-		it('grant', function(done) {
+		it('grant', function (done) {
 			var t = pubnub.grant({
 				channels: [channelName],
 				ttl: 5,
@@ -136,7 +134,7 @@ describe('#subscribe()', function () {
 			});
 		});
 
-		it('setState', function(done){
+		it('setState', function (done) {
 			var objState = {company: 'PubNub', stars: 5};
 
 			pubnub.setState({state: objState, channels: [channelName]}).then(function(response){
@@ -148,7 +146,7 @@ describe('#subscribe()', function () {
 			});
 		});
 
-		it('getState', function(done){
+		it('getState', function (done) {
 			pubnub.getState({channels: [channelName]}).then(function(response) {
 				expect(response.channels[channelName]).to.not.equal(undefined);
 				done();
@@ -157,11 +155,44 @@ describe('#subscribe()', function () {
 			});
 		});
 
-		it('time', function(done){
+		it('time', function (done) {
 			pubnub.time(function(status){
 				expect(status.statusCode).to.be.equal(200);
 				done();
 			});
+		});
+
+		it('push', function (done) {
+			pubnub.push.addChannels(
+				{
+					channels: ['a', 'b'],
+					device: 'niceDevice',
+					pushGateway: 'apns'
+				},
+				function(status) {
+					if (status.error) {
+						done();
+					} else {
+						done();
+					}
+				}
+			);
+		});
+
+		it('fire', function (done) {
+			pubnub.fire(
+				{
+					message: 'hello',
+					channel: channelName
+				},
+				function (status, response) {
+					if (status) {
+						done();
+					} else {
+						done();
+					}
+				}
+			);
 		});
 	});
 });
