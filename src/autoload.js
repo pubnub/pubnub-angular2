@@ -6,10 +6,20 @@ class Autoload {
     this.instance = undefined;
   }
 
+  /**
+   * Initialize the autoload with a wrapper instance
+   *
+   * @param instance
+   */
   initialize(instance) {
     this.instance = instance;
   }
 
+  /**
+   * Enable the autoload for a channel or a set of channels subscribed
+   *
+   * @param args
+   */
   enableLoad(args) {
     if (args.autoload && typeof args.autoload === 'number') {
       this.count[args.channels] = args.autoload;
@@ -20,6 +30,12 @@ class Autoload {
     }
   }
 
+  /**
+   * Get history of a channel or a set of channels.
+   *
+   * @param {string|[string]} channel
+   * @param callback
+   */
   getHistory(channel, callback) {
     if (this.count[channel]) {
       let instance = this.instance;
@@ -47,6 +63,11 @@ class Autoload {
     }
   }
 
+  /**
+   * Disable the autoload for a channel or set of channels
+   *
+   * @param args
+   */
   disableLoad(args) {
     if (Array.isArray(args.channels)) {
       args.channels.forEach((ch) => {

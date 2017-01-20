@@ -54,6 +54,12 @@ class Output {
     }
   }
 
+  /**
+   * Sort the stack of messages for a channel or set of channels
+   *
+   * @param {string|[string]} channel
+   * @param string key
+   */
   sort(channel, key) {
     if (this.channels[channel]) {
       this.channels[channel].sort((a, b) => {

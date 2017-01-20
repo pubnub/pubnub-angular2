@@ -298,11 +298,11 @@ You can also enable all possible events using `triggerEvents: true`
 **Listening to a message event of a specific channel or channel group:**
 
 ```javascript
-pubnubService.getMessage('myChannel', function(msg) {
+pubnubService.getMessage('myChannel', (msg) => {
     console.log(msg);
 });
 
-pubnubService.getMessage('myGroup1', function(msg) {
+pubnubService.getMessage('myGroup1', (msg) => {
     console.log(msg);
 });
 ```
@@ -310,7 +310,7 @@ pubnubService.getMessage('myGroup1', function(msg) {
 **Listening to a message event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.getMessage(['myChannel1', 'myChannel2', 'myGroup1'], function(msg) {
+pubnubService.getMessage(['myChannel1', 'myChannel2', 'myGroup1'], (msg) => {
     console.log(msg.message);
     console.log(msg.channel);
 });
@@ -319,11 +319,11 @@ pubnubService.getMessage(['myChannel1', 'myChannel2', 'myGroup1'], function(msg)
 **Listening to a presence event of a specific channel or channel group:**
 
 ```javascript
-pubnubService.getPresence('myChannel', function(pse) {
+pubnubService.getPresence('myChannel', (pse) => {
     console.log(pse);
 });
 
-pubnubService.getPresence('myGroup1', function(pse) {
+pubnubService.getPresence('myGroup1', (pse) => {
     console.log(pse);
 });
 ```
@@ -331,7 +331,7 @@ pubnubService.getPresence('myGroup1', function(pse) {
 **Listening to a presence event of a specific set of channels or channel groups:**
 
 ```javascript
-pubnubService.getPresence(['myChannel1', 'myChannel2', 'myGroup1'], function(pse) {
+pubnubService.getPresence(['myChannel1', 'myChannel2', 'myGroup1'], (pse) => {
     console.log(pse);
     console.log(pse.subscribedChannel);
 });
@@ -340,11 +340,11 @@ pubnubService.getPresence(['myChannel1', 'myChannel2', 'myGroup1'], function(pse
 **Listening to the global status for a channel or channel group:**
 
 ```javascript
-pubnubService.getStatus('myChannel', function(st) {
+pubnubService.getStatus('myChannel', (st) => {
     console.log(st);
 });
 
-pubnubService.getStatus('myGroup1', function(st) {
+pubnubService.getStatus('myGroup1', (st) => {
     console.log(st);
 });
 ```
@@ -352,7 +352,7 @@ pubnubService.getStatus('myGroup1', function(st) {
 **Listening to the global status for a specific set of channels or channel group:**
 
 ```javascript
-pubnubService.getStatus(['myChannel1', 'myChannel2', 'myGroup1'], function(st) {
+pubnubService.getStatus(['myChannel1', 'myChannel2', 'myGroup1'], (st) => {
     console.log(st);
 });
 ```
@@ -367,7 +367,7 @@ pubnubService.getError((err) => {
 **Listening to other instances:**
 
 ```javascript
-pubnubService.getInstance('another').getMessage('myChannel', function(msg) {
+pubnubService.getInstance('another').getMessage('myChannel', (msg) => {
 	console.log(msg);
 });
 ```
@@ -389,13 +389,13 @@ The stack is going to hold all messages since when you register your channel wit
 **Getting stack of messages for each register of channel or channel group:**
 
 ```javascript
-var myStack1 = pubnubService.getMessage('myChannel1', function(msg) {
+var myStack1 = pubnubService.getMessage('myChannel1', (msg) => {
 	console.log(msg);
 });
 ```
 
 ```javascript
-var myStack1 = pubnubService.getMessage('myGroup1', function(msg) {
+var myStack1 = pubnubService.getMessage('myGroup1', (msg) => {
 	console.log(msg);
 });
 ```
@@ -444,7 +444,7 @@ You can retrieve published messages from archival storage for this requires that
 for your keys. In order to get more information about this feature - see [History](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4#history).
 
 ```javascript
-pubnubService.history({channel: 'myChannel1'}).then(function(response) {
+pubnubService.history({channel: 'myChannel1'}).then((response) => {
 	console.log(response);
 });
 ```
@@ -464,7 +464,7 @@ var myStack1 = pubnubService.getMessage('myChannel1');
 Also you can use a callback to know when the retrieving process has finished.
 
 ```javascript
-var myStack1 = pubnubService.getMessage('myChannel1', function() {
+var myStack1 = pubnubService.getMessage('myChannel1', () => {
 	console.log(myStack1);
 });
 ```
