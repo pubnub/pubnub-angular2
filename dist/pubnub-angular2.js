@@ -388,10 +388,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'unsubscribe',
 	    value: function unsubscribe(args) {
-	      this.getOriginalInstance().unsubscribe(args);
-	      this.mockingInstance.disableEventsBroadcast(args);
 	      this.autoload.disableLoad(args);
 	      this.outputOn.unsubscribe(args);
+	      this.getOriginalInstance().unsubscribe(args);
+	      var self = this;
+	      var tm = setTimeout(function () {
+	        self.mockingInstance.disableEventsBroadcast(args);
+	        clearTimeout(tm);
+	      }, 1000);
 	    }
 
 	    /**

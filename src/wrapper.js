@@ -51,10 +51,14 @@ class Wrapper {
    * @param args
    */
   unsubscribe(args) {
-    this.getOriginalInstance().unsubscribe(args);
-    this.mockingInstance.disableEventsBroadcast(args);
     this.autoload.disableLoad(args);
     this.outputOn.unsubscribe(args);
+    this.getOriginalInstance().unsubscribe(args);
+    let self = this;
+    let tm = setTimeout(() => {
+      self.mockingInstance.disableEventsBroadcast(args);
+      clearTimeout(tm);
+    }, 1000);
   }
 
   /**

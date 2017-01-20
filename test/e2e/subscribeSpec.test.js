@@ -25,8 +25,8 @@ describe('#subscribe()', function () {
 
 			listener = {
 				status: function (st) {
-					expect(st.category).to.not.equal(null);
 					expect(st.category).to.be.equal('PNConnectedCategory');
+					expect(st.operation).to.be.equal('PNSubscribeOperation');
 					done();
 				}
 			};
@@ -44,9 +44,17 @@ describe('#subscribe()', function () {
 			var channelTest = getRandomChannel();
 
 			pubnub.subscribe({channels: [channelTest]});
-			pubnub.unsubscribe({channels: [channelTest]});
 
-			done();
+			listener = {
+				status: function (st) {
+					expect(st.error).to.be.equal(false);
+					expect(st.operation).to.be.equal('PNUnsubscribeOperation');
+					done();
+				}
+			};
+
+			pubnub.addListener(listener);
+			pubnub.unsubscribe({channels: [channelTest]});
 		});
 	});
 
