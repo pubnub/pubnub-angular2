@@ -14,7 +14,6 @@ export declare class PubNubAngular {
     clean(channel: string | string[]): void;
     publish(message: Object): any;
     publish(message: Object, callback: (status: any, response: any) => void): void;
-    fire(args: Object): any;
     fire(args: Object, callback: (status: any, response: any) => void): void;
     addListener(listener: Object): void;
     removeListener(listener: Object): void;
@@ -33,7 +32,7 @@ export declare class PubNubAngular {
     history(args: Object): any;
     history(args: Object, callback: (status: any, response: any) => void): void;
     push: any;
-    time(callback): any;
+    time(): any;
     time(callback: (status: any, response: any) => void): void;
     reconnect(): void;
     stop(): void;
