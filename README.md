@@ -37,7 +37,7 @@ Your HTML page will include 2 key libraries:
     bower install pubnub
     ```
 
-* PubNub JavaScript SDK Angular2 Service
+* PubNub Angular2 SDK
   - With NPM:
       ```shell
       npm install pubnub-angular2
@@ -53,10 +53,31 @@ Your HTML page will include 2 key libraries:
     <script src="http(s)://cdn.pubnub.com/sdk/pubnub-angular2/pubnub-angular2.(version).min.js"></script>
     ```
 
-To utilize this wrapper, include the scripts in the following order after you register all angular scripts which you need:
+To utilize this wrapper using Javascript, include the scripts in the following order:
 ```html  
-  <script src="(latest version of PubNub JS SDK Version 4 from https://github.com/pubnub/javascript)"></script>
-  <script src="(pubnub-angular2.js)"></script>
+1. Include global dependencies for Angular2
+
+<script src="node_modules/core-js/client/shim.min.js"></script>
+<script src="node_modules/zone.js/dist/zone.js"></script>
+<script src="node_modules/reflect-metadata/Reflect.js"></script>
+<script src="node_modules/rxjs/bundles/Rx.js"></script>
+
+2. Include Angular2
+
+<script src="node_modules/@angular/core/bundles/core.umd.js"></script>
+<script src="node_modules/@angular/common/bundles/common.umd.js"></script>
+<script src="node_modules/@angular/compiler/bundles/compiler.umd.js"></script>
+<script src="node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
+<script src="node_modules/@angular/forms/bundles/forms.umd.js"></script>
+<script src="node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
+
+3. Include the lastest version of PubNub's Javascript SDK
+
+<script src="node_modules/pubnub/dist/web/pubnub.js"></script>
+
+4. Include PubNub's Angular2 SDK
+
+<script src="node_modules/pubnub-angular2/dist/pubnub-angular2.js"></script>
 ```
 
 ## Integrating PubNub Angular SDK into Your TypeScript App
@@ -72,21 +93,49 @@ To utilize this wrapper, include the scripts in the following order after you re
     bower install pubnub
     ```
 
-* PubNub JavaScript SDK Angular2 Service
+* PubNub Angular2 SDK
   - With NPM:
       ```shell
       npm install pubnub-angular2
       ```
 
-To utilize this wrapper, register the PubNub JS script Version 4 in your HTML:
+To utilize this wrapper using Typescript, include the scripts in the following order:
 ```html  
-  <script src="(latest version of PubNub JS SDK Version 4 from https://github.com/pubnub/javascript)"></script>
+  1. Include global dependencies for Angular2
+  
+  <script src="node_modules/core-js/client/shim.min.js"></script>
+  <script src="node_modules/zone.js/dist/zone.js"></script>
+  <script src="node_modules/reflect-metadata/Reflect.js"></script>
+  <script src="node_modules/rxjs/bundles/Rx.js"></script>
+  
+  2. Include the lastest version of PubNub's Javascript SDK
+  
+  <script src="node_modules/pubnub/dist/web/pubnub.js"></script>
+  
+  3. Include and load libraries from systemjs
+  
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
+  <script src="systemjs.config.js"></script>
+  <script>
+      System.import('app').catch(function(err){ console.error(err); });
+  </script>
 ```
 
-Followed of this, define the pubnub-angular2 module inside the SystemJS file after all angular modules which you need.
+Your systemjs.config.js will have to include next libraries with the last one key library. Inside the map attribute.
 
 ```javascript
-'pubnub-angular2': 'npm:pubnub-angular2/dist/pubnub-angular2.js'
+map: {
+  'rxjs': 'npm:rxjs',
+  '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
+  '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
+  '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
+  '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
+  '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+  '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
+  '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
+  '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+  'pubnub-angular2': 'npm:pubnub-angular2/dist/pubnub-angular2.js'
+}
 ```
 
 ## How to use PubNubAngular
