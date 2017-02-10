@@ -1,6 +1,6 @@
 import config from '../config.json';
 
-class Autoload {
+export class Autoload {
   constructor() {
     this.count = {};
     this.instance = undefined;
@@ -78,7 +78,3 @@ class Autoload {
     }
   }
 }
-
-module.exports = Autoload;
-
-module.exports.Autoload = Autoload;

@@ -31,7 +31,7 @@ function unsubscribeChannel(event, channel) {
   } else if (event[channel]) delete event[channel];
 }
 
-class Broadcast {
+export class Broadcast {
   constructor() {
     config.subscribe_listener_events_to_broadcast.forEach((eventName) => {
       let event = ('_').concat(eventName);
@@ -98,7 +98,3 @@ class Broadcast {
     });
   }
 }
-
-module.exports = Broadcast;
-
-module.exports.Broadcast = Broadcast;

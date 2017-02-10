@@ -1,8 +1,8 @@
 /* global window */
 import config from '../config.json';
-import Wrapper from './wrapper';
+import { Wrapper } from './wrapper';
 
-class PubNubAngular {
+export class PubNubAngular {
   constructor() {
     if (typeof PubNub === 'undefined' || PubNub === null) {
       throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
@@ -135,7 +135,3 @@ class PubNubAngular {
     this.getInstance(config.default_instance_name).clean(channel);
   }
 }
-
-module.exports = PubNubAngular;
-
-module.exports.PubNubAngular = PubNubAngular;

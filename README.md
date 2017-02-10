@@ -73,7 +73,7 @@ To utilize this wrapper using Javascript, include the scripts in the following o
 
 3. Include the lastest version of PubNub's Javascript SDK
 
-<script src="node_modules/pubnub/dist/web/pubnub.js"></script>
+<script src="node_modules/pubnub/dist/web/pubnub-angular2.js"></script>
 
 4. Include PubNub's Angular2 SDK
 
@@ -110,7 +110,7 @@ To utilize this wrapper using Typescript, include the scripts in the following o
   
   2. Include the lastest version of PubNub's Javascript SDK
   
-  <script src="node_modules/pubnub/dist/web/pubnub.js"></script>
+  <script src="node_modules/pubnub/dist/web/pubnub-angular2.js"></script>
   
   3. Include and load libraries from systemjs
   

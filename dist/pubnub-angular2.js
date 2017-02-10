@@ -57,22 +57,37 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _pubnubAngular = __webpack_require__(1);
+
+	module.exports = _pubnubAngular.PubNubAngular;
+
+	module.exports.PubNubAngular = _pubnubAngular.PubNubAngular;
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.PubNubAngular = undefined;
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global window */
 
 
-	var _config = __webpack_require__(1);
+	var _config = __webpack_require__(2);
 
 	var _config2 = _interopRequireDefault(_config);
 
-	var _wrapper = __webpack_require__(2);
-
-	var _wrapper2 = _interopRequireDefault(_wrapper);
+	var _wrapper = __webpack_require__(3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var PubNubAngular = function () {
+	var PubNubAngular = exports.PubNubAngular = function () {
 	  function PubNubAngular() {
 	    _classCallCheck(this, PubNubAngular);
 
@@ -115,10 +130,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var instance = this.wrappers[instanceName];
 
-	      if (instance && instance instanceof _wrapper2.default) {
+	      if (instance && instance instanceof _wrapper.Wrapper) {
 	        return instance;
 	      } else if (typeof instanceName === 'string' && instanceName.length > 0) {
-	        this.wrappers[instanceName] = new _wrapper2.default(instanceName, this);
+	        this.wrappers[instanceName] = new _wrapper.Wrapper(instanceName, this);
 
 	        _config2.default.attributes_to_delegate.forEach(function (attribute) {
 	          _this.wrappers[instanceName].wrapAttribute(attribute);
@@ -241,12 +256,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return PubNubAngular;
 	}();
 
-	module.exports = PubNubAngular;
-
-	module.exports.PubNubAngular = PubNubAngular;
-
 /***/ },
-/* 1 */
+/* 2 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -298,44 +309,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Wrapper = undefined;
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global angular PUBNUB */
 
 
-	var _mock = __webpack_require__(3);
+	var _mock = __webpack_require__(4);
 
-	var _mock2 = _interopRequireDefault(_mock);
+	var _broadcast = __webpack_require__(5);
 
-	var _broadcast = __webpack_require__(4);
+	var _output = __webpack_require__(6);
 
-	var _broadcast2 = _interopRequireDefault(_broadcast);
-
-	var _output = __webpack_require__(5);
-
-	var _output2 = _interopRequireDefault(_output);
-
-	var _autoload = __webpack_require__(6);
-
-	var _autoload2 = _interopRequireDefault(_autoload);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _autoload = __webpack_require__(7);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Wrapper = function () {
+	var Wrapper = exports.Wrapper = function () {
 	  function Wrapper(label) {
 	    _classCallCheck(this, Wrapper);
 
 	    this.label = label;
 	    this.pubnubInstance = null;
-	    this.broadcastOn = new _broadcast2.default();
-	    this.outputOn = new _output2.default();
-	    this.mockingInstance = new _mock2.default(this.broadcastOn);
-	    this.autoload = new _autoload2.default();
+	    this.broadcastOn = new _broadcast.Broadcast();
+	    this.outputOn = new _output.Output();
+	    this.mockingInstance = new _mock.Mock(this.broadcastOn);
+	    this.autoload = new _autoload.Autoload();
 	  }
 
 	  /**
@@ -528,19 +534,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Wrapper;
 	}();
 
-	module.exports = Wrapper;
-
-	module.exports.Wrapper = Wrapper;
-
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Mock = undefined;
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _config = __webpack_require__(1);
+	var _config = __webpack_require__(2);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -548,7 +555,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Mock = function () {
+	var Mock = exports.Mock = function () {
 	  function Mock(broadcaster) {
 	    _classCallCheck(this, Mock);
 
@@ -699,19 +706,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Mock;
 	}();
 
-	module.exports = Mock;
-
-	module.exports.Mock = Mock;
-
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Broadcast = undefined;
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _config = __webpack_require__(1);
+	var _config = __webpack_require__(2);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -750,7 +758,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  } else if (event[channel]) delete event[channel];
 	}
 
-	var Broadcast = function () {
+	var Broadcast = exports.Broadcast = function () {
 	  function Broadcast() {
 	    var _this = this;
 
@@ -840,21 +848,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Broadcast;
 	}();
 
-	module.exports = Broadcast;
-
-	module.exports.Broadcast = Broadcast;
-
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Output = function () {
+	var Output = exports.Output = function () {
 	  function Output() {
 	    _classCallCheck(this, Output);
 
@@ -924,6 +932,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return false;
 	      }
 	    }
+
+	    /**
+	     * Sort the stack of messages for a channel or set of channels
+	     *
+	     * @param {string|[string]} channel
+	     * @param string key
+	     */
+
 	  }, {
 	    key: "sort",
 	    value: function sort(channel, key) {
@@ -953,19 +969,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Output;
 	}();
 
-	module.exports = Output;
-
-	module.exports.Output = Output;
-
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Autoload = undefined;
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _config = __webpack_require__(1);
+	var _config = __webpack_require__(2);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -973,7 +990,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Autoload = function () {
+	var Autoload = exports.Autoload = function () {
 	  function Autoload() {
 	    _classCallCheck(this, Autoload);
 
@@ -981,11 +998,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.instance = undefined;
 	  }
 
+	  /**
+	   * Initialize the autoload with a wrapper instance
+	   *
+	   * @param instance
+	   */
+
+
 	  _createClass(Autoload, [{
 	    key: 'initialize',
 	    value: function initialize(instance) {
 	      this.instance = instance;
 	    }
+
+	    /**
+	     * Enable the autoload for a channel or a set of channels subscribed
+	     *
+	     * @param args
+	     */
+
 	  }, {
 	    key: 'enableLoad',
 	    value: function enableLoad(args) {
@@ -999,6 +1030,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      }
 	    }
+
+	    /**
+	     * Get history of a channel or a set of channels.
+	     *
+	     * @param {string|[string]} channel
+	     * @param callback
+	     */
+
 	  }, {
 	    key: 'getHistory',
 	    value: function getHistory(channel, callback) {
@@ -1031,6 +1070,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })();
 	      }
 	    }
+
+	    /**
+	     * Disable the autoload for a channel or set of channels
+	     *
+	     * @param args
+	     */
+
 	  }, {
 	    key: 'disableLoad',
 	    value: function disableLoad(args) {
@@ -1048,10 +1094,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return Autoload;
 	}();
-
-	module.exports = Autoload;
-
-	module.exports.Autoload = Autoload;
 
 /***/ }
 /******/ ])

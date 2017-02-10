@@ -1,7 +1,7 @@
 extends: "airbnb/base"
 rules:
   import/no-named-default: 0
-
+  import/prefer-default-export: 0
   padded-blocks: 0
   max-len: 0
   func-names: 0

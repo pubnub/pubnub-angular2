@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 var config = {
 	// webpack options
-	entry: './src/pubnub.js',
+	entry: './webpackEntry.js',
 	module: {
 		loaders: [
 			{ test: /\.json/, loader: 'json' },
