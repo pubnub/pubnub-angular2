@@ -1,4 +1,14 @@
 
+## [v1.0.0.beta.9](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.9)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.8...v1.0.0.beta.9)
+
+- 🌟fix ionic2 bootstrap logic.
+
+
+
+
 ## [v1.0.0.beta.8](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.8)
 
 
