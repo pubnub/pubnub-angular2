@@ -1,4 +1,14 @@
 
+## [v1.0.0](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.9...v1.0.0)
+
+- 🌟release final beta
+
+
+
+
 ## [v1.0.0.beta.9](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.9)
 
 

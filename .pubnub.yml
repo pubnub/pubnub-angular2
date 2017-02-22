@@ -1,8 +1,12 @@
 name: pubnub-angular2
-version: 1.0.0-beta.9
+version: 1.0.0
 schema: 1
 scm: github.com/pubnub/pubnub-angular2
 changelog:
+  - version: v1.0.0
+    changes:
+      - type: feature
+        text: release final beta
   - version: v1.0.0.beta.9
     changes:
       - type: feature
