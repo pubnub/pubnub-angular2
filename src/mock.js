@@ -36,7 +36,7 @@ export class Mock {
           if (event === 'status') {
             if (received.error) {
               self.broadcaster.emitError(received);
-            } else {
+            } else if (received.affectedChannels || received.affectedChannelGroups) {
               received.affectedChannels.forEach((channel) => {
                 if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
                   self.broadcaster.emit(event, channel, received);
@@ -47,6 +47,10 @@ export class Mock {
                 if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
                   self.broadcaster.emit(event, channelGroup, received);
                 }
+              });
+            } else {
+              Object.keys(self.broadcastChannels).forEach((channel) => {
+                self.broadcaster.emit(event, channel, received);
               });
             }
           }

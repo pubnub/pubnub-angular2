@@ -1,4 +1,4 @@
-/*! 1.0.0-beta.9 */
+/*! 1.0.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -574,50 +574,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(Mock, [{
 	    key: 'initializeListener',
 	    value: function initializeListener(instance) {
-	      var _this = this;
-
 	      if (this.listener === null) {
-	        (function () {
-	          var self = _this;
+	        var self = this;
 
-	          self.listener = {};
+	        self.listener = {};
 
-	          _config2.default.subscribe_listener_events_to_broadcast.forEach(function (event) {
-	            self.listener[event] = function (received) {
-	              if (received.subscription && self.broadcastChannels[received.subscription] && self.broadcastChannels[received.subscription].includes(event)) {
-	                self.broadcaster.emit(event, received.subscription, received);
+	        _config2.default.subscribe_listener_events_to_broadcast.forEach(function (event) {
+	          self.listener[event] = function (received) {
+	            if (received.subscription && self.broadcastChannels[received.subscription] && self.broadcastChannels[received.subscription].includes(event)) {
+	              self.broadcaster.emit(event, received.subscription, received);
 
-	                if (received.channel) {
-	                  self.broadcaster.emit(event, received.channel, received);
-	                }
-	              }
-
-	              if (received.channel && self.broadcastChannels[received.channel] && self.broadcastChannels[received.channel].includes(event)) {
+	              if (received.channel) {
 	                self.broadcaster.emit(event, received.channel, received);
 	              }
+	            }
 
-	              if (event === 'status') {
-	                if (received.error) {
-	                  self.broadcaster.emitError(received);
-	                } else {
-	                  received.affectedChannels.forEach(function (channel) {
-	                    if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
-	                      self.broadcaster.emit(event, channel, received);
-	                    }
-	                  });
+	            if (received.channel && self.broadcastChannels[received.channel] && self.broadcastChannels[received.channel].includes(event)) {
+	              self.broadcaster.emit(event, received.channel, received);
+	            }
 
-	                  received.affectedChannelGroups.forEach(function (channelGroup) {
-	                    if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
-	                      self.broadcaster.emit(event, channelGroup, received);
-	                    }
-	                  });
-	                }
+	            if (event === 'status') {
+	              if (received.error) {
+	                self.broadcaster.emitError(received);
+	              } else if (received.affectedChannels || received.affectedChannelGroups) {
+	                received.affectedChannels.forEach(function (channel) {
+	                  if (self.broadcastChannels[channel] && self.broadcastChannels[channel].includes(event)) {
+	                    self.broadcaster.emit(event, channel, received);
+	                  }
+	                });
+
+	                received.affectedChannelGroups.forEach(function (channelGroup) {
+	                  if (self.broadcastChannels[channelGroup] && self.broadcastChannels[channelGroup].includes(event)) {
+	                    self.broadcaster.emit(event, channelGroup, received);
+	                  }
+	                });
+	              } else {
+	                Object.keys(self.broadcastChannels).forEach(function (channel) {
+	                  self.broadcaster.emit(event, channel, received);
+	                });
 	              }
-	            };
-	          });
+	            }
+	          };
+	        });
 
-	          instance.getOriginalInstance().addListener(_this.listener);
-	        })();
+	        instance.getOriginalInstance().addListener(this.listener);
 	      }
 	    }
 
@@ -631,17 +631,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'addEventsBroadcast',
 	    value: function addEventsBroadcast(channels, triggerEvents) {
-	      var _this2 = this;
+	      var _this = this;
 
 	      channels.forEach(function (channel) {
 	        if (typeof triggerEvents === 'boolean') {
-	          _this2.broadcastChannels[channel] = _config2.default.subscribe_listener_events_to_broadcast;
+	          _this.broadcastChannels[channel] = _config2.default.subscribe_listener_events_to_broadcast;
 	        } else if (Array.isArray(triggerEvents)) {
-	          _this2.broadcastChannels[channel] = [];
+	          _this.broadcastChannels[channel] = [];
 
 	          triggerEvents.forEach(function (trigger) {
 	            if (_config2.default.subscribe_listener_events_to_broadcast.includes(trigger)) {
-	              _this2.broadcastChannels[channel].push(trigger);
+	              _this.broadcastChannels[channel].push(trigger);
 	            }
 	          });
 	        }
@@ -657,11 +657,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'removeEventBroadcast',
 	    value: function removeEventBroadcast(channels) {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      channels.forEach(function (channel) {
-	        if (_this3.broadcastChannels[channel]) {
-	          delete _this3.broadcastChannels[channel];
+	        if (_this2.broadcastChannels[channel]) {
+	          delete _this2.broadcastChannels[channel];
 	        }
 	      });
 	    }
@@ -1044,30 +1044,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 
 	      if (this.count[channel]) {
-	        (function () {
-	          var instance = _this2.instance;
-	          var _channels = Array.isArray(channel) ? channel : [channel];
-	          var times = _channels.length;
+	        var instance = this.instance;
+	        var _channels = Array.isArray(channel) ? channel : [channel];
+	        var times = _channels.length;
 
-	          _channels.forEach(function (ch) {
-	            instance.history({ channel: ch, count: _this2.count[channel] }).then(function (response) {
+	        _channels.forEach(function (ch) {
+	          instance.history({ channel: ch, count: _this2.count[channel] }).then(function (response) {
 
-	              response.messages.forEach(function (m) {
-	                m.message = m.entry;
-	                m.channel = ch;
+	            response.messages.forEach(function (m) {
+	              m.message = m.entry;
+	              m.channel = ch;
 
-	                instance.outputOn.push(channel, m);
-	              });
+	              instance.outputOn.push(channel, m);
+	            });
 
-	              times -= 1;
+	            times -= 1;
 
-	              if (callback && times === 0) {
-	                instance.outputOn.sort(channel, _config2.default.history_sort_attribute);
-	                callback();
-	              }
-	            }).catch(function () {});
-	          });
-	        })();
+	            if (callback && times === 0) {
+	              instance.outputOn.sort(channel, _config2.default.history_sort_attribute);
+	              callback();
+	            }
+	          }).catch(function () {});
+	        });
 	      }
 	    }
 
