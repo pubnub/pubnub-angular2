@@ -1,6 +1,6 @@
 {
   "name": "pubnub-angular2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Official PubNub Angular2",
   "main": "dist/pubnub-angular2.min.js",
   "module": "src/pubnub-angular2.js",
