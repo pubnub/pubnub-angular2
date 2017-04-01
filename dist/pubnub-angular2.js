@@ -74,8 +74,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.PubNubAngular = undefined;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global window */
-
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _config = __webpack_require__(2);
 
@@ -98,13 +97,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.wrappers = {};
 	  }
 
-	  /**
-	   * Initializer for default instance
-	   *
-	   * @param {Object} initConfig
-	   */
-
-
 	  _createClass(PubNubAngular, [{
 	    key: 'init',
 	    value: function init(initConfig) {
@@ -115,14 +107,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return instance;
 	    }
-
-	    /**
-	     * Instance getter
-	     *
-	     * @param instanceName
-	     * @returns {Wrapper}
-	     */
-
 	  }, {
 	    key: 'getInstance',
 	    value: function getInstance(instanceName) {
@@ -163,89 +147,36 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return instance;
 	    }
-
-	    /**
-	     * Subscribe method wrapped for default instance
-	     *
-	     * @param {object} args
-	     */
-
 	  }, {
 	    key: 'subscribe',
 	    value: function subscribe(args) {
 	      this.getInstance(_config2.default.default_instance_name).subscribe(args);
 	    }
-
-	    /**
-	     * Unsubscribe method wrapped for default instance
-	     *
-	     * @param {object} args
-	     */
-
 	  }, {
 	    key: 'unsubscribe',
 	    value: function unsubscribe(args) {
 	      this.getInstance(_config2.default.default_instance_name).unsubscribe(args);
 	    }
-
-	    /**
-	     * GetMessage method wrapped for default instance
-	     *
-	     * @param {string|[string]} channel
-	     * @param callback
-	     * @returns [object] array
-	     */
-
 	  }, {
 	    key: 'getMessage',
 	    value: function getMessage(channel, callback) {
 	      return this.getInstance(_config2.default.default_instance_name).getMessage(channel, callback);
 	    }
-
-	    /**
-	     * GetPresence method wrapped for default instance
-	     *
-	     * @param {string|[string]} channel
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getPresence',
 	    value: function getPresence(channel, callback) {
 	      this.getInstance(_config2.default.default_instance_name).getPresence(channel, callback);
 	    }
-
-	    /**
-	     * GetStatus method wrapped for default instance
-	     *
-	     * @param {string|[string]} channel
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getStatus',
 	    value: function getStatus(channel, callback) {
 	      this.getInstance(_config2.default.default_instance_name).getStatus(channel, callback);
 	    }
-
-	    /**
-	     * GetError method wrapped for default instance
-	     *
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getError',
 	    value: function getError(callback) {
 	      this.getInstance(_config2.default.default_instance_name).getError(callback);
 	    }
-
-	    /**
-	     * Clean Method wrapped for default instance
-	     *
-	     * @param {string|[string]} channel
-	     */
-
 	  }, {
 	    key: 'clean',
 	    value: function clean(channel) {
@@ -319,8 +250,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Wrapper = undefined;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global angular PUBNUB */
-
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _mock = __webpack_require__(4);
 
@@ -344,13 +274,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.autoload = new _autoload.Autoload();
 	  }
 
-	  /**
-	   * Initialize the wrapper
-	   *
-	   * @param {object} initConfig
-	   */
-
-
 	  _createClass(Wrapper, [{
 	    key: 'init',
 	    value: function init(initConfig) {
@@ -358,25 +281,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.mockingInstance.initializeListener(this);
 	      this.autoload.initialize(this);
 	    }
-
-	    /**
-	     * Get the name of the instance
-	     *
-	     * @returns {*|string|null|string}
-	     */
-
 	  }, {
 	    key: 'getLabel',
 	    value: function getLabel() {
 	      return this.label;
 	    }
-
-	    /**
-	     * Wrap the subscribe method to enable trigger events to the broadcast
-	     *
-	     * @param {object} args
-	     */
-
 	  }, {
 	    key: 'subscribe',
 	    value: function subscribe(args) {
@@ -384,13 +293,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.mockingInstance.enableEventsBroadcast(args);
 	      this.autoload.enableLoad(args);
 	    }
-
-	    /**
-	     * Wrap the unsubscribe method to disable the trigger events to the broadcast
-	     *
-	     * @param args
-	     */
-
 	  }, {
 	    key: 'unsubscribe',
 	    value: function unsubscribe(args) {
@@ -403,14 +305,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        clearTimeout(tm);
 	      }, 1000);
 	    }
-
-	    /**
-	     * Get to receive messages from a channel or a set of channels through a callback
-	     *
-	     * @param {string|[string]} channel
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getMessage',
 	    value: function getMessage(channel, callback) {
@@ -427,14 +321,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return this.outputOn.get(channel);
 	    }
-
-	    /**
-	     * Get to receive presence information from a channel or a set of channels through a callback
-	     *
-	     * @param {string|[string]} channel
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getPresence',
 	    value: function getPresence(channel, callback) {
@@ -442,14 +328,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.broadcastOn.presence(channel, callback);
 	      }
 	    }
-
-	    /**
-	     * Get to receive status information from a channel or a set of channels through a callback
-	     *
-	     * @param {string|[string]} channel
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getStatus',
 	    value: function getStatus(channel, callback) {
@@ -457,13 +335,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.broadcastOn.status(channel, callback);
 	      }
 	    }
-
-	    /**
-	     * Get to receive error information from PubNub Service through a callback
-	     *
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getError',
 	    value: function getError(callback) {
@@ -471,25 +342,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.broadcastOn.error(callback);
 	      }
 	    }
-
-	    /**
-	     * Clean the stack of messages for a channel or a set of channels
-	     *
-	     * @param {string|[string]} channel
-	     */
-
 	  }, {
 	    key: 'clean',
 	    value: function clean(channel) {
 	      this.outputOn.clean(channel);
 	    }
-
-	    /**
-	     * Get the PubNub instance wrapped or throw an exception if this is not instanced yet
-	     *
-	     * @returns {PubNub|*|null}
-	     */
-
 	  }, {
 	    key: 'getOriginalInstance',
 	    value: function getOriginalInstance() {
@@ -499,13 +356,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        throw new ReferenceError('Pubnub default instance is not initialized yet. Invoke #init() method first.');
 	      }
 	    }
-
-	    /**
-	     * Wrap a PubNub's attribute
-	     *
-	     * @param {string} attributeName
-	     */
-
 	  }, {
 	    key: 'wrapAttribute',
 	    value: function wrapAttribute(attributeName) {
@@ -515,13 +365,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 	    }
-
-	    /**
-	     * Wrap a PubNub's method
-	     *
-	     * @param methodName
-	     */
-
 	  }, {
 	    key: 'wrapMethod',
 	    value: function wrapMethod(methodName) {
@@ -563,13 +406,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.broadcaster = broadcaster;
 	    this.broadcastChannels = {};
 	  }
-
-	  /**
-	   * Initialize the listener for broadcasting all events
-	   *
-	   * @param {wrapper} instance
-	   */
-
 
 	  _createClass(Mock, [{
 	    key: 'initializeListener',
@@ -620,14 +456,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        instance.getOriginalInstance().addListener(this.listener);
 	      }
 	    }
-
-	    /**
-	     * Adds a set of channels to all events to broadcast
-	     *
-	     * @param {[string]} channels
-	     * @param {true|['message', 'presence', 'status']} triggerEvents
-	     */
-
 	  }, {
 	    key: 'addEventsBroadcast',
 	    value: function addEventsBroadcast(channels, triggerEvents) {
@@ -647,13 +475,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 	    }
-
-	    /**
-	     * Removes a set of channels from of all events to broadcast
-	     *
-	     * @param {[string]} channels
-	     */
-
 	  }, {
 	    key: 'removeEventBroadcast',
 	    value: function removeEventBroadcast(channels) {
@@ -665,13 +486,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 	    }
-
-	    /**
-	     * Enable a set of channels or group of channels to the broadcaster
-	     *
-	     * @param {object} args
-	     */
-
 	  }, {
 	    key: 'enableEventsBroadcast',
 	    value: function enableEventsBroadcast(args) {
@@ -683,13 +497,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.addEventsBroadcast(args.channelGroups, args.triggerEvents);
 	      }
 	    }
-
-	    /**
-	     * Disable a set of channels or group of channels from the broadcaster
-	     *
-	     * @param {object} args
-	     */
-
 	  }, {
 	    key: 'disableEventsBroadcast',
 	    value: function disableEventsBroadcast(args) {
@@ -727,13 +534,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	/**
-	 * Subscribe a channel to a trigger event
-	 *
-	 * @param {string} event - (message, presence, status)
-	 * @param {string|[string]} channel
-	 * @param {function} callback to execute.
-	 */
 	function subscribeChannel(event, channel, callback) {
 	  if (Array.isArray(channel)) {
 	    channel.forEach(function (ch) {
@@ -744,12 +544,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 
-	/**
-	 * Unsubscribe a channel of a trigger event
-	 *
-	 * @param {string} event - (message, presence, status)
-	 * @param {string|[string]} channel
-	 */
 	function unsubscribeChannel(event, channel) {
 	  if (Array.isArray(channel)) {
 	    channel.forEach(function (ch) {
@@ -769,26 +563,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      _this[event] = {};
 
-	      /**
-	       * Subscribe a channel with its callback to an event
-	       *
-	       * @param {string} channel
-	       * @param {function} callback
-	       */
 	      _this[eventName] = function (channel, callback) {
 	        subscribeChannel(this[event], channel, callback);
 	      };
 	    });
 	  }
-
-	  /**
-	   * Emit a message to a channel through an event
-	   *
-	   * @param {string} event - (message, presence, status)
-	   * @param {string} channel
-	   * @param {object} args
-	   */
-
 
 	  _createClass(Broadcast, [{
 	    key: 'emit',
@@ -799,25 +578,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this[subscriber][channel].call(null, args);
 	      }
 	    }
-
-	    /**
-	     * Subscribe or unsubscribe for catching errors from trigger events
-	     *
-	     * @param {function|null} callback
-	     */
-
 	  }, {
 	    key: 'error',
 	    value: function error(callback) {
 	      this._error = callback;
 	    }
-
-	    /**
-	     * Emit an error to the callback subscribed
-	     *
-	     * @param {object} args
-	     */
-
 	  }, {
 	    key: 'emitError',
 	    value: function emitError(args) {
@@ -825,13 +590,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._error.call(null, args);
 	      }
 	    }
-
-	    /**
-	     * Unsubscribe a channel of all events
-	     *
-	     * @param {string} channel
-	     */
-
 	  }, {
 	    key: 'unsubscribe',
 	    value: function unsubscribe(channel) {
@@ -869,14 +627,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.channels = {};
 	  }
 
-	  /**
-	   * Push a message to a channel's stack or a set of channels' stack
-	   *
-	   * @param {string|[string]} channel
-	   * @param {object} message
-	   */
-
-
 	  _createClass(Output, [{
 	    key: "push",
 	    value: function push(channel, message) {
@@ -884,14 +634,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.channels[channel].push(message);
 	      }
 	    }
-
-	    /**
-	     * Get a stack of messages for a channel or a set of channels
-	     *
-	     * @param {string|[string]} channel
-	     * @returns [object] array
-	     */
-
 	  }, {
 	    key: "get",
 	    value: function get(channel) {
@@ -901,13 +643,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return null;
 	      }
 	    }
-
-	    /**
-	     * Clean a stack of message for a channel or a set of channels
-	     *
-	     * @param {string|[string]} channel
-	     */
-
 	  }, {
 	    key: "clean",
 	    value: function clean(channel) {
@@ -915,13 +650,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.channels[channel].length = 0;
 	      }
 	    }
-
-	    /**
-	     * Subscribe a channel or a set of channels to create a stack of messages
-	     *
-	     * @param {string|[string]} channel
-	     */
-
 	  }, {
 	    key: "subscribe",
 	    value: function subscribe(channel) {
@@ -932,14 +660,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return false;
 	      }
 	    }
-
-	    /**
-	     * Sort the stack of messages for a channel or set of channels
-	     *
-	     * @param {string|[string]} channel
-	     * @param string key
-	     */
-
 	  }, {
 	    key: "sort",
 	    value: function sort(channel, key) {
@@ -949,13 +669,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      }
 	    }
-
-	    /**
-	     * Unsubscribe a channel or a set of channels of the stack of message
-	     *
-	     * @param {string|[string]} channel
-	     */
-
 	  }, {
 	    key: "unsubscribe",
 	    value: function unsubscribe(channel) {
@@ -998,25 +711,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.instance = undefined;
 	  }
 
-	  /**
-	   * Initialize the autoload with a wrapper instance
-	   *
-	   * @param instance
-	   */
-
-
 	  _createClass(Autoload, [{
 	    key: 'initialize',
 	    value: function initialize(instance) {
 	      this.instance = instance;
 	    }
-
-	    /**
-	     * Enable the autoload for a channel or a set of channels subscribed
-	     *
-	     * @param args
-	     */
-
 	  }, {
 	    key: 'enableLoad',
 	    value: function enableLoad(args) {
@@ -1030,14 +729,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      }
 	    }
-
-	    /**
-	     * Get history of a channel or a set of channels.
-	     *
-	     * @param {string|[string]} channel
-	     * @param callback
-	     */
-
 	  }, {
 	    key: 'getHistory',
 	    value: function getHistory(channel, callback) {
@@ -1068,13 +759,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      }
 	    }
-
-	    /**
-	     * Disable the autoload for a channel or set of channels
-	     *
-	     * @param args
-	     */
-
 	  }, {
 	    key: 'disableLoad',
 	    value: function disableLoad(args) {
