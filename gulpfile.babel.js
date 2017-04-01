@@ -2,6 +2,8 @@
 /* eslint prefer-template: 0, prefer-arrow-callback: 0 */
 
 import gulp from 'gulp';
+import babel from 'gulp-babel';
+import sourcemaps from 'gulp-sourcemaps';
 import gulpClean from 'gulp-clean';
 import gulpLint from 'gulp-eslint';
 import gulpWebpack from 'webpack-stream';
@@ -20,7 +22,20 @@ const src = 'src';
 const dist = 'dist';
 
 gulp.task('clean', function () {
-  return gulp.src(['dist', 'coverage', 'upload'], { read: false }).pipe(gulpClean());
+  return gulp.src(['lib', 'dist', 'coverage', 'upload'], { read: false }).pipe(gulpClean());
+});
+
+gulp.task('babel', function () {
+	return gulp.src('src/**/*.js')
+		.pipe(sourcemaps.init())
+		.pipe(babel())
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('lib'));
+});
+
+gulp.task('copy_declaration_files', function () {
+	return gulp.src('src/declaration_files/*.d.ts')
+		.pipe(gulp.dest('lib'));
 });
 
 gulp.task('lint', function () {
@@ -81,5 +96,5 @@ gulp.task('test', (done) => {
 });
 
 gulp.task('compile', (done) => {
-  runSequence('clean', 'webpack', 'create_version', 'uglify', 'create_version_gzip', done);
+  runSequence('clean', 'babel', 'copy_declaration_files', 'webpack', 'create_version', 'uglify', 'create_version_gzip', done);
 });
