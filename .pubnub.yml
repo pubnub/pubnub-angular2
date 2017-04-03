@@ -2,6 +2,9 @@ name: pubnub-angular2
 version: 1.0.2
 schema: 1
 scm: github.com/pubnub/pubnub-angular2
+files:
+  - dist/pubnub-angular2.js
+  - dist/pubnub-angular2.min.js
 changelog:
   - version: v1.0.2
     changes:
