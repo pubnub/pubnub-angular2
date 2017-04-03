@@ -1,3 +1,13 @@
+## [v1.0.2](https://github.com/pubnub/pubnub-angular2/tree/v1.0.2)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.1...v1.0.2)
+
+- 🌟fix issue over commmand 'ng build --prod' in Angular CLI
+
+
+
+
 ## [v1.0.1](https://github.com/pubnub/pubnub-angular2/tree/v1.0.1)
 
 
