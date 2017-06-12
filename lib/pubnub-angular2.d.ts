@@ -2,7 +2,7 @@ import {Wrapper} from "./wrapper";
 export declare class PubNubAngular {
     constructor();
     getInstance(instanceName: string): Wrapper;
-    init(initConfig: Object);
+    init(initConfig: Object): any;
     subscribe(args: Object): void;
     unsubscribe(args: Object): void;
     unsubscribeAll(): void;
