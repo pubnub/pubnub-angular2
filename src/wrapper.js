@@ -72,10 +72,12 @@ export class Wrapper {
       this.autoload.getHistory(channel, callback);
     }
 
-    this.broadcastOn.message(channel, (message) => {
-      this.outputOn.push(channel, message);
-      if (callback) callback(message);
-    });
+    if (callback) {
+      this.broadcastOn.message(channel, (message) => {
+        this.outputOn.push(channel, message);
+        callback(message);
+      });
+    }
 
     return this.outputOn.get(channel);
   }
