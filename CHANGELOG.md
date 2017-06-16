@@ -1,3 +1,4 @@
+
 ## [v1.0.3](https://github.com/pubnub/pubnub-angular2/tree/v1.0.3)
 
 
@@ -6,7 +7,9 @@
 
 
 - 🐛fix issue 20 autoload history
-- 🌟update for Angular4 and TS 2.3
+
+- ⭐update for Angular4 and TS 2.3
+
 
 
 ## [v1.0.2](https://github.com/pubnub/pubnub-angular2/tree/v1.0.2)
