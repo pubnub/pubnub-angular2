@@ -1,4 +1,4 @@
-/*! 1.0.2 */
+/*! 1.0.3 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -314,10 +314,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.autoload.getHistory(channel, callback);
 	      }
 
-	      this.broadcastOn.message(channel, function (message) {
-	        _this.outputOn.push(channel, message);
-	        if (callback) callback(message);
-	      });
+	      if (callback) {
+	        this.broadcastOn.message(channel, function (message) {
+	          _this.outputOn.push(channel, message);
+	          callback(message);
+	        });
+	      }
 
 	      return this.outputOn.get(channel);
 	    }
