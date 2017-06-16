@@ -16,9 +16,7 @@ var config = {
 		libraryTarget: 'umd',
 	},
 	plugins: [
-		new webpack.BannerPlugin(require('./package.json').version, {
-			raw: false, entryOnly: true,
-		}),
+		new webpack.BannerPlugin({ banner: require('./package.json').version, raw: false })
 	],
 	externals: [],
 	profile: true

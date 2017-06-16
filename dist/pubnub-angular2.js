@@ -1,4 +1,4 @@
-/*! 1.0.2 */
+/*! 1.0.3 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -53,7 +53,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -63,9 +63,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports.PubNubAngular = _pubnubAngular.PubNubAngular;
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -187,9 +187,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return PubNubAngular;
 	}();
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"pubnub_prefix": "pubnub",
@@ -239,9 +239,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		"history_sort_attribute": "timetoken"
 	};
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -314,10 +314,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.autoload.getHistory(channel, callback);
 	      }
 
-	      this.broadcastOn.message(channel, function (message) {
-	        _this.outputOn.push(channel, message);
-	        if (callback) callback(message);
-	      });
+	      if (callback) {
+	        this.broadcastOn.message(channel, function (message) {
+	          _this.outputOn.push(channel, message);
+	          callback(message);
+	        });
+	      }
 
 	      return this.outputOn.get(channel);
 	    }
@@ -377,9 +379,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Wrapper;
 	}();
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -513,9 +515,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Mock;
 	}();
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -606,9 +608,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Broadcast;
 	}();
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -682,9 +684,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Output;
 	}();
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -777,7 +779,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Autoload;
 	}();
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;
