@@ -2,7 +2,7 @@ export declare class Wrapper {
     constructor();
     getLabel(): string;
     getOriginalInstance(): any;
-    init(initConfig: Object);
+    init(initConfig: Object): any;
     subscribe(args: Object): void;
     unsubscribe(args: Object): void;
     unsubscribeAll(): void;
