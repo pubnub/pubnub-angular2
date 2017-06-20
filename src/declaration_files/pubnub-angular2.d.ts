@@ -12,6 +12,7 @@ export declare class PubNubAngular {
     getStatus(channel: string | string[], callback: (status: any) => void): void;
     getError(channel: string | string[], callback: (error: any) => void): void;
     clean(channel: string | string[]): void;
+    release(channel: string | string[]): void;
     publish(message: Object): any;
     publish(message: Object, callback: (status: any, response: any) => void): void;
     fire(args: Object, callback: (status: any, response: any) => void): void;

@@ -134,4 +134,13 @@ export class PubNubAngular {
   clean(channel) {
     this.getInstance(config.default_instance_name).clean(channel);
   }
+
+  /**
+   * Release Method wrapped for default instance
+   *
+   * @param {string|[string]} channel
+   */
+  release(channel) {
+    this.getInstance(config.default_instance_name).release(channel);
+  }
 }

@@ -463,7 +463,10 @@ You can also get the stack of messages with the code above in whatever moment af
 that you can use this code to associate this to a field in your ngComponent and the stack of messages is going to be
 available inside your html.
 
-**Cleaning the stack of messages:**
+**Cleaning and releasing the stack of messages:**
+
+You can execute clean to remove all message cached by the instance in run time without affecting the capture of new
+incoming messages for the trigger events.
 
 ```javascript
 pubnubService.clean('myChannel1');
@@ -475,6 +478,22 @@ pubnubService.clean('myGroup1');
 
 ```javascript
 pubnubService.clean(['myChannel1', 'myChannel2']);
+```
+
+You can execute release if you want to remove all message cached and stop of capturing new incoming messages for the
+trigger events.
+
+
+```javascript
+pubnubService.release('myChannel1');
+```
+
+```javascript
+pubnubService.release('myGroup1');
+```
+
+```javascript
+pubnubService.release(['myChannel1', 'myChannel2']);
 ```
 
 **Getting stack of messages directly in the HTML:**

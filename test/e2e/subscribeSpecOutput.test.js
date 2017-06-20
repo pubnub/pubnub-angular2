@@ -5,13 +5,14 @@ describe('#Allocate messages in arrays of output()', function () {
   var channelName1 = getRandomChannel();
   var channelName2 = getRandomChannel();
   var channelName3 = getRandomChannel();
+	var channelName4 = getRandomChannel();
   var stringMessage = 'hey ';
 
   pubnub4.init(config.demo);
 
   pubnub4.subscribe({channels: [channelName1], triggerEvents: true, withPresence: true});
   pubnub4.subscribe({channels: [channelName1, channelName2], triggerEvents: true, withPresence: true});
-  pubnub4.subscribe({channels: [channelName1, channelName3], triggerEvents: true, withPresence: true});
+  pubnub4.subscribe({channels: [channelName1, channelName3, channelName4], triggerEvents: true, withPresence: true});
 
   var result1 = pubnub4.getMessage(channelName1);
   var result2 = undefined;
@@ -119,10 +120,35 @@ describe('#Allocate messages in arrays of output()', function () {
     });
 
     it('For a channel does not register', function (done) {
-
       pubnub4.clean(getRandomChannel());
       done();
     });
+  });
+
+  describe('Release stack of messages', function (){
+    it('Should be release a channel', function (done) {
+			var newStringMessege = stringMessage + '4';
+
+			var stack3 = pubnub4.getMessage(channelName4, function (m) {
+			  pubnub4.release(channelName4);
+				expect(stack3).to.have.length(0);
+				done();
+			});
+
+			pubnub4.publish({channel: channelName4, message: newStringMessege});
+    });
+
+		it('Should be release a set of channels', function (done) {
+			var newStringMessege = stringMessage + '4';
+
+			var stack4 = pubnub4.getMessage([channelName1, channelName4], function (m) {
+				pubnub4.release([channelName1, channelName4]);
+				expect(stack4).to.have.length(0);
+				done();
+			});
+
+			pubnub4.publish({channel: channelName4, message: newStringMessege});
+		});
   });
 
   describe('Unsubscribe', function (){

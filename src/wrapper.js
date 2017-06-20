@@ -72,12 +72,10 @@ export class Wrapper {
       this.autoload.getHistory(channel, callback);
     }
 
-    if (callback) {
-      this.broadcastOn.message(channel, (message) => {
-        this.outputOn.push(channel, message);
-        callback(message);
-      });
-    }
+    this.broadcastOn.message(channel, (message) => {
+      this.outputOn.push(channel, message);
+      if (callback) callback(message);
+    });
 
     return this.outputOn.get(channel);
   }
@@ -124,6 +122,16 @@ export class Wrapper {
    */
   clean(channel) {
     this.outputOn.clean(channel);
+  }
+
+  /**
+   * Release the stack of messages for a channel or a set of channels
+   *
+   * @param {string|[string]} channel
+   */
+  release(channel) {
+    this.broadcastOn.unsubscribe(channel);
+    this.outputOn.unsubscribe(channel);
   }
 
   /**
