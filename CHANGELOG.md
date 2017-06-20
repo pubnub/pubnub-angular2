@@ -1,4 +1,16 @@
 
+## [v1.1.0](https://github.com/pubnub/pubnub-angular2/tree/v1.1.0)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.3...v1.1.0)
+
+
+
+
+- ⭐add release method
+
+
+
 ## [v1.0.3](https://github.com/pubnub/pubnub-angular2/tree/v1.0.3)
 
 

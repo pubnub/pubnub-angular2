@@ -1,4 +1,4 @@
-/*! 1.0.3 */
+/*! 1.1.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -182,6 +182,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function clean(channel) {
 	      this.getInstance(_config2.default.default_instance_name).clean(channel);
 	    }
+	  }, {
+	    key: 'release',
+	    value: function release(channel) {
+	      this.getInstance(_config2.default.default_instance_name).release(channel);
+	    }
 	  }]);
 
 	  return PubNubAngular;
@@ -314,12 +319,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.autoload.getHistory(channel, callback);
 	      }
 
-	      if (callback) {
-	        this.broadcastOn.message(channel, function (message) {
-	          _this.outputOn.push(channel, message);
-	          callback(message);
-	        });
-	      }
+	      this.broadcastOn.message(channel, function (message) {
+	        _this.outputOn.push(channel, message);
+	        if (callback) callback(message);
+	      });
 
 	      return this.outputOn.get(channel);
 	    }
@@ -348,6 +351,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'clean',
 	    value: function clean(channel) {
 	      this.outputOn.clean(channel);
+	    }
+	  }, {
+	    key: 'release',
+	    value: function release(channel) {
+	      this.broadcastOn.unsubscribe(channel);
+	      this.outputOn.unsubscribe(channel);
 	    }
 	  }, {
 	    key: 'getOriginalInstance',
