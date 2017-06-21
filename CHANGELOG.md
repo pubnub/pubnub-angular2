@@ -4,10 +4,8 @@
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.3...v1.1.0)
 
+- 🌟add release method
 
-
-
-- ⭐add release method
 
 
 
