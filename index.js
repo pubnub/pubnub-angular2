@@ -1,1 +1,1 @@
-exports = require('./lib/pubnub-angular2').PubNubAngular;
+exports = require('./lib/pubnub-angular4').PubNubAngular;

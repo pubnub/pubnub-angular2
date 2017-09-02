@@ -57,11 +57,33 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _pubnubAngular = __webpack_require__(1);
+	var _pubnubCommon = __webpack_require__(1);
 
-	module.exports = _pubnubAngular.PubNubAngular;
+	var _pubnubCommon2 = _interopRequireDefault(_pubnubCommon);
 
-	module.exports.PubNubAngular = _pubnubAngular.PubNubAngular;
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PubNubAngular = function (_PubNubCommon) {
+		_inherits(PubNubAngular, _PubNubCommon);
+
+		function PubNubAngular() {
+			_classCallCheck(this, PubNubAngular);
+
+			return _possibleConstructorReturn(this, (PubNubAngular.__proto__ || Object.getPrototypeOf(PubNubAngular)).call(this, undefined));
+		}
+
+		return PubNubAngular;
+	}(_pubnubCommon2.default);
+
+	module.exports = PubNubAngular;
+
+	module.exports.PubNubAngular = PubNubAngular;
 
 /***/ }),
 /* 1 */
@@ -72,7 +94,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.PubNubAngular = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -86,18 +107,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var PubNubAngular = exports.PubNubAngular = function () {
-	  function PubNubAngular() {
-	    _classCallCheck(this, PubNubAngular);
+	var _class = function () {
+	  function _class(pubnub) {
+	    _classCallCheck(this, _class);
 
-	    if (typeof PubNub === 'undefined' || PubNub === null) {
-	      throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
-	    }
-
+	    this.pubnub = pubnub;
 	    this.wrappers = {};
 	  }
 
-	  _createClass(PubNubAngular, [{
+	  _createClass(_class, [{
 	    key: 'init',
 	    value: function init(initConfig) {
 
@@ -117,7 +135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (instance && instance instanceof _wrapper.Wrapper) {
 	        return instance;
 	      } else if (typeof instanceName === 'string' && instanceName.length > 0) {
-	        this.wrappers[instanceName] = new _wrapper.Wrapper(instanceName, this);
+	        this.wrappers[instanceName] = new _wrapper.Wrapper(instanceName, this.pubnub);
 
 	        _config2.default.attributes_to_delegate.forEach(function (attribute) {
 	          _this.wrappers[instanceName].wrapAttribute(attribute);
@@ -189,8 +207,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }]);
 
-	  return PubNubAngular;
+	  return _class;
 	}();
+
+	exports.default = _class;
+	module.exports = exports['default'];
 
 /***/ }),
 /* 2 */
@@ -268,21 +289,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Wrapper = exports.Wrapper = function () {
-	  function Wrapper(label) {
+	  function Wrapper(label, pubnub) {
 	    _classCallCheck(this, Wrapper);
 
 	    this.label = label;
 	    this.pubnubInstance = null;
+	    this.PubNub = pubnub;
 	    this.broadcastOn = new _broadcast.Broadcast();
 	    this.outputOn = new _output.Output();
 	    this.mockingInstance = new _mock.Mock(this.broadcastOn);
 	    this.autoload = new _autoload.Autoload();
+
+	    if (!this.PubNub) {
+	      this.PubNub = PubNub;
+	    }
+
+	    if (typeof this.PubNub === 'undefined' || this.PubNub === null) {
+	      throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
+	    }
 	  }
 
 	  _createClass(Wrapper, [{
 	    key: 'init',
 	    value: function init(initConfig) {
-	      this.pubnubInstance = new PubNub(initConfig);
+	      this.pubnubInstance = new this.PubNub(initConfig);
 	      this.mockingInstance.initializeListener(this);
 	      this.autoload.initialize(this);
 	    }

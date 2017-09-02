@@ -5,13 +5,22 @@ import { Output } from './output';
 import { Autoload } from './autoload';
 
 export class Wrapper {
-  constructor(label) {
+  constructor(label, pubnub) {
     this.label = label;
     this.pubnubInstance = null;
+    this.PubNub = pubnub;
     this.broadcastOn = new Broadcast();
     this.outputOn = new Output();
     this.mockingInstance = new Mock(this.broadcastOn);
     this.autoload = new Autoload();
+
+    if (!this.PubNub) {
+      this.PubNub = PubNub;
+    }
+
+    if (typeof this.PubNub === 'undefined' || this.PubNub === null) {
+      throw new Error('PubNub is not in global scope. Ensure that pubnub.js v4 library is included before the angular adapter');
+    }
   }
 
   /**
@@ -20,7 +29,7 @@ export class Wrapper {
    * @param {object} initConfig
    */
   init(initConfig) {
-    this.pubnubInstance = new PubNub(initConfig);
+    this.pubnubInstance = new this.PubNub(initConfig);
     this.mockingInstance.initializeListener(this);
     this.autoload.initialize(this);
   }

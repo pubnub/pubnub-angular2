@@ -7,6 +7,13 @@ describe('#History()', function () {
 
   pubnub5.subscribe({channels: [config.channelWithHistory, config.channelWithHistory], triggerEvents: true, withPresence: true, autoload: 100});
 
+	before(function (done) {
+		for (var i = 1; i <= 100; i++) {
+		  pubnub5.publish({ channel: config.channelWithHistory, message: Date.now() });
+    }
+    done();
+	});
+
   this.timeout(20000);
 
   describe('Get messages from a channel with history', function () {
