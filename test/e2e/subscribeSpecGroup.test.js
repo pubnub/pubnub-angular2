@@ -41,7 +41,7 @@ describe('#subscribe_channelGroups', function () {
 		);
 	});
 
-	this.timeout(20000);
+	this.timeout(30000);
 
 	describe('Using trigger events', function () {
 		it('It is able to listen using trigger events', function (done) {

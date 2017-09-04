@@ -14,7 +14,7 @@ describe('#History()', function () {
     done();
 	});
 
-  this.timeout(20000);
+  this.timeout(30000);
 
   describe('Get messages from a channel with history', function () {
     it('Get messages ', function (done) {

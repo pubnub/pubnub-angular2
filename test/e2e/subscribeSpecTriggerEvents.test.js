@@ -23,7 +23,7 @@ describe('#Triggered all events()', function () {
 		pubnub3.unsubscribe({channels: [channelName1, channelName2]});
 	});
 
-	this.timeout(20000);
+	this.timeout(30000);
 
 	describe('Status', function () {
 		it('Should be triggered', function (done) {
