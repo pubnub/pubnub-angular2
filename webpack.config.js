@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 var config = {
 	// webpack options
-	entry: './webpackEntry.js',
+	entry: './src/pubnub-angular2.js',
 	module: {
 		loaders: [
 			{ test: /\.json/, loader: 'json' },

@@ -1,1 +1,1 @@
-export * from './lib/pubnub-angular2';
+export * from './lib/pubnub-angular4';
