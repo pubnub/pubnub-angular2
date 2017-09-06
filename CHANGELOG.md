@@ -1,3 +1,12 @@
+## [v1.2.0](https://github.com/pubnub/pubnub-angular2/tree/v1.2.0)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.1.1...v1.2.0)
+
+- 🌟add support for environments CLI/no CLI simultaneously
+
+
+
 
 ## [v1.1.0](https://github.com/pubnub/pubnub-angular2/tree/v1.1.0)
 
