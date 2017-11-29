@@ -1,4 +1,3 @@
-/* global window */
 import PubNubCommon from './pubnub-common';
 
 class PubNubAngular extends PubNubCommon {
