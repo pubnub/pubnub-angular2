@@ -10,9 +10,10 @@
 
 
 ## [v1.2.0](https://github.com/pubnub/pubnub-angular2/tree/v1.2.0)
+  October-04-2017
 
 
-  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.1.1...v1.2.0)
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.1.0...v1.2.0)
 
 - 🌟add support for environments CLI/no CLI simultaneously
 
@@ -20,6 +21,7 @@
 
 
 ## [v1.1.0](https://github.com/pubnub/pubnub-angular2/tree/v1.1.0)
+  June-20-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.3...v1.1.0)
@@ -30,6 +32,7 @@
 
 
 ## [v1.0.3](https://github.com/pubnub/pubnub-angular2/tree/v1.0.3)
+  June-16-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.2...v1.0.3)
@@ -43,6 +46,7 @@
 
 
 ## [v1.0.2](https://github.com/pubnub/pubnub-angular2/tree/v1.0.2)
+  April-03-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.1...v1.0.2)
@@ -53,6 +57,7 @@
 
 
 ## [v1.0.1](https://github.com/pubnub/pubnub-angular2/tree/v1.0.1)
+  February-28-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0...v1.0.1)
@@ -63,6 +68,7 @@
 
 
 ## [v1.0.0](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0)
+  February-23-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.9...v1.0.0)
@@ -73,6 +79,7 @@
 
 
 ## [v1.0.0.beta.9](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.9)
+  February-13-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.8...v1.0.0.beta.9)
@@ -83,6 +90,7 @@
 
 
 ## [v1.0.0.beta.8](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.8)
+  January-16-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.7...v1.0.0.beta.8)
@@ -93,6 +101,7 @@
 
 
 ## [v1.0.0.beta.7](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.7)
+  December-29-2016
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.6...v1.0.0.beta.7)
@@ -103,6 +112,7 @@
 
 
 ## [v1.0.0.beta.6](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.6)
+  November-22-2016
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.5...v1.0.0.beta.6)
@@ -113,6 +123,7 @@
 
 
 ## [v1.0.0.beta.5](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.5)
+  November-18-2016
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.4...v1.0.0.beta.5)
@@ -123,6 +134,7 @@
 
 
 ## [v1.0.0.beta.4](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.4)
+  November-14-2016
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.3...v1.0.0.beta.4)
@@ -133,20 +145,22 @@
 
 
 ## [v1.0.0.beta.3](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.3)
+  November-03-2016
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.0.0.beta.2...v1.0.0.beta.3)
 
-- 🌟first public beta of the wrapper.
+- 🌟first public beta of the wrapper
 
 
 
 
 ## [v1.0.0.beta.2](https://github.com/pubnub/pubnub-angular2/tree/v1.0.0.beta.2)
+  November-02-2016
 
 
 
-- 🌟first public beta of the wrapper.
+- 🌟first public beta of the wrapper
 
 
 
