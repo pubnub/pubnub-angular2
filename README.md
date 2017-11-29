@@ -479,6 +479,19 @@ var myStack1 = pubnub.getMessage('myChannel1');
 var myStack1 = pubnub.getMessage('myGroup1');
 ```
 
+When you are using getMessage this is going to keep the latest 100 messages received by default. 
+But you can change this value when you attach the channel for first time with getMessage.
+
+```javascript
+var myStack1 = pubnub.getMessage('myChannel1', (msg) => {
+ console.log(msg);
+}, 20);
+```
+
+```javascript
+var myStack1 = pubnub.getMessage('myChannel1', 30);
+```
+
 You can also get the stack of messages with the code above in whatever moment after registering the channel. Remember
 that you can use this code to associate this to a field in your ngComponent and the stack of messages is going to be
 available inside your html.
