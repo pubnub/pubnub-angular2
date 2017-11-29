@@ -1,3 +1,14 @@
+## [v1.3.0](https://github.com/pubnub/pubnub-angular2/tree/v1.3.0)
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.2.0...v1.3.0)
+
+- 🌟add functions to (fetchMessages and deleteMessages)
+- 🌟keep the stack of messages with only the latest 100
+
+
+
+
 ## [v1.2.0](https://github.com/pubnub/pubnub-angular2/tree/v1.2.0)
 
 

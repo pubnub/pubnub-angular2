@@ -1,4 +1,4 @@
-/*! 1.2.0 */
+/*! 1.3.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -177,8 +177,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'getMessage',
-	    value: function getMessage(channel, callback) {
-	      return this.getInstance(_config2.default.default_instance_name).getMessage(channel, callback);
+	    value: function getMessage(channel) {
+	      var _getInstance;
+
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
+	      }
+
+	      return (_getInstance = this.getInstance(_config2.default.default_instance_name)).getMessage.apply(_getInstance, [channel].concat(args));
 	    }
 	  }, {
 	    key: 'getPresence',
@@ -217,53 +223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ (function(module, exports) {
 
-	module.exports = {
-		"pubnub_prefix": "pubnub",
-		"default_instance_name": "default",
-		"attributes_to_delegate": [
-			"channelGroups",
-			"push"
-		],
-		"methods_to_delegate": [
-			"addListener",
-			"removeListener",
-			"removeAllListeners",
-			"hereNow",
-			"whereNow",
-			"getState",
-			"setState",
-			"grant",
-			"audit",
-			"publish",
-			"fire",
-			"history",
-			"time",
-			"reconnect",
-			"stop",
-			"unsubscribeAll",
-			"getSubscribedChannels",
-			"getSubscribedChannelGroups",
-			"encrypt",
-			"decrypt",
-			"getAuthKey",
-			"setAuthKey",
-			"setCipherKey",
-			"getUUID",
-			"setUUID",
-			"getFilterExpression",
-			"setFilterExpression"
-		],
-		"common_callbacks_to_wrap": [
-			"callback",
-			"error"
-		],
-		"subscribe_listener_events_to_broadcast": [
-			"message",
-			"presence",
-			"status"
-		],
-		"history_sort_attribute": "timetoken"
-	};
+	module.exports = {"pubnub_prefix":"pubnub","default_instance_name":"default","attributes_to_delegate":["channelGroups","push"],"methods_to_delegate":["addListener","removeListener","removeAllListeners","hereNow","whereNow","getState","setState","grant","audit","publish","fire","history","deleteMessages","fetchMessages","time","reconnect","stop","unsubscribeAll","getSubscribedChannels","getSubscribedChannelGroups","encrypt","decrypt","getAuthKey","setAuthKey","setCipherKey","getUUID","setUUID","getFilterExpression","setFilterExpression"],"common_callbacks_to_wrap":["callback","error"],"subscribe_listener_events_to_broadcast":["message","presence","status"],"history_sort_attribute":"timetoken"}
 
 /***/ }),
 /* 3 */
@@ -342,10 +302,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'getMessage',
-	    value: function getMessage(channel, callback) {
+	    value: function getMessage(channel) {
 	      var _this = this;
 
-	      if (this.outputOn.subscribe(channel)) {
+	      var callback = void 0;
+	      var keepMessages = 100;
+
+	      if ((arguments.length <= 1 ? 0 : arguments.length - 1) === 1 && typeof (arguments.length <= 1 ? undefined : arguments[1]) === 'function') {
+	        callback = arguments.length <= 1 ? undefined : arguments[1];
+	      } else if ((arguments.length <= 1 ? 0 : arguments.length - 1) === 1 && typeof (arguments.length <= 1 ? undefined : arguments[1]) === 'number') {
+	        keepMessages = arguments.length <= 1 ? undefined : arguments[1];
+	      } else if ((arguments.length <= 1 ? 0 : arguments.length - 1) === 2) {
+	        callback = arguments.length <= 1 ? undefined : arguments[1];
+	        keepMessages = arguments.length <= 2 ? undefined : arguments[2];
+	      }
+
+	      if (this.outputOn.subscribe(channel, keepMessages)) {
 	        this.autoload.getHistory(channel, callback);
 	      }
 
@@ -666,6 +638,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _classCallCheck(this, Output);
 
 	    this.channels = {};
+	    this.keepMessages = {};
 	  }
 
 	  _createClass(Output, [{
@@ -673,6 +646,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function push(channel, message) {
 	      if (this.channels[channel]) {
 	        this.channels[channel].push(message);
+
+	        if (this.keepMessages[channel] && this.channels[channel].length > this.keepMessages[channel]) {
+	          this.channels[channel].splice(0, this.channels[channel].length - this.keepMessages[channel]);
+	        }
 	      }
 	    }
 	  }, {
@@ -693,9 +670,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: "subscribe",
-	    value: function subscribe(channel) {
+	    value: function subscribe(channel, keepMessages) {
 	      if (!this.channels[channel]) {
 	        this.channels[channel] = [];
+	        this.keepMessages[channel] = keepMessages;
 	        return true;
 	      } else {
 	        return false;
