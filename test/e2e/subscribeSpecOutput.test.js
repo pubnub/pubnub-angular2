@@ -6,6 +6,7 @@ describe('#Allocate messages in arrays of output()', function () {
   var channelName2 = getRandomChannel();
   var channelName3 = getRandomChannel();
 	var channelName4 = getRandomChannel();
+	var channelName5 = getRandomChannel();
   var stringMessage = 'hey ';
 
   pubnub4.init(config.demo);
@@ -13,6 +14,7 @@ describe('#Allocate messages in arrays of output()', function () {
   pubnub4.subscribe({channels: [channelName1], triggerEvents: true, withPresence: true});
   pubnub4.subscribe({channels: [channelName1, channelName2], triggerEvents: true, withPresence: true});
   pubnub4.subscribe({channels: [channelName1, channelName3, channelName4], triggerEvents: true, withPresence: true});
+	pubnub4.subscribe({channels: [channelName5], triggerEvents: true});
 
   var result1 = pubnub4.getMessage(channelName1);
   var result2 = undefined;
@@ -149,6 +151,24 @@ describe('#Allocate messages in arrays of output()', function () {
 
 			pubnub4.publish({channel: channelName4, message: newStringMessege});
 		});
+  });
+
+  describe('Trim stack of messages', function () {
+    it('should be keep the last 3 messages received', function(done) {
+			var counter = 0;
+
+			var result = pubnub4.getMessage(channelName5, function (m) {
+				counter += 1;
+				if (counter === 4) {
+					expect(result).to.have.length(3);
+					done();
+				}
+			}, 3);
+
+			for (var i = 1; i <= 4; i++) {
+				pubnub4.publish({ channel: channelName5, message: ('message ' + i )});
+			}
+    }).timeout(7000);
   });
 
   describe('Unsubscribe', function (){

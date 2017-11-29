@@ -57,7 +57,7 @@ describe('#History()', function () {
       var stack = pubnub5.getMessage([config.channelWithHistory, config.channelWithHistory], function(){
         expect(stack).to.have.length(200);
         done();
-      });
+      }, 200);
     });
   });
 });

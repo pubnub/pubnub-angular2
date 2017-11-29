@@ -1,6 +1,7 @@
 export class Output {
   constructor() {
     this.channels = {};
+    this.keepMessages = {};
   }
 
   /**
@@ -12,6 +13,10 @@ export class Output {
   push(channel, message) {
     if (this.channels[channel]) {
       this.channels[channel].push(message);
+
+      if (this.keepMessages[channel] && this.channels[channel].length > this.keepMessages[channel]) {
+        this.channels[channel].splice(0, (this.channels[channel].length - this.keepMessages[channel]));
+      }
     }
   }
 
@@ -45,9 +50,10 @@ export class Output {
    *
    * @param {string|[string]} channel
    */
-  subscribe(channel) {
+  subscribe(channel, keepMessages) {
     if (!this.channels[channel]) {
       this.channels[channel] = [];
+      this.keepMessages[channel] = keepMessages;
       return true;
     } else {
       return false;
