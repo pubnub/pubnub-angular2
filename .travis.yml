@@ -17,6 +17,6 @@ install:
   - yarn install
 script:
   - gulp test
-
+  - npm install -g bower
 after_success:
   - bash <(curl -s https://codecov.io/bash)
