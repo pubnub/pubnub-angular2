@@ -5,6 +5,7 @@ node_js:
 env:
   - CXX=g++-4.8
 addons:
+  srcclr: true
   apt:
     sources:
       - ubuntu-toolchain-r-test
@@ -16,6 +17,6 @@ install:
   - yarn install
 script:
   - gulp test
-
+  - npm install -g bower
 after_success:
   - bash <(curl -s https://codecov.io/bash)
