@@ -1,4 +1,3 @@
-/* global angular PUBNUB */
 import { Mock } from './mock';
 import { Broadcast } from './broadcast';
 import { Output } from './output';
@@ -76,8 +75,20 @@ export class Wrapper {
    * @param {string|[string]} channel
    * @param callback
    */
-  getMessage(channel, callback) {
-    if (this.outputOn.subscribe(channel)) {
+  getMessage(channel, ...args) {
+    let callback;
+    let keepMessages = 100;
+
+    if (args.length === 1 && typeof args[0] === 'function') {
+      callback = args[0];
+    } else if (args.length === 1 && typeof args[0] === 'number') {
+      keepMessages = args[0];
+    } else if (args.length === 2) {
+      callback = args[0];
+      keepMessages = args[1];
+    }
+
+    if (this.outputOn.subscribe(channel, keepMessages)) {
       this.autoload.getHistory(channel, callback);
     }
 

@@ -90,8 +90,8 @@ export default class {
    * @param callback
    * @returns [object] array
    */
-  getMessage(channel, callback) {
-    return this.getInstance(config.default_instance_name).getMessage(channel, callback);
+  getMessage(channel, ...args) {
+    return this.getInstance(config.default_instance_name).getMessage(channel, ...args);
   }
 
   /**
