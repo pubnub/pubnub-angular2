@@ -6,6 +6,7 @@ export declare class PubNubAngular {
     subscribe(args: Object): void;
     unsubscribe(args: Object): void;
     unsubscribeAll(): void;
+    deleteMessages(args: Object, callback: (status: any, response: any) => void): void;
     getMessage(channel: string | string[]): any[];
     getMessage(channel: string | string[], callback: (message: any) => void): any[];
     getPresence(channel: string | string[], callback: (presence: any) => void): void;
