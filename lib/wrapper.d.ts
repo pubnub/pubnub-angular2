@@ -6,6 +6,7 @@ export declare class Wrapper {
     subscribe(args: Object): void;
     unsubscribe(args: Object): void;
     unsubscribeAll(): void;
+    deleteMessages(args: Object, callback: (status: any, response: any) => void): void;
     getMessage(channel: string | string[]): any[];
     getMessage(channel: string | string[], callback: (message: any) => void): any[];
     getPresence(channel: string | string[], callback: (presence: any) => void): void;
@@ -16,6 +17,7 @@ export declare class Wrapper {
     publish(message: Object): any;
     publish(message: Object, callback: (status: any, response: any) => void): void;
     fire(args: Object, callback: (status: any, response: any) => void): void;
+    fetchMessages(args: Object, callback: (status: any, response: any) => void): void;
     addListener(listener: Object): void;
     removeListener(listener: Object): void;
     removeAllListeners(): void;
