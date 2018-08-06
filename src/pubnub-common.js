@@ -1,4 +1,3 @@
-/* global window */
 import config from '../config.json';
 import { Wrapper } from './wrapper';
 
