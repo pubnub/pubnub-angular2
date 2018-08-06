@@ -17,6 +17,7 @@ export declare class PubNubAngular {
     publish(message: Object): any;
     publish(message: Object, callback: (status: any, response: any) => void): void;
     fire(args: Object, callback: (status: any, response: any) => void): void;
+    fetchMessages(args: Object, callback: (status: any, response: any) => void): void;
     addListener(listener: Object): void;
     removeListener(listener: Object): void;
     removeAllListeners(): void;
