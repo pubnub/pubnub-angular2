@@ -1,5 +1,16 @@
-## [v1.3.0](https://github.com/pubnub/pubnub-angular2/tree/v1.3.0)
+## [v1.3.0](https://github.com/pubnub/pubnub-angular2/tree/v1.3.1)
+  August-06-2018
 
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.3.0...v1.3.1)
+
+- 🐛add functions to (fetchMessages and deleteMessages) to declaration files for TS
+
+
+
+
+## [v1.3.0](https://github.com/pubnub/pubnub-angular2/tree/v1.3.0)
+  November-28-2017
 
   [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.2.0...v1.3.0)
 
