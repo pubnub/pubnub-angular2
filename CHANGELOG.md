@@ -1,4 +1,15 @@
-## [v1.3.0](https://github.com/pubnub/pubnub-angular2/tree/v1.3.1)
+## [v1.3.2](https://github.com/pubnub/pubnub-angular2/tree/v1.3.2)
+  December-21-2018
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-angular2/compare/v1.3.1...v1.3.2)
+
+- 🌟update dependencies
+
+
+
+
+## [v1.3.1](https://github.com/pubnub/pubnub-angular2/tree/v1.3.1)
   August-06-2018
 
 
