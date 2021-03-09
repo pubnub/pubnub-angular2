@@ -15,6 +15,7 @@ changelog:
     changes:
       - type: bug
         text: add functions to (fetchMessages and deleteMessages) to declaration files for TS
+    date: Aug 6, 2018
   - version: v1.3.0
     changes:
       - type: feature
