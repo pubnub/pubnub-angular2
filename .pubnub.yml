@@ -10,17 +10,17 @@ changelog:
     changes:
       - type: improvement
         text: update dependencies
-    date: Dec 21, 2018
+    date: 2018-12-21
   - version: v1.3.1
     changes:
       - type: bug
         text: add functions to (fetchMessages and deleteMessages) to declaration files for TS
-    date: Aug 6, 2018
+    date: 2018-08-06
   - version: v1.3.0
     changes:
       - type: feature
         text: add functions to (fetchMessages and deleteMessages) and keep the stack of messages with only the latest 100
-    date: Nov 28, 2017
+    date: 2017-11-28
   - version: v1.2.0
     changes:
       - type: feature
