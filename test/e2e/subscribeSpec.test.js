@@ -88,17 +88,19 @@ describe('#subscribe()', function () {
 			pubnub.getInstance('another2').init(config.demo);
 
 			listener = {
-				message: function (m) {
-					expect(m.message).to.be.equal(stringMessage);
-					done();
-				}
-			};
+        message: function (m) {
+          expect(m.message).to.be.equal(stringMessage);
+          done();
+        },
+        status: function (st) {
+          expect(st.category).to.be.equal("PNConnectedCategory");
+          pubnub.getInstance('another2').publish({channel: channelName, message: stringMessage});
+        },
+      };
 
 			pubnub.getInstance('another2').addListener(listener);
 
 			pubnub.getInstance('another2').subscribe({channels: [channelName]});
-
-			pubnub.getInstance('another2').publish({channel: channelName, message: stringMessage});
 		});
 	});
 
