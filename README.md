@@ -18,6 +18,8 @@ that adds a few of extra features to simplify Angular integrations:
 You can still use the native PubNub JavaScript SDK if you feel this will be
 more suitable for your situation.
 
+For more information, visit our [docs](https://www.pubnub.com/docs/sdks/angular2) page.
+
 ## Communication
 - If you **need help** or have a **general question**, contact <support@pubnub.com>
 - If you **want to contribute**, please open a pull request against the `develop` branch.
